@@ -26,5 +26,7 @@ class EmbedService {
         getGuildEmbeds(guild.id).remove(Embed(name))
     }
 
+    fun getEmbed(guild: Guild, name: String) = getGuildEmbeds(guild.id).firstOrNull { it.name == name }?.builder
+
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).joinToString("\n") { it.name }
 }
