@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.services.EmbedService
+import io.github.jakejmattson.embedbot.arguments.EmbedArg
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
 
@@ -8,13 +9,10 @@ import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
 fun embedCommands(embedService: EmbedService) = commands {
     command("SendEmbed") {
         requiresGuild = true
-        expect(WordArg)
+        expect(EmbedArg)
         execute {
-            val embedName = it.args.component1() as String
+            val embed = (it.args.component1() as Embed).builder
 
-            val embed = embedService.getEmbed(it.guild!!, embedName)
-
-            embed ?: return@execute it.respond("No such embed")
             if (embed.isEmpty) return@execute
 
             it.respond(embed.build())
@@ -33,11 +31,11 @@ fun embedCommands(embedService: EmbedService) = commands {
 
     command("RemoveEmbed") {
         requiresGuild = true
-        expect(WordArg)
+        expect(EmbedArg)
         execute {
-            val embedName = it.args.component1() as String
+            val embed = it.args.component1() as Embed
 
-            embedService.removeEmbed(it.guild!!, embedName)
+            embedService.removeEmbed(it.guild!!, embed)
         }
     }
 

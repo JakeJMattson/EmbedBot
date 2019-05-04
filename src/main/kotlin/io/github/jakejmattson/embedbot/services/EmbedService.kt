@@ -7,26 +7,24 @@ import net.dv8tion.jda.core.entities.*
 
 data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder())
 
+private val embedMap = HashMap<String, ArrayList<Embed>>()
+
+fun getGuildEmbeds(guildId: String) : ArrayList<Embed> {
+    if (!embedMap.containsKey(guildId))
+        embedMap[guildId] = arrayListOf()
+
+    return embedMap[guildId]!!
+}
+
 @Service
 class EmbedService {
-    private val embedMap = HashMap<String, ArrayList<Embed>>()
-
-    private fun getGuildEmbeds(guildId: String) : ArrayList<Embed> {
-        if (!embedMap.containsKey(guildId))
-            embedMap[guildId] = arrayListOf()
-
-        return embedMap[guildId]!!
-    }
-
     fun addEmbed(guild: Guild, name: String) {
         getGuildEmbeds(guild.id).add(Embed(name))
     }
 
-    fun removeEmbed(guild: Guild, name: String) {
-        getGuildEmbeds(guild.id).remove(Embed(name))
+    fun removeEmbed(guild: Guild, embed: Embed) {
+        getGuildEmbeds(guild.id).remove(embed)
     }
-
-    fun getEmbed(guild: Guild, name: String) = getGuildEmbeds(guild.id).firstOrNull { it.name == name }?.builder
 
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).joinToString("\n") { it.name }
 }
