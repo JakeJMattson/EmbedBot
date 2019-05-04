@@ -13,7 +13,7 @@ fun embedCommands(embedService: EmbedService) = commands {
         execute {
             val embed = (it.args.component1() as Embed).builder
 
-            if (embed.isEmpty) return@execute
+            if (embed.isEmpty) return@execute it.respond("This embed is empty.")
 
             it.respond(embed.build())
         }
@@ -26,6 +26,8 @@ fun embedCommands(embedService: EmbedService) = commands {
             val embedName = it.args.component1() as String
 
             embedService.addEmbed(it.guild!!, embedName)
+
+            it.respond("Successfully added the embed: $embedName")
         }
     }
 
@@ -36,6 +38,8 @@ fun embedCommands(embedService: EmbedService) = commands {
             val embed = it.args.component1() as Embed
 
             embedService.removeEmbed(it.guild!!, embed)
+
+            it.respond("Successfully removed the embed: ${embed.name}")
         }
     }
 
