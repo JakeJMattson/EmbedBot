@@ -16,5 +16,8 @@
 # EmbedBot
 EmbedBot is a simple bot interface to create and modify embeds via commands as this is not possible via the traditional Discord interface.
 
+## Commands
+See [commands.md](commands.md) for a list of commands.
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
