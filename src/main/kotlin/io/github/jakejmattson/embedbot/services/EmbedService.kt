@@ -27,4 +27,8 @@ class EmbedService {
     }
 
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).joinToString("\n") { it.name }
+
+    fun setTitle(embed: Embed, newTitle: String) {
+        embed.builder.setTitle(newTitle)
+    }
 }
