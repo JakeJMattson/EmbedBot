@@ -9,6 +9,7 @@ import me.aberrantfox.kjdautils.internal.command.arguments.*
 fun editCommands(embedService: EmbedService) = commands {
     command("SetTitle") {
         requiresGuild = true
+        description = "Set the embed title."
         expect(EmbedArg, SentenceArg)
         execute {
             val embed = it.args.component1() as Embed

@@ -9,6 +9,7 @@ import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
 fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         requiresGuild = true
+        description = "Send the embed with this name."
         expect(EmbedArg)
         execute {
             val embed = (it.args.component1() as Embed).builder
@@ -21,6 +22,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Create") {
         requiresGuild = true
+        description = "Create a new embed with this name."
         expect(WordArg)
         execute {
             val embedName = it.args.component1() as String
@@ -33,6 +35,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Delete") {
         requiresGuild = true
+        description = "Delete the embed with this name."
         expect(EmbedArg)
         execute {
             val embed = it.args.component1() as Embed
@@ -45,6 +48,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("ListEmbeds") {
         requiresGuild = true
+        description = "List all embeds created in this guild."
         execute {
             it.respond(embedService.listEmbeds(it.guild!!))
         }
