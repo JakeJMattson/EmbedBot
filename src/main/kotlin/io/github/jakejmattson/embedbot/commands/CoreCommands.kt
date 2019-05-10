@@ -6,8 +6,8 @@ import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
 
 @CommandSet
-fun embedCommands(embedService: EmbedService) = commands {
-    command("SendEmbed") {
+fun coreCommands(embedService: EmbedService) = commands {
+    command("Send") {
         requiresGuild = true
         expect(EmbedArg)
         execute {
@@ -19,7 +19,7 @@ fun embedCommands(embedService: EmbedService) = commands {
         }
     }
 
-    command("AddEmbed") {
+    command("Create") {
         requiresGuild = true
         expect(WordArg)
         execute {
@@ -31,7 +31,7 @@ fun embedCommands(embedService: EmbedService) = commands {
         }
     }
 
-    command("RemoveEmbed") {
+    command("Delete") {
         requiresGuild = true
         expect(EmbedArg)
         execute {
