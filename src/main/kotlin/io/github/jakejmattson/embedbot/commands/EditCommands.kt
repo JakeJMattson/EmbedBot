@@ -14,7 +14,7 @@ fun editCommands(embedService: EmbedService) = commands {
             val embed = it.args.component1() as Embed
             val title = it.args.component2() as String
 
-            embedService.setTitle(embed, title)
+            embed.setTitle(title)
 
             it.respond("Successfully updated the embed title!")
         }

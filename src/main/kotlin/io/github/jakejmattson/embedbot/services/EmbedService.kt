@@ -5,7 +5,15 @@ import me.aberrantfox.kjdautils.api.dsl.embed
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 
-data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder())
+data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
+    fun setTitle(title: String) = builder.setTitle(title)
+    fun setDescription(description: String) = builder.setDescription(description)
+    fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)
+    fun setThumbnail(url: String) = builder.setThumbnail(url)
+    fun setImage(url: String) = builder.setImage(url)
+    fun setColor(color: Int) = builder.setColor(color)
+    fun setAuthor(author: String) = builder.setAuthor(author)
+}
 
 private val embedMap = HashMap<String, ArrayList<Embed>>()
 
@@ -27,8 +35,4 @@ class EmbedService {
     }
 
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).joinToString("\n") { it.name }
-
-    fun setTitle(embed: Embed, newTitle: String) {
-        embed.builder.setTitle(newTitle)
-    }
 }
