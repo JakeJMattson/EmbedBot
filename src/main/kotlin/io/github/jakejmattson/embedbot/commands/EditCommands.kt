@@ -20,4 +20,32 @@ fun editCommands(embedService: EmbedService) = commands {
             it.respond("Successfully updated the embed title!")
         }
     }
+
+    command("SetDescription") {
+        requiresGuild = true
+        description = "Set the embed description."
+        expect(EmbedArg, SentenceArg)
+        execute {
+            val embed = it.args.component1() as Embed
+            val description = it.args.component2() as String
+
+            embed.setDescription(description)
+
+            it.respond("Successfully updated the embed description!")
+        }
+    }
+
+    command("SetAuthor") {
+        requiresGuild = true
+        description = "Set the embed author."
+        expect(EmbedArg, SentenceArg)
+        execute {
+            val embed = it.args.component1() as Embed
+            val description = it.args.component2() as String
+
+            embed.setAuthor(description)
+
+            it.respond("Successfully updated the embed author!")
+        }
+    }
 }
