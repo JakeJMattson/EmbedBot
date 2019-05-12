@@ -27,6 +27,9 @@ fun getGuildEmbeds(guildId: String) : ArrayList<Embed> {
 @Service
 class EmbedService {
     fun addEmbed(guild: Guild, name: String) {
+        if (getGuildEmbeds(guild.id).any { it.name == name })
+            return
+
         getGuildEmbeds(guild.id).add(Embed(name))
     }
 
