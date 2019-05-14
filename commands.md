@@ -15,3 +15,4 @@
 | SetTitle       | Embed name; title       | Set the embed title.       |
 | SetDescription | Embed name; description | Set the embed description. |
 | SetAuthor      | Embed name; author      | Set the embed author.      |
+| SetColor       | Embed name; hex color   | Set the embed color.       |
