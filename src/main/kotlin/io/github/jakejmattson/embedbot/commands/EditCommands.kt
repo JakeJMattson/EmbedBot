@@ -1,9 +1,10 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.arguments.EmbedArg
+import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
+import java.awt.Color
 
 @CommandSet
 fun editCommands(embedService: EmbedService) = commands {
@@ -46,6 +47,20 @@ fun editCommands(embedService: EmbedService) = commands {
             embed.setAuthor(description)
 
             it.respond("Successfully updated the embed author!")
+        }
+    }
+
+    command("SetColor") {
+        requiresGuild = true
+        description = "Set the embed color."
+        expect(EmbedArg, HexColorArg)
+        execute {
+            val embed = it.args.component1() as Embed
+            val color = it.args.component2() as Int
+
+            embed.setColor(color)
+
+            it.respond("Successfully updated the embed color!")
         }
     }
 }
