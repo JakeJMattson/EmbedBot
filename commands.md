@@ -16,3 +16,4 @@
 | SetDescription | Embed name; description | Set the embed description. |
 | SetAuthor      | Embed name; author      | Set the embed author.      |
 | SetColor       | Embed name; hex color   | Set the embed color.       |
+| SetThumbnail   | Embed name; URL         | Set the embed thumbnail.   |
