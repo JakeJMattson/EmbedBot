@@ -63,4 +63,18 @@ fun editCommands(embedService: EmbedService) = commands {
             it.respond("Successfully updated the embed color!")
         }
     }
+
+    command("SetThumbnail") {
+        requiresGuild = true
+        description = "Set the embed thumbnail."
+        expect(EmbedArg, UrlArg)
+        execute {
+            val embed = it.args.component1() as Embed
+            val url = it.args.component2() as String
+
+            embed.setThumbnail(url)
+
+            it.respond("Successfully updated the embed thumbnail!")
+        }
+    }
 }
