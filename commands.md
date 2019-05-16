@@ -7,6 +7,7 @@
 | Send       | Embed name   | Send the embed with this name.            |
 | Create     | Embed name   | Create a new embed with this name.        |
 | Delete     | Embed name   | Delete the embed with this name.          |
+| Export     | Embed name   | Export this embed to a JSON String.       |
 | ListEmbeds | (none)       | List all embeds created in this guild.    |
 
 ## EditCommands
