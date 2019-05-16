@@ -1,5 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
+import com.google.gson.GsonBuilder
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
@@ -7,6 +8,8 @@ import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
 
 @CommandSet
 fun coreCommands(embedService: EmbedService) = commands {
+    val gson = GsonBuilder().setPrettyPrinting().create()
+
     command("Send") {
         requiresGuild = true
         description = "Send the embed with this name."
@@ -51,6 +54,17 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = "List all embeds created in this guild."
         execute {
             it.respond(embedService.listEmbeds(it.guild!!))
+        }
+    }
+
+    command("Export") {
+        requiresGuild = true
+        description = "Export this embed to a JSON String."
+        expect(EmbedArg)
+        execute {
+            val embed = it.args.component1() as Embed
+
+            it.respond(gson.toJson(embed.builder))
         }
     }
 }
