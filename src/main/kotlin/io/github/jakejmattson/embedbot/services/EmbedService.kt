@@ -1,7 +1,6 @@
 package io.github.jakejmattson.embedbot.services
 
 import me.aberrantfox.kjdautils.api.annotation.Service
-import me.aberrantfox.kjdautils.api.dsl.embed
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 
@@ -15,11 +14,13 @@ data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
     fun setAuthor(author: String) = builder.setAuthor(author)
 }
 
-private val embedMap = HashMap<String, ArrayList<Embed>>()
+data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
 
-fun getGuildEmbeds(guildId: String) : ArrayList<Embed> {
+private val embedMap = HashMap<String, GuildEmbeds>()
+
+fun getGuildEmbeds(guildId: String) : GuildEmbeds {
     if (!embedMap.containsKey(guildId))
-        embedMap[guildId] = arrayListOf()
+        embedMap[guildId] = GuildEmbeds(null, arrayListOf())
 
     return embedMap[guildId]!!
 }
@@ -27,15 +28,21 @@ fun getGuildEmbeds(guildId: String) : ArrayList<Embed> {
 @Service
 class EmbedService {
     fun addEmbed(guild: Guild, name: String) {
-        if (getGuildEmbeds(guild.id).any { it.name == name })
+        if (getGuildEmbeds(guild.id).embedList.any { it.name == name })
             return
 
-        getGuildEmbeds(guild.id).add(Embed(name))
+        getGuildEmbeds(guild.id).embedList.add(Embed(name))
     }
 
     fun removeEmbed(guild: Guild, embed: Embed) {
-        getGuildEmbeds(guild.id).remove(embed)
+        getGuildEmbeds(guild.id).embedList.remove(embed)
     }
 
-    fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).joinToString("\n") { it.name }
+    fun loadEmbed(guild: Guild, embed: Embed) {
+        getGuildEmbeds(guild.id).loadedEmbed = embed
+    }
+
+    fun getLoadedEmbed(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed
+
+    fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.joinToString("\n") { it.name }
 }

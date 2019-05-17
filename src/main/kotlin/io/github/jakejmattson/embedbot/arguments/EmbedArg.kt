@@ -12,7 +12,7 @@ open class EmbedArg(override val name: String = "Embed") : ArgumentType {
     override fun convert(arg: String, args: List<String>, event: CommandEvent): ArgumentResult {
         val guild = event.guild ?: return ArgumentResult.Error("Must be invoked inside a guild.")
 
-        val embed = getGuildEmbeds(guild.id).firstOrNull { it.name == arg }
+        val embed = getGuildEmbeds(guild.id).embedList.firstOrNull { it.name == arg }
             ?: return ArgumentResult.Error("No such embed exists with the name: $arg")
 
         return ArgumentResult.Single(embed)

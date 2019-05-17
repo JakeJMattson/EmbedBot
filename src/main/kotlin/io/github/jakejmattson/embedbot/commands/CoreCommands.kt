@@ -13,13 +13,14 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         requiresGuild = true
         description = "Send the embed with this name."
-        expect(EmbedArg)
         execute {
-            val embed = (it.args.component1() as Embed).builder
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
-            if (embed.isEmpty) return@execute it.respond("This embed is empty.")
+            val builder = embed.builder.takeIf { !it.isEmpty }
+                ?:return@execute it.respond("This embed is empty.")
 
-            it.respond(embed.build())
+            it.respond(builder.build())
         }
     }
 
@@ -49,6 +50,19 @@ fun coreCommands(embedService: EmbedService) = commands {
         }
     }
 
+    command("Load") {
+        requiresGuild = true
+        description = "Load the embed with this name into memory."
+        expect(EmbedArg)
+        execute {
+            val embed = it.args.component1() as Embed
+
+            embedService.loadEmbed(it.guild!!, embed)
+
+            it.respond("Successfully loaded the embed: ${embed.name}")
+        }
+    }
+
     command("ListEmbeds") {
         requiresGuild = true
         description = "List all embeds created in this guild."
@@ -60,11 +74,10 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Export") {
         requiresGuild = true
         description = "Export this embed to a JSON String."
-        expect(EmbedArg)
         execute {
-            val embed = it.args.component1() as Embed
+            val embed = embedService.getLoadedEmbed(it.guild!!) ?: return@execute it.respond("No embed loaded!")
 
-            it.respond(gson.toJson(embed.builder))
+            it.respond(gson.toJson(embed))
         }
     }
 }

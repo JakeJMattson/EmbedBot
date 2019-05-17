@@ -4,17 +4,18 @@ import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
-import java.awt.Color
 
 @CommandSet
 fun editCommands(embedService: EmbedService) = commands {
     command("SetTitle") {
         requiresGuild = true
         description = "Set the embed title."
-        expect(EmbedArg, SentenceArg)
+        expect(SentenceArg)
         execute {
-            val embed = it.args.component1() as Embed
-            val title = it.args.component2() as String
+            val title = it.args.component1() as String
+
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
             embed.setTitle(title)
 
@@ -25,10 +26,12 @@ fun editCommands(embedService: EmbedService) = commands {
     command("SetDescription") {
         requiresGuild = true
         description = "Set the embed description."
-        expect(EmbedArg, SentenceArg)
+        expect(SentenceArg)
         execute {
-            val embed = it.args.component1() as Embed
-            val description = it.args.component2() as String
+            val description = it.args.component1() as String
+
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
             embed.setDescription(description)
 
@@ -39,10 +42,12 @@ fun editCommands(embedService: EmbedService) = commands {
     command("SetAuthor") {
         requiresGuild = true
         description = "Set the embed author."
-        expect(EmbedArg, SentenceArg)
+        expect(SentenceArg)
         execute {
-            val embed = it.args.component1() as Embed
-            val description = it.args.component2() as String
+            val description = it.args.component1() as String
+
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
             embed.setAuthor(description)
 
@@ -53,10 +58,12 @@ fun editCommands(embedService: EmbedService) = commands {
     command("SetColor") {
         requiresGuild = true
         description = "Set the embed color."
-        expect(EmbedArg, HexColorArg)
+        expect(HexColorArg)
         execute {
-            val embed = it.args.component1() as Embed
-            val color = it.args.component2() as Int
+            val color = it.args.component1() as Int
+
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
             embed.setColor(color)
 
@@ -67,10 +74,12 @@ fun editCommands(embedService: EmbedService) = commands {
     command("SetThumbnail") {
         requiresGuild = true
         description = "Set the embed thumbnail."
-        expect(EmbedArg, UrlArg)
+        expect(UrlArg)
         execute {
-            val embed = it.args.component1() as Embed
-            val url = it.args.component2() as String
+            val url = it.args.component1() as String
+
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
             embed.setThumbnail(url)
 
