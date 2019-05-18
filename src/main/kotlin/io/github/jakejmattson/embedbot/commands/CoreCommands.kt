@@ -6,13 +6,13 @@ import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
 
-@CommandSet
+@CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
     val gson = GsonBuilder().setPrettyPrinting().create()
 
     command("Send") {
         requiresGuild = true
-        description = "Send the embed with this name."
+        description = "Send the currently loaded embed."
         execute {
             val embed = embedService.getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
@@ -73,7 +73,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Export") {
         requiresGuild = true
-        description = "Export this embed to a JSON String."
+        description = "Export the currently loaded embed to JSON."
         execute {
             val embed = embedService.getLoadedEmbed(it.guild!!) ?: return@execute it.respond("No embed loaded!")
 

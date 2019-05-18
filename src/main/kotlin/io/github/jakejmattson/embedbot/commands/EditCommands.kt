@@ -5,11 +5,11 @@ import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 
-@CommandSet
+@CommandSet("Edit")
 fun editCommands(embedService: EmbedService) = commands {
     command("SetTitle") {
         requiresGuild = true
-        description = "Set the embed title."
+        description = "Set the title for the currently loaded embed."
         expect(SentenceArg)
         execute {
             val title = it.args.component1() as String
@@ -25,7 +25,7 @@ fun editCommands(embedService: EmbedService) = commands {
 
     command("SetDescription") {
         requiresGuild = true
-        description = "Set the embed description."
+        description = "Set the description for the currently loaded embed."
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
@@ -41,7 +41,7 @@ fun editCommands(embedService: EmbedService) = commands {
 
     command("SetAuthor") {
         requiresGuild = true
-        description = "Set the embed author."
+        description = "Set the author for the currently loaded embed."
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
@@ -57,7 +57,7 @@ fun editCommands(embedService: EmbedService) = commands {
 
     command("SetColor") {
         requiresGuild = true
-        description = "Set the embed color."
+        description = "Set the color for the currently loaded embed."
         expect(HexColorArg)
         execute {
             val color = it.args.component1() as Int
@@ -73,7 +73,7 @@ fun editCommands(embedService: EmbedService) = commands {
 
     command("SetThumbnail") {
         requiresGuild = true
-        description = "Set the embed thumbnail."
+        description = "Set the thumbnail for the currently loaded embed."
         expect(UrlArg)
         execute {
             val url = it.args.component1() as String

@@ -4,18 +4,18 @@
 
 | Command    | Arguments    | Effect                                    |
 | ------     | ------       | ------                                    |
-| Send       | (none)       | Send the embed with this name.            |
+| Send       | (none)       | Send the currently loaded embed.          |
 | Create     | Embed name   | Create a new embed with this name.        |
 | Delete     | Embed name   | Delete the embed with this name.          |
 | Load       | Embed name   | Load the embed with this name into memory.|
-| Export     | (none)       | Export this embed to a JSON String.       |
+| Export     | (none)       | Export the currently loaded embed to JSON.|
 | ListEmbeds | (none)       | List all embeds created in this guild.    |
 
 ## EditCommands
-| Command        | Arguments   | Effect                     |
-| ------         | ------      | ------                     |
-| SetTitle       | Title       | Set the embed title.       |
-| SetDescription | Description | Set the embed description. |
-| SetAuthor      | Author      | Set the embed author.      |
-| SetColor       | Hex color   | Set the embed color.       |
-| SetThumbnail   | Image URL   | Set the embed thumbnail.   |
+| Command        | Arguments   | Effect                                              |
+| ------         | ------      | ------                                              |
+| SetTitle       | Title       | Set the title for the currently loaded embed.       |
+| SetDescription | Description | Set the description for the currently loaded embed. |
+| SetAuthor      | Author      | Set the author for the currently loaded embed.      |
+| SetColor       | Hex color   | Set the color for the currently loaded embed.       |
+| SetThumbnail   | Image URL   | Set the thumbnail for the currently loaded embed.   |
