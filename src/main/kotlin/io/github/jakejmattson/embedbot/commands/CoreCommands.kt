@@ -40,7 +40,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Delete") {
         requiresGuild = true
         description = "Delete the embed with this name."
-        expect(EmbedArg)
+        expect(arg(EmbedArg, optional = true, default = {embedService.getLoadedEmbed(it.guild!!) as Any}))
         execute {
             val embed = it.args.component1() as Embed
 

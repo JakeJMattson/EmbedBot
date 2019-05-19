@@ -18,6 +18,8 @@ data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
 
 private val embedMap = HashMap<String, GuildEmbeds>()
 
+fun Embed.isLoaded(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed == this
+
 fun getGuildEmbeds(guildId: String) : GuildEmbeds {
     if (!embedMap.containsKey(guildId))
         embedMap[guildId] = GuildEmbeds(null, arrayListOf())
@@ -28,13 +30,22 @@ fun getGuildEmbeds(guildId: String) : GuildEmbeds {
 @Service
 class EmbedService {
     fun addEmbed(guild: Guild, name: String) {
-        if (getGuildEmbeds(guild.id).embedList.any { it.name == name })
+        val embeds = getGuildEmbeds(guild.id)
+
+        if (embeds.embedList.any { it.name == name })
             return
 
-        getGuildEmbeds(guild.id).embedList.add(Embed(name))
+        val newEmbed = Embed(name)
+        embeds.loadedEmbed = newEmbed
+        embeds.embedList.add(newEmbed)
     }
 
     fun removeEmbed(guild: Guild, embed: Embed) {
+        val embeds = getGuildEmbeds(guild.id)
+
+        if (embed.isLoaded(guild))
+            embeds.loadedEmbed = null
+
         getGuildEmbeds(guild.id).embedList.remove(embed)
     }
 
