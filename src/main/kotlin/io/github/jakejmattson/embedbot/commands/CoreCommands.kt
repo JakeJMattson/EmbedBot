@@ -5,6 +5,7 @@ import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
+import net.dv8tion.jda.core.EmbedBuilder
 import java.lang.Exception
 
 @CommandSet("Core")
@@ -47,6 +48,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(arg(EmbedArg, optional = true, default = {embedService.getLoadedEmbed(it.guild!!) as Any}))
         execute {
             val embed = it.args.component1() as Embed
+            val wasRemoved = embedService.removeEmbed(it.guild!!, embed)
 
             if (wasRemoved)
                 it.respond("Successfully removed the embed: ${embed.name}")
@@ -72,20 +74,22 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "List all embeds created in this guild."
         execute {
-            it.respond(embedService.listEmbeds(it.guild!!))
+            it.respond(embedService.listEmbeds(it.guild!!).takeIf { it.isNotEmpty() } ?: "<No embeds>")
         }
     }
 
     command("Import") {
         requiresGuild = true
         description = "Import a JSON String as an embed."
-        expect(SentenceArg)
+        expect(WordArg, SentenceArg)
         execute {
-            val json = it.args.component1() as String
+            val name = it.args.component1() as String
+            val json = it.args.component2() as String
 
             it.respond(
                 try {
-                    val embed = gson.fromJson(json, Embed::class.java)
+                    val builder = gson.fromJson(json, EmbedBuilder::class.java)
+                    val embed = Embed(name, builder)
                     val wasAdded = embedService.addEmbed(it.guild!!, embed)
 
                     if (wasAdded) "Successfully loaded the embed: ${embed.name}" else "An embed with this name already exists"
@@ -103,7 +107,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = embedService.getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
-            it.respond(gson.toJson(embed))
+            it.respond(gson.toJson(embed.builder))
         }
     }
 }
