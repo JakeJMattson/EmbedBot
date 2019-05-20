@@ -29,7 +29,7 @@ fun getGuildEmbeds(guildId: String) : GuildEmbeds {
 
 @Service
 class EmbedService {
-    fun addEmbed(guild: Guild, name: String) {
+    fun createEmbed(guild: Guild, name: String) {
         val embeds = getGuildEmbeds(guild.id)
 
         if (embeds.embedList.any { it.name == name })
@@ -38,6 +38,16 @@ class EmbedService {
         val newEmbed = Embed(name)
         embeds.loadedEmbed = newEmbed
         embeds.embedList.add(newEmbed)
+    }
+
+    fun addEmbed(guild: Guild, embed: Embed) {
+        val embeds = getGuildEmbeds(guild.id)
+
+        if (embed in embeds.embedList)
+            return
+
+        embeds.loadedEmbed = embed
+        embeds.embedList.add(embed)
     }
 
     fun removeEmbed(guild: Guild, embed: Embed) {

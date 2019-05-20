@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
-import me.aberrantfox.kjdautils.internal.command.arguments.WordArg
+import me.aberrantfox.kjdautils.internal.command.arguments.*
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
@@ -31,7 +31,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val embedName = it.args.component1() as String
 
-            embedService.addEmbed(it.guild!!, embedName)
+            embedService.createEmbed(it.guild!!, embedName)
 
             it.respond("Successfully added the embed: $embedName")
         }
@@ -68,6 +68,20 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = "List all embeds created in this guild."
         execute {
             it.respond(embedService.listEmbeds(it.guild!!))
+        }
+    }
+
+    command("Import") {
+        requiresGuild = true
+        description = "Import a JSON String as an embed."
+        expect(SentenceArg)
+        execute {
+            val json = it.args.component1() as String
+            val embed = gson.fromJson(json, Embed::class.java) ?: return@execute it.respond("Invalid JSON!")
+
+            embedService.addEmbed(it.guild!!, embed)
+
+            it.respond("Successfully loaded the embed: ${embed.name}")
         }
     }
 
