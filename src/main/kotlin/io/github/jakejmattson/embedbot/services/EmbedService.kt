@@ -29,34 +29,40 @@ fun getGuildEmbeds(guildId: String) : GuildEmbeds {
 
 @Service
 class EmbedService {
-    fun createEmbed(guild: Guild, name: String) {
+    fun createEmbed(guild: Guild, name: String): Boolean {
         val embeds = getGuildEmbeds(guild.id)
 
         if (embeds.embedList.any { it.name == name })
-            return
+            return false
 
         val newEmbed = Embed(name)
         embeds.loadedEmbed = newEmbed
         embeds.embedList.add(newEmbed)
+        return true
     }
 
-    fun addEmbed(guild: Guild, embed: Embed) {
+    fun addEmbed(guild: Guild, embed: Embed): Boolean {
         val embeds = getGuildEmbeds(guild.id)
 
         if (embed in embeds.embedList)
-            return
+            return false
 
         embeds.loadedEmbed = embed
         embeds.embedList.add(embed)
+        return true
     }
 
-    fun removeEmbed(guild: Guild, embed: Embed) {
+    fun removeEmbed(guild: Guild, embed: Embed): Boolean {
         val embeds = getGuildEmbeds(guild.id)
+
+        if (embed !in embeds.embedList)
+            return false
 
         if (embed.isLoaded(guild))
             embeds.loadedEmbed = null
 
-        getGuildEmbeds(guild.id).embedList.remove(embed)
+        embeds.embedList.remove(embed)
+        return true
     }
 
     fun loadEmbed(guild: Guild, embed: Embed) {

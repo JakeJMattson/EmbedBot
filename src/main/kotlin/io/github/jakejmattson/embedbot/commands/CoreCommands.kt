@@ -5,6 +5,7 @@ import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
+import java.lang.Exception
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
@@ -31,9 +32,12 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val embedName = it.args.component1() as String
 
-            embedService.createEmbed(it.guild!!, embedName)
+            val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
-            it.respond("Successfully added the embed: $embedName")
+            if (wasCreated)
+                it.respond("Successfully added the embed: $embedName")
+            else
+                it.respond("An embed with this name already exists")
         }
     }
 
@@ -44,9 +48,10 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val embed = it.args.component1() as Embed
 
-            embedService.removeEmbed(it.guild!!, embed)
-
-            it.respond("Successfully removed the embed: ${embed.name}")
+            if (wasRemoved)
+                it.respond("Successfully removed the embed: ${embed.name}")
+            else
+                it.respond("No such embed exists")
         }
     }
 
@@ -77,11 +82,17 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(SentenceArg)
         execute {
             val json = it.args.component1() as String
-            val embed = gson.fromJson(json, Embed::class.java) ?: return@execute it.respond("Invalid JSON!")
 
-            embedService.addEmbed(it.guild!!, embed)
+            it.respond(
+                try {
+                    val embed = gson.fromJson(json, Embed::class.java)
+                    val wasAdded = embedService.addEmbed(it.guild!!, embed)
 
-            it.respond("Successfully loaded the embed: ${embed.name}")
+                    if (wasAdded) "Successfully loaded the embed: ${embed.name}" else "An embed with this name already exists"
+                } catch (e: Exception) {
+                    "Invalid JSON!"
+                }
+            )
         }
     }
 
@@ -89,7 +100,8 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Export the currently loaded embed to JSON."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!) ?: return@execute it.respond("No embed loaded!")
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
 
             it.respond(gson.toJson(embed))
         }
