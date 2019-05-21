@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.services
 
 import me.aberrantfox.kjdautils.api.annotation.Service
+import me.aberrantfox.kjdautils.api.dsl.embed
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 
@@ -73,3 +74,13 @@ class EmbedService {
 
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.joinToString("\n") { it.name }
 }
+
+fun MessageEmbed.toEmbedBuilder() =
+    EmbedBuilder()
+        .setTitle(title)
+        .setDescription(description)
+        .setFooter(footer?.text, footer?.iconUrl)
+        .setThumbnail(thumbnail?.url)
+        .setImage(image?.url)
+        .setColor(colorRaw)
+        .setAuthor(author?.name)

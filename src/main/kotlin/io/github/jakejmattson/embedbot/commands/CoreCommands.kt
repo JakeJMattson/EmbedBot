@@ -4,8 +4,11 @@ import com.google.gson.GsonBuilder
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
 import me.aberrantfox.kjdautils.internal.command.arguments.*
+import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import net.dv8tion.jda.core.EmbedBuilder
+import net.dv8tion.jda.core.entities.*
 import java.lang.Exception
 
 @CommandSet("Core")
@@ -75,6 +78,32 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = "List all embeds created in this guild."
         execute {
             it.respond(embedService.listEmbeds(it.guild!!).takeIf { it.isNotEmpty() } ?: "<No embeds>")
+        }
+    }
+
+    command("Copy") {
+        requiresGuild = true
+        description = "Copy an embed by its message ID."
+        expect(arg(WordArg), arg(TextChannelArg, optional = true, default = { it.channel }), arg(WordArg("Message ID")))
+        execute {
+            val name = it.args.component1() as String
+            val channel = it.args.component2() as TextChannel
+            val messageId = it.args.component3() as String
+
+            val message = tryRetrieveSnowflake(it.jda) {
+                channel.getMessageById(messageId.trimToID()).complete()
+            } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel")
+
+            val embeds = message.embeds
+
+            if (embeds.isEmpty())
+                return@execute it.respond("This message does not contain an embed")
+
+            val embed = Embed(name, embeds.first().toEmbedBuilder())
+
+            embedService.addEmbed(it.guild!!, embed)
+
+            it.respond("Successfully copied the embed as: ${embed.name}")
         }
     }
 
