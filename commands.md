@@ -8,6 +8,7 @@
 | Create     | Embed name   | Create a new embed with this name.        |
 | Delete     | Embed name   | Delete the embed with this name.          |
 | Load       | Embed name   | Load the embed with this name into memory.|
+| Copy       | Name, Mesage | Copy an embed by its message ID.          |
 | Import     | JSON String  | Import a JSON String as an embed.         |
 | Export     | (none)       | Export the currently loaded embed to JSON.|
 | ListEmbeds | (none)       | List all embeds created in this guild.    |
