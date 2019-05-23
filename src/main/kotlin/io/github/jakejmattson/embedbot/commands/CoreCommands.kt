@@ -89,6 +89,10 @@ fun coreCommands(embedService: EmbedService) = commands {
             val name = it.args.component1() as String
             val channel = it.args.component2() as TextChannel
             val messageId = it.args.component3() as String
+            val guild = it.guild!!
+
+            if (guild.hasEmbedWithName(name))
+                return@execute it.respond("An embed with this name already exists")
 
             val message = tryRetrieveSnowflake(it.jda) {
                 channel.getMessageById(messageId.trimToID()).complete()
@@ -101,7 +105,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
             val embed = Embed(name, embeds.first().toEmbedBuilder())
 
-            embedService.addEmbed(it.guild!!, embed)
+            embedService.addEmbed(guild, embed)
 
             it.respond("Successfully copied the embed as: ${embed.name}")
         }
@@ -114,6 +118,10 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val name = it.args.component1() as String
             val json = it.args.component2() as String
+            val guild = it.guild!!
+
+            if (guild.hasEmbedWithName(name))
+                return@execute it.respond("An embed with this name already exists")
 
             it.respond(
                 try {

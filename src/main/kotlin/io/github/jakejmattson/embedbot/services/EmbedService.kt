@@ -28,12 +28,14 @@ fun getGuildEmbeds(guildId: String) : GuildEmbeds {
     return embedMap[guildId]!!
 }
 
+fun Guild.hasEmbedWithName(name: String) = getGuildEmbeds(id).embedList.any { it.name == name }
+
 @Service
 class EmbedService {
     fun createEmbed(guild: Guild, name: String): Boolean {
         val embeds = getGuildEmbeds(guild.id)
 
-        if (embeds.embedList.any { it.name == name })
+        if (guild.hasEmbedWithName(name))
             return false
 
         val newEmbed = Embed(name)
