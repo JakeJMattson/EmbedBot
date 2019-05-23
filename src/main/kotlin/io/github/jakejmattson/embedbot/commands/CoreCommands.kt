@@ -32,7 +32,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Create") {
         requiresGuild = true
         description = "Create a new embed with this name."
-        expect(WordArg)
+        expect(WordArg("Embed Name"))
         execute {
             val embedName = it.args.component1() as String
 
@@ -84,7 +84,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Copy") {
         requiresGuild = true
         description = "Copy an embed by its message ID."
-        expect(arg(WordArg), arg(TextChannelArg, optional = true, default = { it.channel }), arg(WordArg("Message ID")))
+        expect(arg(WordArg("Embed Name")), arg(TextChannelArg, optional = true, default = { it.channel }), arg(WordArg("Message ID")))
         execute {
             val name = it.args.component1() as String
             val channel = it.args.component2() as TextChannel
@@ -114,7 +114,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Import") {
         requiresGuild = true
         description = "Import a JSON String as an embed."
-        expect(WordArg, SentenceArg)
+        expect(WordArg("Embed Name"), SentenceArg("JSON"))
         execute {
             val name = it.args.component1() as String
             val json = it.args.component2() as String
