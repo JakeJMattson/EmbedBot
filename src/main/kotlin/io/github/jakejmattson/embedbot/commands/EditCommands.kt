@@ -18,7 +18,6 @@ fun editCommands(embedService: EmbedService) = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setTitle(title)
-
             it.respond("Successfully updated the embed title!")
         }
     }
@@ -34,7 +33,6 @@ fun editCommands(embedService: EmbedService) = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setDescription(description)
-
             it.respond("Successfully updated the embed description!")
         }
     }
@@ -50,7 +48,6 @@ fun editCommands(embedService: EmbedService) = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setAuthor(description)
-
             it.respond("Successfully updated the embed author!")
         }
     }
@@ -66,7 +63,6 @@ fun editCommands(embedService: EmbedService) = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setColor(color)
-
             it.respond("Successfully updated the embed color!")
         }
     }
@@ -82,7 +78,6 @@ fun editCommands(embedService: EmbedService) = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setThumbnail(url)
-
             it.respond("Successfully updated the embed thumbnail!")
         }
     }

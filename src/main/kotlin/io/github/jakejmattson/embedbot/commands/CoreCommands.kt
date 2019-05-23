@@ -38,10 +38,12 @@ fun coreCommands(embedService: EmbedService) = commands {
 
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
-            if (wasCreated)
-                it.respond("Successfully added the embed: $embedName")
-            else
-                it.respond("An embed with this name already exists")
+            it.respond(
+                if (wasCreated)
+                    "Successfully added the embed: $embedName"
+                else
+                    "An embed with this name already exists"
+            )
         }
     }
 
@@ -53,10 +55,12 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = it.args.component1() as Embed
             val wasRemoved = embedService.removeEmbed(it.guild!!, embed)
 
-            if (wasRemoved)
-                it.respond("Successfully removed the embed: ${embed.name}")
-            else
-                it.respond("No such embed exists")
+            it.respond(
+                if (wasRemoved)
+                    "Successfully removed the embed: ${embed.name}"
+                else
+                    "No such embed exists"
+            )
         }
     }
 
@@ -66,9 +70,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(EmbedArg)
         execute {
             val embed = it.args.component1() as Embed
-
             embedService.loadEmbed(it.guild!!, embed)
-
             it.respond("Successfully loaded the embed: ${embed.name}")
         }
     }
@@ -98,15 +100,11 @@ fun coreCommands(embedService: EmbedService) = commands {
                 channel.getMessageById(messageId.trimToID()).complete()
             } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel")
 
-            val embeds = message.embeds
+            val messageEmbed = message.embeds.firstOrNull()
+                ?: return@execute it.respond("This message does not contain an embed")
 
-            if (embeds.isEmpty())
-                return@execute it.respond("This message does not contain an embed")
-
-            val embed = Embed(name, embeds.first().toEmbedBuilder())
-
+            val embed = Embed(name, messageEmbed.toEmbedBuilder())
             embedService.addEmbed(guild, embed)
-
             it.respond("Successfully copied the embed as: ${embed.name}")
         }
     }
@@ -127,7 +125,7 @@ fun coreCommands(embedService: EmbedService) = commands {
                 try {
                     val builder = gson.fromJson(json, EmbedBuilder::class.java)
                     val embed = Embed(name, builder)
-                    val wasAdded = embedService.addEmbed(it.guild!!, embed)
+                    val wasAdded = embedService.addEmbed(guild, embed)
 
                     if (wasAdded) "Successfully loaded the embed: ${embed.name}" else "An embed with this name already exists"
                 } catch (e: Exception) {
