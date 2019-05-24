@@ -13,9 +13,20 @@ data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
     fun setImage(url: String) = builder.setImage(url)
     fun setColor(color: Int) = builder.setColor(color)
     fun setAuthor(author: String) = builder.setAuthor(author)
+
+    fun clear() = builder.clear()
+    fun clearFields() = builder.clearFields()
+    fun setFields(fields: List<MessageEmbed.Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
+    fun addField(field: MessageEmbed.Field) = builder.addField(field)
+    fun removeField(index: Int) = builder.fields.removeAt(index)
 }
 
-data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
+data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
+    fun addAndLoad(embed: Embed) {
+        loadedEmbed = embed
+        embedList.add(embed)
+    }
+}
 
 private val embedMap = HashMap<String, GuildEmbeds>()
 
@@ -39,8 +50,7 @@ class EmbedService {
             return false
 
         val newEmbed = Embed(name)
-        embeds.loadedEmbed = newEmbed
-        embeds.embedList.add(newEmbed)
+        embeds.addAndLoad(newEmbed)
         return true
     }
 
@@ -50,8 +60,7 @@ class EmbedService {
         if (embed in embeds.embedList)
             return false
 
-        embeds.loadedEmbed = embed
-        embeds.embedList.add(embed)
+        embeds.addAndLoad(embed)
         return true
     }
 
@@ -77,8 +86,8 @@ class EmbedService {
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.joinToString("\n") { it.name }
 }
 
-fun MessageEmbed.toEmbedBuilder() =
-    EmbedBuilder()
+fun MessageEmbed.toEmbed(name: String) =
+    Embed(name, EmbedBuilder()
         .setTitle(title)
         .setDescription(description)
         .setFooter(footer?.text, footer?.iconUrl)
@@ -86,3 +95,4 @@ fun MessageEmbed.toEmbedBuilder() =
         .setImage(image?.url)
         .setColor(colorRaw)
         .setAuthor(author?.name)
+    ).also { it.setFields(fields) }

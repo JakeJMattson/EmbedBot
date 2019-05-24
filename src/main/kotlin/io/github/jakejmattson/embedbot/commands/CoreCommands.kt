@@ -103,7 +103,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             val messageEmbed = message.embeds.firstOrNull()
                 ?: return@execute it.respond("This message does not contain an embed")
 
-            val embed = Embed(name, messageEmbed.toEmbedBuilder())
+            val embed = messageEmbed.toEmbed(name)
             embedService.addEmbed(guild, embed)
             it.respond("Successfully copied the embed as: ${embed.name}")
         }
