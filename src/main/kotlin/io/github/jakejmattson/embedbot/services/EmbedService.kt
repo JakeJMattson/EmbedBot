@@ -14,11 +14,19 @@ data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
     fun setColor(color: Int) = builder.setColor(color)
     fun setAuthor(author: String) = builder.setAuthor(author)
 
-    fun clear() = builder.clear()
-    fun clearFields() = builder.clearFields()
     fun setFields(fields: List<MessageEmbed.Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
     fun addField(field: MessageEmbed.Field) = builder.addField(field)
     fun removeField(index: Int) = builder.fields.removeAt(index)
+
+    fun clearTitle() = builder.setTitle(null)
+    fun clearDescription() = builder.setDescription(null)
+    fun clearThumbnail() = builder.setThumbnail(null)
+    fun clearImage() = builder.setImage(null)
+    fun clearColor() = builder.setColor(null)
+    fun clearAuthor() = builder.setAuthor(null)
+
+    fun clear() = builder.clear()
+    fun clearFields() = builder.clearFields()
 }
 
 data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
