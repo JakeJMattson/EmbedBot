@@ -2,6 +2,8 @@ package io.github.jakejmattson.embedbot.utilities
 
 import me.aberrantfox.kjdautils.api.dsl.CommandsContainer
 
+operator fun String.times(x: Int) = this.repeat(x)
+
 fun generateDocs(commandsContainer: CommandsContainer): String {
     data class CommandData(val name: String, val args: String, val description: String) {
         fun format(format: String) = String.format(format, name, args, description)
@@ -30,7 +32,7 @@ fun generateDocs(commandsContainer: CommandsContainer): String {
         categoryCommands.remove(headers)
 
         docs.appendln(String.format(format, "Commands", "Arguments", "Description"))
-        docs.appendln(String.format(format, "-".repeat(longestName), "-".repeat(longestArgs), "-".repeat(longestDescription)))
+        docs.appendln(String.format(format, "-" * longestName, "-" * longestArgs, "-" * longestDescription))
 
         categoryCommands.sortedBy { it.name }.forEach {
             docs.appendln(it.format(format))
