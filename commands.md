@@ -33,3 +33,10 @@
 | ClearNonFields   | <none>    | Clear all non-field entities from the currently loaded embed. |
 | ClearThumbnail   | <none>    | Clear the thumbnail from the currently loaded embed.          |
 | ClearTitle       | <none>    | Clear the title of the currently loaded embed.                |
+
+## Utility
+| Commands     | Arguments | Description                          |
+| ------------ | --------- | ------------------------------------ |
+| ListCommands | <none>    | List all available commands.         |
+| Ping         | <none>    | Display the network ping of the bot. |
+| Uptime       | <none>    | Uptime of the bot.                   |
