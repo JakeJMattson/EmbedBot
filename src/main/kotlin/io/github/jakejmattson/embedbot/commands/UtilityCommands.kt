@@ -1,9 +1,14 @@
 package io.github.jakejmattson.embedbot.commands
 
+import com.google.gson.Gson
 import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.extensions.jda.fullName
 import java.awt.Color
 import java.util.*
 
+private data class Properties(val version: String, val author: String, val repository: String)
+private val propFile = Properties::class.java.getResource("/properties.json").readText()
+private val Project = Gson().fromJson(propFile, Properties::class.java)
 private val startTime = Date()
 
 @CommandSet("Utility")
@@ -16,9 +21,49 @@ fun utilityCommands() = commands {
         }
     }
 
+    command("Version") {
+        requiresGuild = true
+        description = "Display the bot version."
+        execute {
+            it.respond("**Running version**: ${Project.version}")
+        }
+    }
+
+    command("Author") {
+        requiresGuild = true
+        description = "Display project author."
+        execute {
+            it.respond("**Project author**: ${Project.author}")
+        }
+    }
+
+    command("Source") {
+        requiresGuild = true
+        description = "Display the (source code) repository link."
+        execute {
+            it.respond(Project.repository)
+        }
+    }
+
+    command("BotInfo") {
+        requiresGuild = true
+        description = "Display the bot information."
+        execute {
+            it.respond(embed {
+                title(it.jda.selfUser.fullName())
+                description("A Discord embed management bot.")
+                setColor(Color.green)
+                setThumbnail(it.jda.selfUser.effectiveAvatarUrl)
+                addField("Author", Project.author, false)
+                addField("Source", Project.repository, false)
+                addField("Version", Project.version, false)
+            })
+        }
+    }
+
     command("Uptime") {
         requiresGuild = true
-        description = "Display yhe uptime of the bot."
+        description = "Displays how long the bot has been running."
         execute {
             val milliseconds = Date().time - startTime.time
             val seconds = (milliseconds / 1000) % 60
