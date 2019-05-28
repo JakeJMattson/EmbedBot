@@ -35,8 +35,12 @@
 | ClearTitle       | <none>    | Clear the title of the currently loaded embed.                |
 
 ## Utility
-| Commands     | Arguments | Description                          |
-| ------------ | --------- | ------------------------------------ |
-| ListCommands | <none>    | List all available commands.         |
-| Ping         | <none>    | Display the network ping of the bot. |
-| Uptime       | <none>    | Uptime of the bot.                   |
+| Commands     | Arguments | Description                                 |
+| ------------ | --------- | ------------------------------------------- |
+| Author       | <none>    | Display project author.                     |
+| BotInfo      | <none>    | Display the bot information.                |
+| ListCommands | <none>    | List all available commands.                |
+| Ping         | <none>    | Display the network ping of the bot.        |
+| Source       | <none>    | Display the (source code) repository link.  |
+| Uptime       | <none>    | Displays how long the bot has been running. |
+| Version      | <none>    | Display the bot version.                    |
