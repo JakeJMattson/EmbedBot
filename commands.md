@@ -12,6 +12,12 @@
 | Load       | Embed Name                          | Load the embed with this name into memory. |
 | Send       | <none>                              | Send the currently loaded embed.           |
 
+## Field
+| Commands    | Arguments   | Description                                            |
+| ----------- | ----------- | ------------------------------------------------------ |
+| AddField    | Field       | Add a field in the following format: title\|body\|inline |
+| RemoveField | Field Index | Remove a field from the loaded embed by its index.     |
+
 ## Edit
 | Commands       | Arguments | Description                                         |
 | -------------- | --------- | --------------------------------------------------- |
