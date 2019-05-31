@@ -6,7 +6,7 @@ import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 
 @CommandSet("Edit")
-fun editCommands(embedService: EmbedService) = commands {
+fun editCommands() = commands {
     command("SetTitle") {
         requiresGuild = true
         description = "Set the title for the currently loaded embed."
@@ -14,7 +14,7 @@ fun editCommands(embedService: EmbedService) = commands {
         execute {
             val title = it.args.component1() as String
 
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setTitle(title)
@@ -29,7 +29,7 @@ fun editCommands(embedService: EmbedService) = commands {
         execute {
             val description = it.args.component1() as String
 
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setDescription(description)
@@ -44,7 +44,7 @@ fun editCommands(embedService: EmbedService) = commands {
         execute {
             val description = it.args.component1() as String
 
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setAuthor(description)
@@ -59,7 +59,7 @@ fun editCommands(embedService: EmbedService) = commands {
         execute {
             val color = it.args.component1() as Int
 
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setColor(color)
@@ -74,7 +74,7 @@ fun editCommands(embedService: EmbedService) = commands {
         execute {
             val url = it.args.component1() as String
 
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setThumbnail(url)

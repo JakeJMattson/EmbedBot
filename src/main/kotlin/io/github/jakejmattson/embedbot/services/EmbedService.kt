@@ -1,11 +1,13 @@
 package io.github.jakejmattson.embedbot.services
 
 import me.aberrantfox.kjdautils.api.annotation.Service
-import me.aberrantfox.kjdautils.api.dsl.embed
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 
 data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
+    val lastFieldIndex: Int
+        get() = builder.fields.lastIndex
+
     fun setTitle(title: String) = builder.setTitle(title)
     fun setDescription(description: String) = builder.setDescription(description)
     fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)
@@ -50,6 +52,8 @@ fun getGuildEmbeds(guildId: String) : GuildEmbeds {
 
 fun Guild.hasEmbedWithName(name: String) = getGuildEmbeds(id).embedList.any { it.name == name }
 
+fun getLoadedEmbed(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed
+
 @Service
 class EmbedService {
     fun createEmbed(guild: Guild, name: String): Boolean {
@@ -89,8 +93,6 @@ class EmbedService {
     fun loadEmbed(guild: Guild, embed: Embed) {
         getGuildEmbeds(guild.id).loadedEmbed = embed
     }
-
-    fun getLoadedEmbed(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed
 
     fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.joinToString("\n") { it.name }
 }

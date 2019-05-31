@@ -19,7 +19,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Send the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             val builder = embed.builder.takeIf { !it.isEmpty }
@@ -50,7 +50,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Delete") {
         requiresGuild = true
         description = "Delete the embed with this name."
-        expect(arg(EmbedArg, optional = true, default = {embedService.getLoadedEmbed(it.guild!!) as Any}))
+        expect(arg(EmbedArg, optional = true, default = {getLoadedEmbed(it.guild!!) as Any}))
         execute {
             val embed = it.args.component1() as Embed
             val wasRemoved = embedService.removeEmbed(it.guild!!, embed)
@@ -139,7 +139,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Export the currently loaded embed to JSON."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             it.respond(gson.toJson(embed.builder))

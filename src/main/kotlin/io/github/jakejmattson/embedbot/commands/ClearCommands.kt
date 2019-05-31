@@ -1,16 +1,16 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.services.EmbedService
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import kotlin.streams.toList
 
 @CommandSet("Clear")
-fun clearCommands(embedService: EmbedService) = commands {
+fun clearCommands() = commands {
     command("ClearTitle") {
         requiresGuild = true
         description = "Clear the title of the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearTitle()
@@ -23,7 +23,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear the description from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearDescription()
@@ -36,7 +36,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear the author from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearAuthor()
@@ -49,7 +49,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear the color from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearColor()
@@ -62,7 +62,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear the thumbnail from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearThumbnail()
@@ -75,7 +75,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear the image from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearImage()
@@ -88,7 +88,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear all fields from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clearFields()
@@ -101,7 +101,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear all non-field entities from the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             val fields = embed.builder.fields.stream().toList()
@@ -117,7 +117,7 @@ fun clearCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clear the currently loaded embed."
         execute {
-            val embed = embedService.getLoadedEmbed(it.guild!!)
+            val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.clear()
