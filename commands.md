@@ -13,11 +13,11 @@
 | Send       | <none>                              | Send the currently loaded embed.           |
 
 ## Field
-| Commands    | Arguments      | Description                                            |
-| ----------- | -------------- | ------------------------------------------------------ |
-| AddField    | Field          | Add a field in the following format: title\|body\|inline |
-| EditField   | Integer, Field | Edit a field at a given index with the given data.     |
-| RemoveField | Field Index    | Remove a field from the loaded embed by its index.     |
+| Commands    | Arguments               | Description                                            |
+| ----------- | ----------------------- | ------------------------------------------------------ |
+| AddField    | Field Data              | Add a field in the following format: title\|body\|inline |
+| EditField   | Field Index, Field Data | Edit a field at a given index with the given data.     |
+| RemoveField | Field Index             | Remove a field from the loaded embed by its index.     |
 
 ## Edit
 | Commands       | Arguments | Description                                         |
