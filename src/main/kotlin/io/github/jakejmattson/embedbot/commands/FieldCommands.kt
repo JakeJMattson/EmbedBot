@@ -46,4 +46,31 @@ fun fieldCommands(embedService: EmbedService) = commands {
             embed.removeField(index)
         }
     }
+
+    command("EditField") {
+        requiresGuild = true
+        description = "Edit a field at a given index with the given data."
+        expect(IntegerArg, SplitterArg("Field"))
+        execute {
+            val index = it.args.component1() as Int
+            val fieldData = it.args.component2() as List<String>
+
+            val embed = embedService.getLoadedEmbed(it.guild!!)
+                ?: return@execute it.respond("No embed loaded!")
+
+            if (index !in 0 until embed.builder.length())
+                return@execute it.respond("Invalid index.")
+
+            if (fieldData.size !in 2..3)
+                return@execute it.respond("Invalid number of arguments.")
+
+            val field = MessageEmbed.Field(
+                fieldData.component1(),
+                fieldData.component2(),
+                if (fieldData.size == 3) fieldData.component3().toBoolean() else false
+            )
+
+            embed.setField(index, field)
+        }
+    }
 }

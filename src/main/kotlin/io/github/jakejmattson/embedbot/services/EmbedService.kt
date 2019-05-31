@@ -15,6 +15,7 @@ data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
     fun setAuthor(author: String) = builder.setAuthor(author)
 
     fun setFields(fields: List<MessageEmbed.Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
+    fun setField(index: Int, field: MessageEmbed.Field) { builder.fields[index] = field }
     fun addField(field: MessageEmbed.Field) = builder.addField(field)
     fun removeField(index: Int) = builder.fields.removeAt(index)
 
