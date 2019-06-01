@@ -93,7 +93,7 @@ fun clearCommands() = commands {
 
             embed.clearFields()
 
-            it.respond("Author cleared.")
+            it.respond("Fields cleared.")
         }
     }
 

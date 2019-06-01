@@ -5,6 +5,8 @@ import io.github.jakejmattson.embedbot.services.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 
+private const val editFormat = "Successfully updated the embed %s!"
+
 @CommandSet("Edit")
 fun editCommands() = commands {
     command("SetTitle") {
@@ -18,7 +20,7 @@ fun editCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setTitle(title)
-            it.respond("Successfully updated the embed title!")
+            it.respond(editFormat.format("title"))
         }
     }
 
@@ -33,7 +35,7 @@ fun editCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setDescription(description)
-            it.respond("Successfully updated the embed description!")
+            it.respond(editFormat.format("description"))
         }
     }
 
@@ -48,7 +50,7 @@ fun editCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setAuthor(description)
-            it.respond("Successfully updated the embed author!")
+            it.respond(editFormat.format("author"))
         }
     }
 
@@ -63,7 +65,7 @@ fun editCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setColor(color)
-            it.respond("Successfully updated the embed color!")
+            it.respond(editFormat.format("color"))
         }
     }
 
@@ -78,7 +80,7 @@ fun editCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setThumbnail(url)
-            it.respond("Successfully updated the embed thumbnail!")
+            it.respond(editFormat.format("thumbnail"))
         }
     }
 }

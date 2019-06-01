@@ -17,6 +17,7 @@ fun fieldCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.addField(field)
+            it.respond("Field added.")
         }
     }
 
@@ -31,6 +32,7 @@ fun fieldCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.removeField(index)
+            it.respond("Field removed.")
         }
     }
 
@@ -46,6 +48,7 @@ fun fieldCommands() = commands {
                 ?: return@execute it.respond("No embed loaded!")
 
             embed.setField(index, field)
+            it.respond("Field set.")
         }
     }
 }
