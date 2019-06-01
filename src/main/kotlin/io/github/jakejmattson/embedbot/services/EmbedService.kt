@@ -1,10 +1,21 @@
 package io.github.jakejmattson.embedbot.services
 
+import com.google.gson.GsonBuilder
 import me.aberrantfox.kjdautils.api.annotation.Service
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 
-data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
+typealias Field = MessageEmbed.Field
+
+private val gson = GsonBuilder().setPrettyPrinting().create()
+
+data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuilder()) {
+    val isEmpty: Boolean
+        get() = builder.isEmpty
+
+    val fields: List<Field>
+        get() = builder.fields
+
     val lastFieldIndex: Int
         get() = builder.fields.lastIndex
 
@@ -16,9 +27,9 @@ data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
     fun setColor(color: Int) = builder.setColor(color)
     fun setAuthor(author: String) = builder.setAuthor(author)
 
-    fun setFields(fields: List<MessageEmbed.Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
-    fun setField(index: Int, field: MessageEmbed.Field) { builder.fields[index] = field }
-    fun addField(field: MessageEmbed.Field) = builder.addField(field)
+    fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
+    fun setField(index: Int, field: Field) { builder.fields[index] = field }
+    fun addField(field: Field) = builder.addField(field)
     fun removeField(index: Int) = builder.fields.removeAt(index)
 
     fun clearTitle() = builder.setTitle(null)
@@ -30,7 +41,12 @@ data class Embed(val name: String, val builder: EmbedBuilder = EmbedBuilder()) {
 
     fun clear() = builder.clear()
     fun clearFields() = builder.clearFields()
+
+    fun build() = builder.build()
+    fun toJson() = gson.toJson(builder)
 }
+
+fun createEmbedFromJson(name: String, json: String) = Embed(name, gson.fromJson(json, EmbedBuilder::class.java))
 
 data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
     fun addAndLoad(embed: Embed) {
@@ -43,7 +59,7 @@ private val embedMap = HashMap<String, GuildEmbeds>()
 
 fun Embed.isLoaded(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed == this
 
-fun getGuildEmbeds(guildId: String) : GuildEmbeds {
+fun getGuildEmbeds(guildId: String): GuildEmbeds {
     if (!embedMap.containsKey(guildId))
         embedMap[guildId] = GuildEmbeds(null, arrayListOf())
 

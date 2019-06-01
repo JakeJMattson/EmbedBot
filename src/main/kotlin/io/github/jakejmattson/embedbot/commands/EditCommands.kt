@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.arguments.*
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.arguments.HexColorArg
+import io.github.jakejmattson.embedbot.services.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 

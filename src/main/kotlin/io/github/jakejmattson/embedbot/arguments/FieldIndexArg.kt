@@ -15,7 +15,7 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
         val embed = getLoadedEmbed(guild)
             ?: return ArgumentResult.Error("No embed loaded!")
 
-        if (embed.builder.isEmpty)
+        if (embed.isEmpty)
             return ArgumentResult.Error("This embed is empty.")
 
         val index = arg.toIntOrNull()

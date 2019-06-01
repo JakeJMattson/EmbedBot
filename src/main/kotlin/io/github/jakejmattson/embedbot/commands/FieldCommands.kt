@@ -3,7 +3,6 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
-import net.dv8tion.jda.core.entities.MessageEmbed
 
 @CommandSet("Field")
 fun fieldCommands() = commands {
@@ -12,7 +11,7 @@ fun fieldCommands() = commands {
         description = "Add a field in the following format: title|body|inline"
         expect(FieldArg)
         execute {
-            val field = it.args.component1() as MessageEmbed.Field
+            val field = it.args.component1() as Field
 
             val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
@@ -41,7 +40,7 @@ fun fieldCommands() = commands {
         expect(FieldIndexArg, FieldArg)
         execute {
             val index = it.args.component1() as Int
-            val field = it.args.component2() as MessageEmbed.Field
+            val field = it.args.component2() as Field
 
             val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")

@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.services.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import kotlin.streams.toList
 
@@ -104,7 +104,7 @@ fun clearCommands() = commands {
             val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
-            val fields = embed.builder.fields.stream().toList()
+            val fields = embed.fields.stream().toList()
 
             embed.clear()
             embed.setFields(fields)

@@ -1,19 +1,16 @@
 package io.github.jakejmattson.embedbot.commands
 
-import com.google.gson.GsonBuilder
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
-import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
-import java.lang.Exception
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
-    val gson = GsonBuilder().setPrettyPrinting().create()
+
 
     command("Send") {
         requiresGuild = true
@@ -22,10 +19,10 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
-            val builder = embed.builder.takeIf { !it.isEmpty }
-                ?:return@execute it.respond("This embed is empty.")
+            if (embed.isEmpty)
+                return@execute it.respond("This embed is empty.")
 
-            it.respond(builder.build())
+            it.respond(embed.build())
         }
     }
 
@@ -50,7 +47,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Delete") {
         requiresGuild = true
         description = "Delete the embed with this name."
-        expect(arg(EmbedArg, optional = true, default = {getLoadedEmbed(it.guild!!) as Any}))
+        expect(arg(EmbedArg, optional = true, default = { getLoadedEmbed(it.guild!!) as Any }))
         execute {
             val embed = it.args.component1() as Embed
             val wasRemoved = embedService.removeEmbed(it.guild!!, embed)
@@ -123,8 +120,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
             it.respond(
                 try {
-                    val builder = gson.fromJson(json, EmbedBuilder::class.java)
-                    val embed = Embed(name, builder)
+                    val embed = createEmbedFromJson(name, json)
                     val wasAdded = embedService.addEmbed(guild, embed)
 
                     if (wasAdded) "Successfully loaded the embed: ${embed.name}" else "An embed with this name already exists"
@@ -142,7 +138,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = getLoadedEmbed(it.guild!!)
                 ?: return@execute it.respond("No embed loaded!")
 
-            it.respond(gson.toJson(embed.builder))
+            it.respond(embed.toJson())
         }
     }
 }

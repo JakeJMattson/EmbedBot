@@ -1,8 +1,8 @@
 package io.github.jakejmattson.embedbot
 
 import io.github.jakejmattson.embedbot.utilities.generateDocs
-import me.aberrantfox.kjdautils.api.*
-import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.api.dsl.CommandsContainer
+import me.aberrantfox.kjdautils.api.startBot
 
 private lateinit var commands: CommandsContainer
 

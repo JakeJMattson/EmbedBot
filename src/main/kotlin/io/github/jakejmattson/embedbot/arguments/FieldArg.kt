@@ -1,9 +1,8 @@
 package io.github.jakejmattson.embedbot.arguments
 
-import io.github.jakejmattson.embedbot.services.getLoadedEmbed
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
-import net.dv8tion.jda.core.entities.MessageEmbed
 
 open class FieldArg(override val name: String = "Field Data") : ArgumentType {
     companion object : FieldArg()
@@ -19,7 +18,7 @@ open class FieldArg(override val name: String = "Field Data") : ArgumentType {
         if (data.size !in 2..3)
             return ArgumentResult.Error("Invalid field data. Expected 2-3 items split by \"|\". Received ${data.size}")
 
-        val field = MessageEmbed.Field(
+        val field = Field(
             data.component1(),
             data.component2(),
             if (data.size == 3) data.component3().toBoolean() else false

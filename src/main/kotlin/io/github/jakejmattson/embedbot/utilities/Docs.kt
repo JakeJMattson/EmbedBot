@@ -8,6 +8,7 @@ fun generateDocs(commandsContainer: CommandsContainer): String {
     data class CommandData(val name: String, val args: String, val description: String) {
         fun format(format: String) = String.format(format, name, args, description)
     }
+
     val headers = CommandData("Commands", "Arguments", "Description")
     val docs = StringBuilder()
 

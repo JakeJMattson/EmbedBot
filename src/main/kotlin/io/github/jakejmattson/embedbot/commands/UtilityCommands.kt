@@ -4,9 +4,10 @@ import com.google.gson.Gson
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.fullName
 import java.awt.Color
-import java.util.*
+import java.util.Date
 
 private data class Properties(val version: String, val author: String, val repository: String)
+
 private val propFile = Properties::class.java.getResource("/properties.json").readText()
 private val Project = Gson().fromJson(propFile, Properties::class.java)
 private val startTime = Date()
