@@ -10,11 +10,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the title of the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearTitle()
-
             it.respond("Title cleared.")
         }
     }
@@ -23,11 +20,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the description from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearDescription()
-
             it.respond("Description cleared.")
         }
     }
@@ -36,11 +30,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the author from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearAuthor()
-
             it.respond("Author cleared.")
         }
     }
@@ -49,11 +40,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the color from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearColor()
-
             it.respond("Color cleared.")
         }
     }
@@ -62,11 +50,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the thumbnail from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearThumbnail()
-
             it.respond("Thumbnail cleared.")
         }
     }
@@ -75,11 +60,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the image from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearImage()
-
             it.respond("Image cleared.")
         }
     }
@@ -88,11 +70,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear all fields from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clearFields()
-
             it.respond("Fields cleared.")
         }
     }
@@ -101,9 +80,7 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear all non-field entities from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             val fields = embed.fields.stream().toList()
 
             embed.clear()
@@ -117,11 +94,8 @@ fun clearCommands() = commands {
         requiresGuild = true
         description = "Clear the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = getLoadedEmbed(it.guild!!)!!
             embed.clear()
-
             it.respond("Embed cleared.")
         }
     }

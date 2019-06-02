@@ -12,9 +12,7 @@ fun fieldCommands() = commands {
         expect(FieldArg)
         execute {
             val field = it.args.component1() as Field
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.addField(field)
             it.respond("Field added.")
@@ -27,9 +25,7 @@ fun fieldCommands() = commands {
         expect(FieldIndexArg)
         execute {
             val index = it.args.component1() as Int
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.removeField(index)
             it.respond("Field removed.")
@@ -43,9 +39,7 @@ fun fieldCommands() = commands {
         execute {
             val index = it.args.component1() as Int
             val field = it.args.component2() as Field
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.setField(index, field)
             it.respond("Field set.")

@@ -15,9 +15,7 @@ fun editCommands() = commands {
         expect(SentenceArg)
         execute {
             val title = it.args.component1() as String
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.setTitle(title)
             it.respond(editFormat.format("title"))
@@ -30,9 +28,7 @@ fun editCommands() = commands {
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.setDescription(description)
             it.respond(editFormat.format("description"))
@@ -45,9 +41,7 @@ fun editCommands() = commands {
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.setAuthor(description)
             it.respond(editFormat.format("author"))
@@ -60,9 +54,7 @@ fun editCommands() = commands {
         expect(HexColorArg)
         execute {
             val color = it.args.component1() as Int
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.setColor(color)
             it.respond(editFormat.format("color"))
@@ -75,9 +67,7 @@ fun editCommands() = commands {
         expect(UrlArg)
         execute {
             val url = it.args.component1() as String
-
-            val embed = getLoadedEmbed(it.guild!!)
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = getLoadedEmbed(it.guild!!)!!
 
             embed.setThumbnail(url)
             it.respond(editFormat.format("thumbnail"))
