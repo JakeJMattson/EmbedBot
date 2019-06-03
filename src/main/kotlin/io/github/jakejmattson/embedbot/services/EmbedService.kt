@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import me.aberrantfox.kjdautils.api.annotation.Service
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
+import java.time.temporal.*
 
 typealias Field = MessageEmbed.Field
 
@@ -19,25 +20,28 @@ data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuil
     val lastFieldIndex: Int
         get() = builder.fields.lastIndex
 
-    fun setTitle(title: String) = builder.setTitle(title)
+    fun setAuthor(author: String) = builder.setAuthor(author)
+    fun setColor(color: Int) = builder.setColor(color)
     fun setDescription(description: String) = builder.setDescription(description)
     fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)
-    fun setThumbnail(url: String) = builder.setThumbnail(url)
     fun setImage(url: String) = builder.setImage(url)
-    fun setColor(color: Int) = builder.setColor(color)
-    fun setAuthor(author: String) = builder.setAuthor(author)
+    fun setThumbnail(url: String) = builder.setThumbnail(url)
+    fun setTimestamp(time: TemporalAccessor) = builder.setTimestamp(time)
+    fun setTitle(title: String) = builder.setTitle(title)
+
+    fun clearAuthor() = builder.setAuthor(null)
+    fun clearColor() = builder.setColor(null)
+    fun clearDescription() = builder.setDescription(null)
+    fun clearFooter() = builder.setFooter(null, null)
+    fun clearImage() = builder.setImage(null)
+    fun clearThumbnail() = builder.setThumbnail(null)
+    fun clearTimestamp() = builder.setTimestamp(null)
+    fun clearTitle() = builder.setTitle(null)
 
     fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
     fun setField(index: Int, field: Field) { builder.fields[index] = field }
     fun addField(field: Field) = builder.addField(field)
     fun removeField(index: Int) = builder.fields.removeAt(index)
-
-    fun clearTitle() = builder.setTitle(null)
-    fun clearDescription() = builder.setDescription(null)
-    fun clearThumbnail() = builder.setThumbnail(null)
-    fun clearImage() = builder.setImage(null)
-    fun clearColor() = builder.setColor(null)
-    fun clearAuthor() = builder.setAuthor(null)
 
     fun clear() = builder.clear()
     fun clearFields() = builder.clearFields()
@@ -110,7 +114,7 @@ class EmbedService {
         getGuildEmbeds(guild.id).loadedEmbed = embed
     }
 
-    fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.joinToString("\n") { it.name }
+    fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.sortedBy { it.name }.joinToString("\n") { it.name }
 }
 
 fun MessageEmbed.toEmbed(name: String) =
@@ -119,6 +123,7 @@ fun MessageEmbed.toEmbed(name: String) =
         .setDescription(description)
         .setFooter(footer?.text, footer?.iconUrl)
         .setThumbnail(thumbnail?.url)
+        .setTimestamp(timestamp)
         .setImage(image?.url)
         .setColor(colorRaw)
         .setAuthor(author?.name)

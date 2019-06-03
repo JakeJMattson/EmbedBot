@@ -6,26 +6,6 @@ import kotlin.streams.toList
 
 @CommandSet("Clear")
 fun clearCommands() = commands {
-    command("ClearTitle") {
-        requiresGuild = true
-        description = "Clear the title of the currently loaded embed."
-        execute {
-            val embed = getLoadedEmbed(it.guild!!)!!
-            embed.clearTitle()
-            it.respond("Title cleared.")
-        }
-    }
-
-    command("ClearDescription") {
-        requiresGuild = true
-        description = "Clear the description from the currently loaded embed."
-        execute {
-            val embed = getLoadedEmbed(it.guild!!)!!
-            embed.clearDescription()
-            it.respond("Description cleared.")
-        }
-    }
-
     command("ClearAuthor") {
         requiresGuild = true
         description = "Clear the author from the currently loaded embed."
@@ -46,13 +26,23 @@ fun clearCommands() = commands {
         }
     }
 
-    command("ClearThumbnail") {
+    command("ClearDescription") {
         requiresGuild = true
-        description = "Clear the thumbnail from the currently loaded embed."
+        description = "Clear the description from the currently loaded embed."
         execute {
             val embed = getLoadedEmbed(it.guild!!)!!
-            embed.clearThumbnail()
-            it.respond("Thumbnail cleared.")
+            embed.clearDescription()
+            it.respond("Description cleared.")
+        }
+    }
+
+    command("ClearFooter") {
+        requiresGuild = true
+        description = "Clear the image from the currently loaded embed."
+        execute {
+            val embed = getLoadedEmbed(it.guild!!)!!
+            embed.clearFooter()
+            it.respond("Footer cleared.")
         }
     }
 
@@ -66,37 +56,33 @@ fun clearCommands() = commands {
         }
     }
 
-    command("ClearFields") {
+    command("ClearThumbnail") {
         requiresGuild = true
-        description = "Clear all fields from the currently loaded embed."
+        description = "Clear the thumbnail from the currently loaded embed."
         execute {
             val embed = getLoadedEmbed(it.guild!!)!!
-            embed.clearFields()
-            it.respond("Fields cleared.")
+            embed.clearThumbnail()
+            it.respond("Thumbnail cleared.")
         }
     }
 
-    command("ClearNonFields") {
+    command("ClearTimestamp") {
         requiresGuild = true
-        description = "Clear all non-field entities from the currently loaded embed."
+        description = "Clear the timestamp from the currently loaded embed."
         execute {
             val embed = getLoadedEmbed(it.guild!!)!!
-            val fields = embed.fields.stream().toList()
-
-            embed.clear()
-            embed.setFields(fields)
-
-            it.respond("Non-fields cleared.")
+            embed.clearTimestamp()
+            it.respond("Timestamp cleared.")
         }
     }
 
-    command("Clear") {
+    command("ClearTitle") {
         requiresGuild = true
-        description = "Clear the currently loaded embed."
+        description = "Clear the title of the currently loaded embed."
         execute {
             val embed = getLoadedEmbed(it.guild!!)!!
-            embed.clear()
-            it.respond("Embed cleared.")
+            embed.clearTitle()
+            it.respond("Title cleared.")
         }
     }
 }

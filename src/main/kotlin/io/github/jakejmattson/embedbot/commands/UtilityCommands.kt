@@ -96,7 +96,7 @@ fun utilityCommands() = commands {
                 commands.forEach {
                     field {
                         name = it.key
-                        value = it.value.sortedBy { it.name.length }.joinToString("\n") { it.name }
+                        value = it.value.sortedBy { it.name }.joinToString("\n") { it.name }
                         inline = true
                     }
                 }
