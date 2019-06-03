@@ -14,7 +14,7 @@
 </p>
 
 # EmbedBot
-EmbedBot is a simple bot interface to create and modify embeds via commands as this is not possible via the traditional Discord interface.
+EmbedBot is a simple bot interface to create and modify embeds via commands as this is not possible via the traditional Discord interface. A web interface is also in the pipeline, leading to a seamless embed experience.
 
 ## Setup
 See [setup.md](setup.md) for a setup guide.
