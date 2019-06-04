@@ -22,22 +22,6 @@ fun utilityCommands() = commands {
         }
     }
 
-    command("Version") {
-        requiresGuild = true
-        description = "Display the bot version."
-        execute {
-            it.respond("**Running version**: ${Project.version}")
-        }
-    }
-
-    command("Author") {
-        requiresGuild = true
-        description = "Display project author."
-        execute {
-            it.respond("**Project author**: ${Project.author}")
-        }
-    }
-
     command("Source") {
         requiresGuild = true
         description = "Display the (source code) repository link."
@@ -51,13 +35,14 @@ fun utilityCommands() = commands {
         description = "Display the bot information."
         execute {
             it.respond(embed {
-                title(it.jda.selfUser.fullName())
-                description("A Discord embed management bot.")
+                val self = it.jda.selfUser
+
                 setColor(Color.green)
-                setThumbnail(it.jda.selfUser.effectiveAvatarUrl)
-                addField("Author", Project.author, false)
-                addField("Source", Project.repository, false)
-                addField("Version", Project.version, false)
+                setThumbnail(self.effectiveAvatarUrl)
+                addField(self.fullName(), "A Discord embed management bot.", true)
+                addField("Version", Project.version, true)
+                addField("Author", Project.author, true)
+                addField("Source", Project.repository, true)
             })
         }
     }

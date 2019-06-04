@@ -16,6 +16,8 @@ fun main(args: Array<String>) {
 
             commands = this@startBot.container
         }
+
+        container.commands.getValue("help").category = "Utility"
     }
 
     println(generateDocs(commands))
