@@ -10,7 +10,7 @@ import net.dv8tion.jda.core.entities.*
 
 @CommandSet("Copy")
 fun copyCommands(embedService: EmbedService) = commands {
-    command("Copy") {
+    command("CopyTarget") {
         requiresGuild = true
         description = "Copy an embed by its message ID."
         expect(arg(WordArg("Embed Name")), arg(TextChannelArg, optional = true, default = { it.channel }), arg(WordArg("Message ID")))

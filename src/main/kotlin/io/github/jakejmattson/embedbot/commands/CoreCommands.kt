@@ -30,7 +30,6 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(WordArg("Embed Name"))
         execute {
             val embedName = it.args.component1() as String
-
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
             it.respond(
@@ -95,7 +94,7 @@ fun coreCommands(embedService: EmbedService) = commands {
                     val embed = createEmbedFromJson(name, json)
                     val wasAdded = embedService.addEmbed(guild, embed)
 
-                    if (wasAdded) "Successfully loaded the embed: ${embed.name}" else "An embed with this name already exists"
+                    if (wasAdded) "Successfully imported the embed: ${embed.name}" else "An embed with this name already exists"
                 } catch (e: Exception) {
                     "Invalid JSON!"
                 }
