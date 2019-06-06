@@ -12,7 +12,7 @@ fun produceHasLoadedEmbedPrecondition() = exit@{ event: CommandEvent ->
     if (command.category !in categoriesToApplyTo) return@exit Pass
 
     val guild = event.guild ?: return@exit Fail("This can only be executed within a guild.")
-    getLoadedEmbed(guild) ?: return@exit Fail("No embed loaded!")
+    guild.getLoadedEmbed() ?: return@exit Fail("No embed loaded!")
 
     return@exit Pass
 }

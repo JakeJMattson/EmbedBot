@@ -21,14 +21,14 @@ fun copyCommands(embedService: EmbedService) = commands {
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists")
+                return@execute it.respond("An embed with this name already exists.")
 
             val message = tryRetrieveSnowflake(it.jda) {
                 channel.getMessageById(messageId.trimToID()).complete()
-            } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel")
+            } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel.")
 
             val messageEmbed = message.embeds.firstOrNull()
-                ?: return@execute it.respond("This message does not contain an embed")
+                ?: return@execute it.respond("This message does not contain an embed.")
 
             val embed = messageEmbed.toEmbed(name)
             embedService.addEmbed(guild, embed)
@@ -47,7 +47,7 @@ fun copyCommands(embedService: EmbedService) = commands {
             val limit = 50
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists")
+                return@execute it.respond("An embed with this name already exists.")
 
             val previousMessages = channel.getHistoryBefore(it.message.id, limit).complete().retrievedHistory
 

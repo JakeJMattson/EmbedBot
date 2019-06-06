@@ -17,7 +17,7 @@ fun editCommands() = commands {
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setAuthor(description)
             it.respond(commandResponseFormat.format("author"))
@@ -30,7 +30,7 @@ fun editCommands() = commands {
         expect(HexColorArg)
         execute {
             val color = it.args.component1() as Int
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setColor(color)
             it.respond(commandResponseFormat.format("color"))
@@ -43,7 +43,7 @@ fun editCommands() = commands {
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setDescription(description)
             it.respond(commandResponseFormat.format("description"))
@@ -57,7 +57,7 @@ fun editCommands() = commands {
         execute {
             val url = it.args.component1() as String
             val text = it.args.component2() as String
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFooter(text, url)
             it.respond(commandResponseFormat.format("footer"))
@@ -70,7 +70,7 @@ fun editCommands() = commands {
         expect(UrlArg)
         execute {
             val url = it.args.component1() as String
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setImage(url)
             it.respond(commandResponseFormat.format("image"))
@@ -83,7 +83,7 @@ fun editCommands() = commands {
         expect(UrlArg)
         execute {
             val url = it.args.component1() as String
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setThumbnail(url)
             it.respond(commandResponseFormat.format("thumbnail"))
@@ -94,7 +94,7 @@ fun editCommands() = commands {
         requiresGuild = true
         description = commandDescriptionFormat.format("timestamp")
         execute {
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
             embed.setTimestamp(LocalDateTime.now())
             it.respond(commandResponseFormat.format("timestamp"))
         }
@@ -106,7 +106,7 @@ fun editCommands() = commands {
         expect(SentenceArg)
         execute {
             val title = it.args.component1() as String
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setTitle(title)
             it.respond(commandResponseFormat.format("title"))

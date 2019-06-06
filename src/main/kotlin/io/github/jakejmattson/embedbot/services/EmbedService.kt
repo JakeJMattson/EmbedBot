@@ -8,6 +8,7 @@ import java.time.temporal.*
 
 typealias Field = MessageEmbed.Field
 
+private val embedMap = HashMap<String, GuildEmbeds>()
 private val gson = GsonBuilder().setPrettyPrinting().create()
 
 data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuilder()) {
@@ -48,36 +49,33 @@ data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuil
 
     fun build() = builder.build()
     fun toJson() = gson.toJson(builder)
+
+    fun isLoaded(guild: Guild) = guild.getGuildEmbeds().loadedEmbed == this
+}
+
+data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
+    fun addAndLoad(embed: Embed) {
+        embedList.add(embed)
+        load(embed)
+    }
+
+    fun load(embed: Embed) {
+        loadedEmbed = embed
+    }
 }
 
 fun createEmbedFromJson(name: String, json: String) = Embed(name, gson.fromJson(json, EmbedBuilder::class.java))
 
-data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
-    fun addAndLoad(embed: Embed) {
-        loadedEmbed = embed
-        embedList.add(embed)
-    }
-}
-
-private val embedMap = HashMap<String, GuildEmbeds>()
-
-fun Embed.isLoaded(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed == this
-
-fun getGuildEmbeds(guildId: String): GuildEmbeds {
-    if (!embedMap.containsKey(guildId))
-        embedMap[guildId] = GuildEmbeds(null, arrayListOf())
-
-    return embedMap[guildId]!!
-}
-
-fun Guild.hasEmbedWithName(name: String) = getGuildEmbeds(id).embedList.any { it.name == name }
-
-fun getLoadedEmbed(guild: Guild) = getGuildEmbeds(guild.id).loadedEmbed
+fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf()) }
+fun Guild.getLoadedEmbed() = getGuildEmbeds().loadedEmbed
+fun Guild.hasEmbedWithName(name: String) = getGuildEmbeds().embedList.any { it.name.toLowerCase() == name.toLowerCase() }
+fun Guild.loadEmbed(embed: Embed) = getGuildEmbeds().load(embed)
+fun Guild.listEmbeds() = getGuildEmbeds().embedList.sortedBy { it.name }.joinToString("\n") { it.name }
 
 @Service
 class EmbedService {
     fun createEmbed(guild: Guild, name: String): Boolean {
-        val embeds = getGuildEmbeds(guild.id)
+        val embeds = guild.getGuildEmbeds()
 
         if (guild.hasEmbedWithName(name))
             return false
@@ -88,7 +86,7 @@ class EmbedService {
     }
 
     fun addEmbed(guild: Guild, embed: Embed): Boolean {
-        val embeds = getGuildEmbeds(guild.id)
+        val embeds = guild.getGuildEmbeds()
 
         if (embed in embeds.embedList)
             return false
@@ -98,7 +96,7 @@ class EmbedService {
     }
 
     fun removeEmbed(guild: Guild, embed: Embed): Boolean {
-        val embeds = getGuildEmbeds(guild.id)
+        val embeds = guild.getGuildEmbeds()
 
         if (embed !in embeds.embedList)
             return false
@@ -109,12 +107,6 @@ class EmbedService {
         embeds.embedList.remove(embed)
         return true
     }
-
-    fun loadEmbed(guild: Guild, embed: Embed) {
-        getGuildEmbeds(guild.id).loadedEmbed = embed
-    }
-
-    fun listEmbeds(guild: Guild) = getGuildEmbeds(guild.id).embedList.sortedBy { it.name }.joinToString("\n") { it.name }
 }
 
 fun MessageEmbed.toEmbed(name: String) =

@@ -13,7 +13,7 @@ open class FieldArg(override val name: String = "Field Data") : ArgumentType {
         val guild = event.guild ?: return ArgumentResult.Error("Must be invoked in a guild!")
         val data = args.joinToString(" ").split("|")
 
-        getLoadedEmbed(guild) ?: return ArgumentResult.Error("No embed loaded!")
+        guild.getLoadedEmbed() ?: return ArgumentResult.Error("No embed loaded!")
 
         if (data.size !in 2..3)
             return ArgumentResult.Error("Invalid field data. Expected 2-3 items split by \"|\". Received ${data.size}")

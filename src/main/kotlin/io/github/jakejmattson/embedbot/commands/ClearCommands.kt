@@ -11,7 +11,7 @@ fun clearCommands() = commands {
             requiresGuild = true
             description = "Clear the ${fieldName.toLowerCase()} from the currently loaded embed."
             execute {
-                val embed = getLoadedEmbed(it.guild!!)!!
+                val embed = it.guild!!.getLoadedEmbed()!!
                 embedAction.invoke(embed)
                 it.respond("$fieldName cleared.")
             }

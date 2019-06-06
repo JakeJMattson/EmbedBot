@@ -10,7 +10,7 @@ fun clearGroupCommands() = commands {
         requiresGuild = true
         description = "Clear all fields from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
             embed.clearFields()
             it.respond("Fields cleared.")
         }
@@ -20,7 +20,7 @@ fun clearGroupCommands() = commands {
         requiresGuild = true
         description = "Clear all non-field entities from the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
             val fields = embed.fields.stream().toList()
 
             embed.clear()
@@ -34,7 +34,7 @@ fun clearGroupCommands() = commands {
         requiresGuild = true
         description = "Clear the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)!!
+            val embed = it.guild!!.getLoadedEmbed()!!
             embed.clear()
             it.respond("Embed cleared.")
         }

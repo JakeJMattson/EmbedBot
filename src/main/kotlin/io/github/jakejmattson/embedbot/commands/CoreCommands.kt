@@ -14,7 +14,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Send the currently loaded embed."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
+            val embed = it.guild!!.getLoadedEmbed()
                 ?: return@execute it.respond("No embed loaded!")
 
             if (embed.isEmpty)
@@ -36,7 +36,7 @@ fun coreCommands(embedService: EmbedService) = commands {
                 if (wasCreated)
                     "Successfully added the embed: $embedName"
                 else
-                    "An embed with this name already exists"
+                    "An embed with this name already exists."
             )
         }
     }
@@ -44,7 +44,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Delete") {
         requiresGuild = true
         description = "Delete the embed with this name."
-        expect(arg(EmbedArg, optional = true, default = { getLoadedEmbed(it.guild!!) as Any }))
+        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }))
         execute {
             val embed = it.args.component1() as Embed
             val wasRemoved = embedService.removeEmbed(it.guild!!, embed)
@@ -64,7 +64,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(EmbedArg)
         execute {
             val embed = it.args.component1() as Embed
-            embedService.loadEmbed(it.guild!!, embed)
+            it.guild!!.loadEmbed(embed)
             it.respond("Successfully loaded the embed: ${embed.name}")
         }
     }
@@ -73,7 +73,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "List all embeds created in this guild."
         execute {
-            it.respond(embedService.listEmbeds(it.guild!!).takeIf { it.isNotEmpty() } ?: "<No embeds>")
+            it.respond(it.guild!!.listEmbeds().takeIf { it.isNotEmpty() } ?: "<No embeds>")
         }
     }
 
@@ -87,7 +87,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists")
+                return@execute it.respond("An embed with this name already exists.")
 
             it.respond(
                 try {
@@ -106,7 +106,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Export the currently loaded embed to JSON."
         execute {
-            val embed = getLoadedEmbed(it.guild!!)
+            val embed = it.guild!!.getLoadedEmbed()
                 ?: return@execute it.respond("No embed loaded!")
 
             it.respond(embed.toJson())

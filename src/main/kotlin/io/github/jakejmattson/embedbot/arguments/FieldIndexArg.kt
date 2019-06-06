@@ -12,7 +12,7 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
     override fun convert(arg: String, args: List<String>, event: CommandEvent): ArgumentResult {
         val guild = event.guild ?: return ArgumentResult.Error("Must be invoked in a guild!")
 
-        val embed = getLoadedEmbed(guild)
+        val embed = guild.getLoadedEmbed()
             ?: return ArgumentResult.Error("No embed loaded!")
 
         if (embed.isEmpty)
