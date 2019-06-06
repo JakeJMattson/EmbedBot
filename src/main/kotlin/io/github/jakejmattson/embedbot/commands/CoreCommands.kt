@@ -10,8 +10,6 @@ import net.dv8tion.jda.core.entities.*
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
-
-
     command("Send") {
         requiresGuild = true
         description = "Send the currently loaded embed."
@@ -77,32 +75,6 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = "List all embeds created in this guild."
         execute {
             it.respond(embedService.listEmbeds(it.guild!!).takeIf { it.isNotEmpty() } ?: "<No embeds>")
-        }
-    }
-
-    command("Copy") {
-        requiresGuild = true
-        description = "Copy an embed by its message ID."
-        expect(arg(WordArg("Embed Name")), arg(TextChannelArg, optional = true, default = { it.channel }), arg(WordArg("Message ID")))
-        execute {
-            val name = it.args.component1() as String
-            val channel = it.args.component2() as TextChannel
-            val messageId = it.args.component3() as String
-            val guild = it.guild!!
-
-            if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists")
-
-            val message = tryRetrieveSnowflake(it.jda) {
-                channel.getMessageById(messageId.trimToID()).complete()
-            } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel")
-
-            val messageEmbed = message.embeds.firstOrNull()
-                ?: return@execute it.respond("This message does not contain an embed")
-
-            val embed = messageEmbed.toEmbed(name)
-            embedService.addEmbed(guild, embed)
-            it.respond("Successfully copied the embed as: ${embed.name}")
         }
     }
 
