@@ -1,16 +1,21 @@
 # Commands
 
 ## Core
-| Commands   | Arguments                           | Description                                |
-| ---------- | ----------------------------------- | ------------------------------------------ |
-| Copy       | Embed Name, TextChannel, Message ID | Copy an embed by its message ID.           |
-| Create     | Embed Name                          | Create a new embed with this name.         |
-| Delete     | Embed Name                          | Delete the embed with this name.           |
-| Export     | <none>                              | Export the currently loaded embed to JSON. |
-| Import     | Embed Name, JSON                    | Import a JSON String as an embed.          |
-| ListEmbeds | <none>                              | List all embeds created in this guild.     |
-| Load       | Embed Name                          | Load the embed with this name into memory. |
-| Send       | <none>                              | Send the currently loaded embed.           |
+| Commands   | Arguments        | Description                                |
+| ---------- | ---------------- | ------------------------------------------ |
+| Create     | Embed Name       | Create a new embed with this name.         |
+| Delete     | Embed Name       | Delete the embed with this name.           |
+| Export     | <none>           | Export the currently loaded embed to JSON. |
+| Import     | Embed Name, JSON | Import a JSON String as an embed.          |
+| ListEmbeds | <none>           | List all embeds created in this guild.     |
+| Load       | Embed Name       | Load the embed with this name into memory. |
+| Send       | <none>           | Send the currently loaded embed.           |
+  
+## Copy
+| Commands     | Arguments                           | Description                                    |
+| ------------ | ----------------------------------- | ---------------------------------------------- |
+| Copy         | Embed Name, TextChannel, Message ID | Copy an embed by its message ID.               |
+| CopyPrevious | Embed Name, TextChannel             | Copy the previous embed in the target channel. |
 
 ## Field
 | Commands    | Arguments               | Description                                            |
@@ -41,7 +46,7 @@
 | ClearImage       | <none>    | Clear the image from the currently loaded embed.       |
 | ClearThumbnail   | <none>    | Clear the thumbnail from the currently loaded embed.   |
 | ClearTimestamp   | <none>    | Clear the timestamp from the currently loaded embed.   |
-| ClearTitle       | <none>    | Clear the title of the currently loaded embed.         |
+| ClearTitle       | <none>    | Clear the title from the currently loaded embed.       |
 
 ## ClearGroup
 | Commands       | Arguments | Description                                                   |
@@ -53,10 +58,9 @@
 ## Utility
 | Commands     | Arguments | Description                                 |
 | ------------ | --------- | ------------------------------------------- |
-| Author       | <none>    | Display project author.                     |
 | BotInfo      | <none>    | Display the bot information.                |
 | ListCommands | <none>    | List all available commands.                |
 | Ping         | <none>    | Display the network ping of the bot.        |
 | Source       | <none>    | Display the (source code) repository link.  |
 | Uptime       | <none>    | Displays how long the bot has been running. |
-| Version      | <none>    | Display the bot version.                    |
+| help         | Word      | Display a help menu                         |
