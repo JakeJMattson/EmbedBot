@@ -7,6 +7,8 @@ import me.aberrantfox.kjdautils.internal.command.*
 
 @Precondition
 fun produceHasClearancePrecondition(configuration: Configuration) = exit@{ event: CommandEvent ->
+    val category = event.container.commands[event.commandStruct.commandName]?.category ?: return@exit Pass
+
     val guild = event.guild
         ?: return@exit Fail("This can only be executed within a guild.")
 
@@ -15,8 +17,14 @@ fun produceHasClearancePrecondition(configuration: Configuration) = exit@{ event
     if (member.isOwner)
         return@exit Pass
 
+    if (category == "Configuration")
+        return@exit Fail("Missing clearance to use this command. You must be the guild owner.")
+
     val guildConfig = configuration.getGuildConfig(guild.id)
         ?: return@exit Fail("This guild is not configured for use.")
+
+    if (category == "Utility")
+        return@exit Pass
 
     val requiredRoleName = guildConfig.requiredRole
 
@@ -24,7 +32,7 @@ fun produceHasClearancePrecondition(configuration: Configuration) = exit@{ event
         ?: return@exit Fail("Guild missing the role defined in the configuration :: $requiredRoleName")
 
     if (requiredRole !in member.roles)
-        return@exit Fail("Missing clearance to use this command.")
+        return@exit Fail("Missing clearance to use this command. Required role: $requiredRoleName")
 
     return@exit Pass
 }
