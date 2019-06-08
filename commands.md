@@ -1,5 +1,10 @@
 # Commands
 
+## Configuration
+| Commands        | Arguments | Description                            |
+| --------------- | --------- | -------------------------------------- |
+| SetRequiredRole | Role      | Set the role required to use this bot. |
+
 ## Core
 | Commands   | Arguments        | Description                                |
 | ---------- | ---------------- | ------------------------------------------ |
@@ -14,8 +19,8 @@
 ## Copy
 | Commands     | Arguments                           | Description                                    |
 | ------------ | ----------------------------------- | ---------------------------------------------- |
-| Copy         | Embed Name, TextChannel, Message ID | Copy an embed by its message ID.               |
 | CopyPrevious | Embed Name, TextChannel             | Copy the previous embed in the target channel. |
+| CopyTarget   | Embed Name, TextChannel, Message ID | Copy an embed by its message ID.               |
 
 ## Field
 | Commands    | Arguments               | Description                                            |
