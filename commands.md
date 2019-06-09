@@ -1,6 +1,11 @@
 # Commands
 
-## Configuration
+## BotConfiguration
+| Commands  | Arguments | Description                                                |
+| --------- | --------- | ---------------------------------------------------------- |
+| SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
+
+## GuildConfiguration
 | Commands        | Arguments | Description                            |
 | --------------- | --------- | -------------------------------------- |
 | SetRequiredRole | Role      | Set the role required to use this bot. |
@@ -15,7 +20,7 @@
 | ListEmbeds | <none>           | List all embeds created in this guild.     |
 | Load       | Embed Name       | Load the embed with this name into memory. |
 | Send       | <none>           | Send the currently loaded embed.           |
-  
+
 ## Copy
 | Commands     | Arguments                           | Description                                    |
 | ------------ | ----------------------------------- | ---------------------------------------------- |
