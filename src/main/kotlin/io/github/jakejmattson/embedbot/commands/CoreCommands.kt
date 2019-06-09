@@ -1,12 +1,10 @@
 package io.github.jakejmattson.embedbot.commands
 
+import com.google.gson.JsonSyntaxException
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
-import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
 import me.aberrantfox.kjdautils.internal.command.arguments.*
-import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
-import net.dv8tion.jda.core.entities.*
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
@@ -95,8 +93,8 @@ fun coreCommands(embedService: EmbedService) = commands {
                     val wasAdded = embedService.addEmbed(guild, embed)
 
                     if (wasAdded) "Successfully imported the embed: ${embed.name}" else "An embed with this name already exists"
-                } catch (e: Exception) {
-                    "Invalid JSON!"
+                } catch (e: JsonSyntaxException) {
+                    "Invalid JSON! ${e.message?.substringAfter("Exception: ")}"
                 }
             )
         }

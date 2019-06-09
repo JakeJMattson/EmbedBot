@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import me.aberrantfox.kjdautils.api.annotation.Service
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
-import java.time.temporal.*
+import java.time.temporal.TemporalAccessor
 
 typealias Field = MessageEmbed.Field
 

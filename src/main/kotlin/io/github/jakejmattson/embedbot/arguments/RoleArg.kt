@@ -3,7 +3,7 @@ package io.github.jakejmattson.embedbot.arguments
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
-open class RoleArg(override val name : String = "Role", private val guildId: String = "") : ArgumentType {
+open class RoleArg(override val name: String = "Role", private val guildId: String = "") : ArgumentType {
     companion object : RoleArg()
 
     override val examples = arrayListOf("Moderator", "Level 1", "406612842968776706")
