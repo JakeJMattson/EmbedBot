@@ -1,15 +1,18 @@
 package io.github.jakejmattson.embedbot.services
 
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import me.aberrantfox.kjdautils.api.annotation.Service
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
+import java.io.File
 import java.time.temporal.TemporalAccessor
 
 typealias Field = MessageEmbed.Field
 
-private val embedMap = HashMap<String, GuildEmbeds>()
+private lateinit var embedMap: HashMap<String, GuildEmbeds>
 private val gson = GsonBuilder().setPrettyPrinting().create()
+private val embedFile = File("config/embeds.json")
 
 data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuilder()) {
     val isEmpty: Boolean
@@ -74,6 +77,10 @@ fun Guild.listEmbeds() = getGuildEmbeds().embedList.sortedBy { it.name }.joinToS
 
 @Service
 class EmbedService {
+    init {
+        embedMap = loadEmbeds()
+    }
+
     fun createEmbed(guild: Guild, name: String): Boolean {
         val embeds = guild.getGuildEmbeds()
 
@@ -82,6 +89,7 @@ class EmbedService {
 
         val newEmbed = Embed(name)
         embeds.addAndLoad(newEmbed)
+        saveEmbeds()
         return true
     }
 
@@ -92,6 +100,7 @@ class EmbedService {
             return false
 
         embeds.addAndLoad(embed)
+        saveEmbeds()
         return true
     }
 
@@ -105,6 +114,7 @@ class EmbedService {
             embeds.loadedEmbed = null
 
         embeds.embedList.remove(embed)
+        saveEmbeds()
         return true
     }
 }
@@ -120,3 +130,14 @@ fun MessageEmbed.toEmbed(name: String) =
         .setColor(colorRaw)
         .setAuthor(author?.name)
     ).also { it.setFields(fields) }
+
+private fun saveEmbeds() = embedFile.writeText(gson.toJson(embedMap))
+
+private fun loadEmbeds(): HashMap<String, GuildEmbeds> {
+    if (!embedFile.exists())
+        return HashMap()
+
+    val type = object : TypeToken<HashMap<String, GuildEmbeds>>() {}.type
+
+    return gson.fromJson<HashMap<String, GuildEmbeds>>(embedFile.readText(), type)
+}
