@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.arguments
 
-import io.github.jakejmattson.embedbot.services.getLoadedEmbed
+import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 

@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.services.getLoadedEmbed
+import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import kotlin.streams.toList
 

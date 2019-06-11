@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.preconditions
 
-import io.github.jakejmattson.embedbot.services.getLoadedEmbed
+import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.*
 

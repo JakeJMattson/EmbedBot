@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.dataclasses.Embed
+import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 
 @CommandSet("Clear")
