@@ -5,6 +5,7 @@ import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.hasEmbedWithName
 import io.github.jakejmattson.embedbot.utilities.*
 import me.aberrantfox.kjdautils.api.annotation.Service
+import me.aberrantfox.kjdautils.api.dsl.embed
 import net.dv8tion.jda.core.entities.*
 import java.io.File
 
@@ -69,6 +70,18 @@ class EmbedService {
         saveEmbeds()
         return true
     }
+
+    fun removeAllFromGuild(guild: Guild): Int {
+        val embeds = guild.getGuildEmbeds()
+        val removed = embeds.embedList.size
+
+        embeds.loadedEmbed = null
+        embeds.embedList.toTypedArray().forEach {
+            removeEmbed(guild, it)
+        }
+
+        return removed
+    }
 }
 
 private fun saveEmbeds() = save(embedFile, embedMap)
@@ -79,3 +92,5 @@ private fun loadEmbeds() =
         gson.fromJson(embedFile.readText(), type)
     } else
         HashMap<String, GuildEmbeds>()
+
+
