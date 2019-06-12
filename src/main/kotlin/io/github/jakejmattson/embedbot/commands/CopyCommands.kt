@@ -1,5 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
+import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
@@ -31,7 +32,8 @@ fun copyCommands(embedService: EmbedService) = commands {
             val messageEmbed = message.embeds.firstOrNull()
                 ?: return@execute it.respond("This message does not contain an embed.")
 
-            val embed = messageEmbed.toEmbed(name)
+            val builder = messageEmbed.toEmbedBuilder()
+            val embed = Embed(name, builder, CopyLocation(channel.id, messageId))
             embedService.addEmbed(guild, embed)
             it.respond("Successfully copied the embed as: ${embed.name}")
         }
@@ -55,9 +57,40 @@ fun copyCommands(embedService: EmbedService) = commands {
             val previousEmbedMessage = previousMessages.firstOrNull { it.embeds.isNotEmpty() && !it.containsURL() }
                 ?: return@execute it.respond("No embeds found in the previous $limit messages.")
 
-            val previousEmbed = previousEmbedMessage.embeds.first().toEmbed(name)
+            val builder = previousEmbedMessage.embeds.first().toEmbedBuilder()
+            val previousEmbed = Embed(name, builder, CopyLocation(channel.id, previousEmbedMessage.id))
             embedService.addEmbed(guild, previousEmbed)
             it.respond("Successfully copied the embed as: ${previousEmbed.name}")
+        }
+    }
+
+    command("UpdateOriginal") {
+        requiresGuild = true
+        description = "Update the original embed this content was copied from."
+        execute {
+            val embed = it.guild!!.getLoadedEmbed()
+                ?: return@execute it.respond("No embed loaded!")
+
+            val original = embed.copyLocation
+                ?: return@execute it.respond("This embed was not copied from another message.")
+
+            val channel = it.jda.getTextChannelById(original.channelId)
+                ?: return@execute it.respond("The channel this embed was copied from no longer exists.")
+
+            val message = tryRetrieveSnowflake(it.jda) {
+                channel.getMessageById(original.messageId).complete()
+            } as Message? ?: return@execute it.respond("The message this embed was copied from no longer exists.")
+
+            if (message.author != it.jda.selfUser)
+                return@execute it.respond("The message this embed was copied from is not from this bot.")
+
+            with(it) {
+                message.editMessage(embed.build()).queue({
+                    respond("Message updated!")
+                }) {
+                    respond("Message edit failed for an unknown reason. See stack trace:\n ${it.stackTrace}")
+                }
+            }
         }
     }
 }

@@ -6,7 +6,10 @@ import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.Guild
 import java.time.temporal.TemporalAccessor
 
-data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuilder()) {
+data class Embed(val name: String,
+                 private val builder: EmbedBuilder = EmbedBuilder(),
+                 val copyLocation: CopyLocation? = null) {
+
     val isEmpty: Boolean
         get() = builder.isEmpty
 
@@ -47,3 +50,5 @@ data class Embed(val name: String, private val builder: EmbedBuilder = EmbedBuil
 
     fun isLoaded(guild: Guild) = guild.getGuildEmbeds().loadedEmbed == this
 }
+
+data class CopyLocation(val channelId: String, val messageId: String)
