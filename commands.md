@@ -1,13 +1,15 @@
 # Commands
 
 ## BotConfiguration
-| Commands  | Arguments | Description                                                |
-| --------- | --------- | ---------------------------------------------------------- |
-| SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
+| Commands                             | Arguments | Description                                                       |
+| ------------------------------------ | --------- | ----------------------------------------------------------------- |
+| NukeAllSeriouslyEverythingAllTheData | <none>    | Delete all embeds in all guilds. Delete all guild configurations. |
+| SetPrefix                            | Prefix    | Set the prefix required for the bot to register a command.        |
 
 ## GuildConfiguration
 | Commands        | Arguments | Description                            |
 | --------------- | --------- | -------------------------------------- |
+| DeleteAll       | <none>    | Delete all embeds in this guild.       |
 | SetRequiredRole | Role      | Set the role required to use this bot. |
 
 ## Core
@@ -22,10 +24,11 @@
 | Send       | <none>           | Send the currently loaded embed.           |
 
 ## Copy
-| Commands     | Arguments                           | Description                                    |
-| ------------ | ----------------------------------- | ---------------------------------------------- |
-| CopyPrevious | Embed Name, TextChannel             | Copy the previous embed in the target channel. |
-| CopyTarget   | Embed Name, TextChannel, Message ID | Copy an embed by its message ID.               |
+| Commands       | Arguments                           | Description                                             |
+| -------------- | ----------------------------------- | ------------------------------------------------------- |
+| CopyPrevious   | Embed Name, TextChannel             | Copy the previous embed in the target channel.          |
+| CopyTarget     | Embed Name, TextChannel, Message ID | Copy an embed by its message ID.                        |
+| UpdateOriginal | <none>                              | Update the original embed this content was copied from. |
 
 ## Field
 | Commands    | Arguments               | Description                                            |
