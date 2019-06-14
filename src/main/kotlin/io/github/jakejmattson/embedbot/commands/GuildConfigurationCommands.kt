@@ -2,12 +2,15 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.RoleArg
 import io.github.jakejmattson.embedbot.data.*
+import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
 import net.dv8tion.jda.core.entities.Role
 
 @CommandSet("GuildConfiguration")
-fun guildConfigurationCommands(configuration: Configuration, persistenceService: PersistenceService) = commands {
+fun guildConfigurationCommands(configuration: Configuration,
+                               persistenceService: PersistenceService,
+                               embedService: EmbedService) = commands {
     command("SetRequiredRole") {
         requiresGuild = true
         description = "Set the role required to use this bot."
@@ -24,6 +27,17 @@ fun guildConfigurationCommands(configuration: Configuration, persistenceService:
             persistenceService.save(configuration)
 
             it.respond("Required role set to: ${requiredRole.name}")
+        }
+    }
+
+    command("DeleteAll") {
+        requiresGuild = true
+        description = "Delete all embeds in this guild."
+        execute {
+            val guild = it.guild!!
+            val removed = embedService.removeAllFromGuild(guild)
+
+            it.respond("Successfully deleted $removed embeds.")
         }
     }
 }
