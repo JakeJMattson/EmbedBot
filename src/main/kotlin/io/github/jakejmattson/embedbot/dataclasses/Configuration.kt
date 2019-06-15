@@ -1,4 +1,4 @@
-package io.github.jakejmattson.embedbot.data
+package io.github.jakejmattson.embedbot.dataclasses
 
 import me.aberrantfox.kjdautils.api.annotation.Data
 

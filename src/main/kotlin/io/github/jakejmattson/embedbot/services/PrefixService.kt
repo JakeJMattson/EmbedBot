@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.services
 
-import io.github.jakejmattson.embedbot.data.Configuration
+import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.KJDAConfiguration
 

@@ -29,7 +29,7 @@ fun copyCommands(embedService: EmbedService) = commands {
                 channel.getMessageById(messageId.trimToID()).complete()
             } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel.")
 
-            val messageEmbed = message.embeds.firstOrNull()
+            val messageEmbed = message.getEmbed()
                 ?: return@execute it.respond("This message does not contain an embed.")
 
             val builder = messageEmbed.toEmbedBuilder()
@@ -54,10 +54,10 @@ fun copyCommands(embedService: EmbedService) = commands {
 
             val previousMessages = channel.getHistoryBefore(it.message.id, limit).complete().retrievedHistory
 
-            val previousEmbedMessage = previousMessages.firstOrNull { it.embeds.isNotEmpty() && !it.containsURL() }
+            val previousEmbedMessage = previousMessages.firstOrNull { it.getEmbed() != null }
                 ?: return@execute it.respond("No embeds found in the previous $limit messages.")
 
-            val builder = previousEmbedMessage.embeds.first().toEmbedBuilder()
+            val builder = previousEmbedMessage.getEmbed()!!.toEmbedBuilder()
             val previousEmbed = Embed(name, builder, CopyLocation(channel.id, previousEmbedMessage.id))
             embedService.addEmbed(guild, previousEmbed)
             it.respond("Successfully copied the embed as: ${previousEmbed.name}")

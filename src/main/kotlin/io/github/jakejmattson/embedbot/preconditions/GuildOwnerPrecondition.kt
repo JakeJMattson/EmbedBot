@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.preconditions
 
-import io.github.jakejmattson.embedbot.data.Configuration
+import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.toMember
 import me.aberrantfox.kjdautils.internal.command.*

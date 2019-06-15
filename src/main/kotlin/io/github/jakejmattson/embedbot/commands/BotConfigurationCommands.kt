@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.data.Configuration
+import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.WordArg

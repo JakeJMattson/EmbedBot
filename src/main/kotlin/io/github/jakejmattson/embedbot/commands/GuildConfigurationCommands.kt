@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.RoleArg
-import io.github.jakejmattson.embedbot.data.*
+import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
