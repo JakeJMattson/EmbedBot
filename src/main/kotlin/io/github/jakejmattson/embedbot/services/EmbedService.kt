@@ -2,16 +2,17 @@ package io.github.jakejmattson.embedbot.services
 
 import com.google.gson.reflect.TypeToken
 import io.github.jakejmattson.embedbot.dataclasses.Embed
-import io.github.jakejmattson.embedbot.extensions.hasEmbedWithName
+import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.utilities.*
 import me.aberrantfox.kjdautils.api.annotation.Service
-import me.aberrantfox.kjdautils.api.dsl.embed
+import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 import java.io.File
 
 typealias Field = MessageEmbed.Field
 
 private lateinit var embedMap: HashMap<String, GuildEmbeds>
+private val clusterMap = HashMap<String, ArrayList<GuildCluster>>()
 
 private val embedFile = File("config/embeds.json")
 
@@ -26,7 +27,10 @@ data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
     }
 }
 
+data class GuildCluster(var name: String, val embeds: ArrayList<EmbedBuilder>)
+
 fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf()) }
+fun Guild.getGuildClusters() = clusterMap.getOrPut(this.id) { arrayListOf() }
 
 @Service
 class EmbedService {
@@ -81,6 +85,16 @@ class EmbedService {
         }
 
         return removed
+    }
+
+    fun createCluster(guild: Guild, cluster: GuildCluster): Boolean {
+        val clusters = guild.getGuildClusters()
+
+        if (guild.hasClusterWithName(cluster.name))
+            return false
+
+        clusters.add(cluster)
+        return true
     }
 }
 

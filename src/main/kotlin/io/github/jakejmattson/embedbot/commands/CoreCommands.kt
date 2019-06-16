@@ -74,7 +74,15 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "List all embeds created in this guild."
         execute {
-            it.respond(it.guild!!.listEmbeds().takeIf { it.isNotEmpty() } ?: "<No embeds>")
+            it.respond(
+                embed {
+                    val embeds = it.guild!!.listEmbeds().takeIf { it.isNotEmpty() } ?: "<No embeds>"
+                    val clusters = it.guild!!.listClusters().takeIf { it.isNotEmpty() } ?: "<No clusters>"
+
+                    addField("Embeds", embeds, false)
+                    addField("Clusters", clusters, false)
+                }
+            )
         }
     }
 
