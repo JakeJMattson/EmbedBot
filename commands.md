@@ -37,6 +37,12 @@
 | EditField   | Field Index, Field Data | Edit a field at a given index with the given data.     |
 | RemoveField | Field Index             | Remove a field from the loaded embed by its index.     |
 
+## Cluster
+| Commands     | Arguments                         | Description                             |
+| ------------ | --------------------------------- | --------------------------------------- |
+| CloneCluster | Cluster Name, TextChannel, Amount | Clone a group of embeds into a cluster. |
+| Deploy       | Cluster Name, TextChannel         | Deploy a cluster into a target channel. |
+
 ## Edit
 | Commands       | Arguments      | Description                                         |
 | -------------- | -------------- | --------------------------------------------------- |
