@@ -112,4 +112,35 @@ fun editCommands() = commands {
             it.respond(commandResponseFormat.format("title"))
         }
     }
+
+    command("Clear") {
+        requiresGuild = true
+        description = "Clear a target field from the loaded embed. " +
+            "\nOptions: Author, Color, Description, Footer, Image, Thumbnail, Timestamp, Title \nAll, Fields, Non-Fields"
+        expect(WordArg("Clear Target"))
+        execute {
+            val field = it.args.component1() as String
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            with (embed) {
+                when (field.toLowerCase()) {
+                    "author" -> clearAuthor()
+                    "color" -> clearColor()
+                    "description" -> clearDescription()
+                    "footer" -> clearFooter()
+                    "image" -> clearImage()
+                    "thumbnail" -> clearThumbnail()
+                    "timestamp" -> clearTimestamp()
+                    "title" -> clearTitle()
+
+                    "all" -> clear()
+                    "fields" -> clearFields()
+                    "non-fields" -> clearNonFields()
+                    else -> null
+                }
+            } ?: return@execute it.respond("Invalid field selected.")
+
+            it.respond("Successfully cleared $field")
+        }
+    }
 }

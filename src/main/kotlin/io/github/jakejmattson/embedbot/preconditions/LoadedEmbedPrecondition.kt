@@ -4,7 +4,7 @@ import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.*
 
-private val categoriesToApplyTo = arrayListOf("Clear", "ClearGroup", "Edit", "Field")
+private val categoriesToApplyTo = arrayListOf("Edit", "Field")
 
 @Precondition
 fun produceHasLoadedEmbedPrecondition() = exit@{ event: CommandEvent ->

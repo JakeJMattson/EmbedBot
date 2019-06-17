@@ -5,6 +5,7 @@ import io.github.jakejmattson.embedbot.utilities.gson
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.Guild
 import java.time.temporal.TemporalAccessor
+import kotlin.streams.toList
 
 data class Embed(val name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
@@ -13,7 +14,7 @@ data class Embed(val name: String,
     val isEmpty: Boolean
         get() = builder.isEmpty
 
-    val fields: List<Field>
+    private val fields: List<Field>
         get() = builder.fields
 
     val lastFieldIndex: Int
@@ -44,6 +45,11 @@ data class Embed(val name: String,
 
     fun clear() = builder.clear()
     fun clearFields() = builder.clearFields()
+    fun clearNonFields() {
+        val fields = fields.stream().toList()
+        clear()
+        setFields(fields)
+    }
 
     fun build() = builder.build()
     fun toJson() = gson.toJson(builder)
