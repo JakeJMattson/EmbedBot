@@ -8,20 +8,24 @@ import io.github.jakejmattson.embedbot.services.EmbedService
 import io.github.jakejmattson.embedbot.utilities.createEmbedFromJson
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
+import net.dv8tion.jda.core.entities.TextChannel
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         requiresGuild = true
         description = "Send the currently loaded embed."
+        expect(arg(TextChannelArg, optional = true, default = { it.channel }))
         execute {
+            val channel = it.args.component1() as TextChannel
+
             val embed = it.guild!!.getLoadedEmbed()
                 ?: return@execute it.respond("No embed loaded!")
 
             if (embed.isEmpty)
                 return@execute it.respond("This embed is empty.")
 
-            it.respond(embed.build())
+            channel.sendMessage(embed.build()).queue()
         }
     }
 

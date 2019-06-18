@@ -12,9 +12,10 @@ import java.io.File
 typealias Field = MessageEmbed.Field
 
 private lateinit var embedMap: HashMap<String, GuildEmbeds>
-private val clusterMap = HashMap<String, ArrayList<GuildCluster>>()
+private lateinit var clusterMap: HashMap<String, ArrayList<GuildCluster>>
 
 private val embedFile = File("config/embeds.json")
+private val clusterFile = File("config/clusters.json")
 
 data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
     fun addAndLoad(embed: Embed) {
@@ -36,6 +37,7 @@ fun Guild.getGuildClusters() = clusterMap.getOrPut(this.id) { arrayListOf() }
 class EmbedService {
     init {
         embedMap = loadEmbeds()
+        clusterMap = loadClusters()
     }
 
     fun createEmbed(guild: Guild, name: String): Boolean {
@@ -94,11 +96,13 @@ class EmbedService {
             return false
 
         clusters.add(cluster)
+        saveClusters()
         return true
     }
 }
 
 private fun saveEmbeds() = save(embedFile, embedMap)
+private fun saveClusters() = save(clusterFile, clusterMap)
 
 private fun loadEmbeds() =
     if (embedFile.exists()) {
@@ -107,4 +111,9 @@ private fun loadEmbeds() =
     } else
         HashMap<String, GuildEmbeds>()
 
-
+private fun loadClusters() =
+    if (clusterFile.exists()) {
+        val type = object : TypeToken<HashMap<String, ArrayList<GuildCluster>>>() {}.type
+        gson.fromJson(clusterFile.readText(), type)
+    } else
+        HashMap<String, ArrayList<GuildCluster>>()

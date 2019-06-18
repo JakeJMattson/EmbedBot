@@ -18,7 +18,7 @@ fun utilityCommands() = commands {
         requiresGuild = true
         description = "Display the network ping of the bot."
         execute {
-            it.respond("JDA ping: ${it.jda.ping}ms\n")
+            it.respond("Ping: ${it.jda.ping}ms\n")
         }
     }
 

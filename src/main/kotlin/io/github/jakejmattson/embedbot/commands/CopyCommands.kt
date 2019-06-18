@@ -84,6 +84,9 @@ fun copyCommands(embedService: EmbedService) = commands {
             if (message.author != it.jda.selfUser)
                 return@execute it.respond("The message this embed was copied from is not from this bot.")
 
+            if (embed.isEmpty)
+                return@execute it.respond("Update failed. Cannot build an empty embed.")
+
             with(it) {
                 message.editMessage(embed.build()).queue({
                     respond("Message updated!")

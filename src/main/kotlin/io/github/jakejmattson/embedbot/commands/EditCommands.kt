@@ -119,11 +119,11 @@ fun editCommands() = commands {
             "\nOptions: Author, Color, Description, Footer, Image, Thumbnail, Timestamp, Title \nAll, Fields, Non-Fields"
         expect(WordArg("Clear Target"))
         execute {
-            val field = it.args.component1() as String
+            val field = (it.args.component1() as String).toLowerCase()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             with (embed) {
-                when (field.toLowerCase()) {
+                when (field) {
                     "author" -> clearAuthor()
                     "color" -> clearColor()
                     "description" -> clearDescription()
