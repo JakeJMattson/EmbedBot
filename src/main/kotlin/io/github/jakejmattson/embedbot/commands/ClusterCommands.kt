@@ -13,8 +13,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
         requiresGuild = true
         description = "Clone a group of embeds into a cluster."
         expect(arg(WordArg("Cluster Name")),
-                arg(TextChannelArg, optional = true, default = { it.channel }),
-                arg(IntegerArg("Amount"), optional = true, default = 10))
+                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
+                arg(IntegerArg("Amount")))
         execute {
             val clusterName = it.args.component1() as String
             val channel = it.args.component2() as TextChannel
@@ -43,7 +43,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("Deploy") {
         requiresGuild = true
         description = "Deploy a cluster into a target channel."
-        expect(arg(WordArg("Cluster Name")), arg(TextChannelArg, optional = true, default = { it.channel }))
+        expect(arg(WordArg("Cluster Name")),
+                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
             val name = it.args.component1() as String
             val channel = it.args.component2() as TextChannel

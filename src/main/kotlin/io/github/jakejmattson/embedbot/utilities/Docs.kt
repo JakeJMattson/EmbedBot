@@ -16,8 +16,13 @@ fun generateDocs(commandsContainer: CommandsContainer) =
             val categoryCommands = it.second.map {
                 CommandData(
                     it.name,
-                    it.expectedArgs.joinToString { it.type.name }.takeIf { it.isNotEmpty() } ?: "<none>",
-                    it.description
+                    it.expectedArgs.joinToString {
+                        if(it.optional)
+                            "(${it.type.name})"
+                        else
+                            it.type.name
+                    }.takeIf { it.isNotEmpty() } ?: "<none>",
+                    it.description.replace("|", "\\|")
                 )
             } as ArrayList
 

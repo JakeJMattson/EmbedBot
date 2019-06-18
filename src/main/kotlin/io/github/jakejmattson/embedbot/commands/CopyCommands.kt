@@ -15,7 +15,9 @@ fun copyCommands(embedService: EmbedService) = commands {
     command("CopyTarget") {
         requiresGuild = true
         description = "Copy an embed by its message ID."
-        expect(arg(WordArg("Embed Name")), arg(TextChannelArg, optional = true, default = { it.channel }), arg(WordArg("Message ID")))
+        expect(arg(WordArg("Embed Name")),
+                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
+                arg(WordArg("Message ID")))
         execute {
             val name = it.args.component1() as String
             val channel = it.args.component2() as TextChannel
@@ -42,7 +44,8 @@ fun copyCommands(embedService: EmbedService) = commands {
     command("CopyPrevious") {
         requiresGuild = true
         description = "Copy the previous embed in the target channel."
-        expect(arg(WordArg("Embed Name")), arg(TextChannelArg, optional = true, default = { it.channel }))
+        expect(arg(WordArg("Embed Name")),
+                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
             val name = it.args.component1() as String
             val channel = it.args.component2() as TextChannel

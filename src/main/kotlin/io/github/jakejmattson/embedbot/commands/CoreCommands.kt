@@ -15,7 +15,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         requiresGuild = true
         description = "Send the currently loaded embed."
-        expect(arg(TextChannelArg, optional = true, default = { it.channel }))
+        expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
             val channel = it.args.component1() as TextChannel
 
