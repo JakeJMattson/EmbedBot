@@ -28,7 +28,7 @@ data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
     }
 }
 
-data class GuildCluster(var name: String, val embeds: ArrayList<EmbedBuilder>)
+data class GuildCluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf())
 
 fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf()) }
 fun Guild.getGuildClusters() = clusterMap.getOrPut(this.id) { arrayListOf() }
@@ -89,13 +89,35 @@ class EmbedService {
         return removed
     }
 
-    fun createCluster(guild: Guild, cluster: GuildCluster): Boolean {
+    fun createCluster(guild: Guild, name: String) =
+        if (!guild.hasClusterWithName(name)) {
+            val clusters = guild.getGuildClusters()
+            val newCluster = GuildCluster(name)
+
+            clusters.add(newCluster)
+            saveClusters()
+            true
+        }
+        else
+            false
+
+    fun createClusterFromEmbeds(guild: Guild, cluster: GuildCluster): Boolean {
         val clusters = guild.getGuildClusters()
 
         if (guild.hasClusterWithName(cluster.name))
             return false
 
         clusters.add(cluster)
+        saveClusters()
+        return true
+    }
+
+    fun deleteCluster(guild: Guild, name: String): Boolean {
+        if (!guild.hasClusterWithName(name))
+            return false
+
+        val clusters = guild.getGuildClusters()
+        clusters.remove(clusters.first { it.name.toLowerCase() == name.toLowerCase() })
         saveClusters()
         return true
     }

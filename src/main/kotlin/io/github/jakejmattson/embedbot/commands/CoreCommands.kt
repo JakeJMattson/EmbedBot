@@ -80,11 +80,19 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             it.respond(
                 embed {
-                    val embeds = it.guild!!.listEmbeds().takeIf { it.isNotEmpty() } ?: "<No embeds>"
-                    val clusters = it.guild!!.listClusters().takeIf { it.isNotEmpty() } ?: "<No clusters>"
+                    val embeds = it.guild!!.getEmbeds()
+                    val clusters = it.guild!!.getClusters()
 
-                    addField("Embeds", embeds, false)
-                    addField("Clusters", clusters, false)
+                    val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
+                    addField("Embeds", embedList, false)
+
+                    if (clusters.isEmpty())
+                        addField("Clusters", "<No clusters>", false)
+                    else
+                        clusters.forEach {
+                            val clusterEmbeds = it.embeds.joinToString { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
+                            addField(it.name, clusterEmbeds, false)
+                        }
                 }
             )
         }
