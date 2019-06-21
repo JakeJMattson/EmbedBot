@@ -5,14 +5,13 @@ import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.utilities.*
 import me.aberrantfox.kjdautils.api.annotation.Service
-import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.*
 import java.io.File
 
 typealias Field = MessageEmbed.Field
 
 private lateinit var embedMap: HashMap<String, GuildEmbeds>
-private lateinit var clusterMap: HashMap<String, ArrayList<GuildCluster>>
+private lateinit var clusterMap: HashMap<String, ArrayList<Cluster>>
 
 private val embedFile = File("config/embeds.json")
 private val clusterFile = File("config/clusters.json")
@@ -28,7 +27,7 @@ data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
     }
 }
 
-data class GuildCluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf())
+data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf())
 
 fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf()) }
 fun Guild.getGuildClusters() = clusterMap.getOrPut(this.id) { arrayListOf() }
@@ -92,7 +91,7 @@ class EmbedService {
     fun createCluster(guild: Guild, name: String) =
         if (!guild.hasClusterWithName(name)) {
             val clusters = guild.getGuildClusters()
-            val newCluster = GuildCluster(name)
+            val newCluster = Cluster(name)
 
             clusters.add(newCluster)
             saveClusters()
@@ -101,7 +100,7 @@ class EmbedService {
         else
             false
 
-    fun createClusterFromEmbeds(guild: Guild, cluster: GuildCluster): Boolean {
+    fun createClusterFromEmbeds(guild: Guild, cluster: Cluster): Boolean {
         val clusters = guild.getGuildClusters()
 
         if (guild.hasClusterWithName(cluster.name))
@@ -112,7 +111,7 @@ class EmbedService {
         return true
     }
 
-    fun deleteCluster(guild: Guild, cluster: GuildCluster): Boolean {
+    fun deleteCluster(guild: Guild, cluster: Cluster): Boolean {
         val clusters = guild.getGuildClusters()
         clusters.remove(cluster)
         saveClusters()
@@ -138,7 +137,7 @@ private fun loadEmbeds() =
 
 private fun loadClusters() =
     if (clusterFile.exists()) {
-        val type = object : TypeToken<HashMap<String, ArrayList<GuildCluster>>>() {}.type
+        val type = object : TypeToken<HashMap<String, ArrayList<Cluster>>>() {}.type
         gson.fromJson(clusterFile.readText(), type)
     } else
-        HashMap<String, ArrayList<GuildCluster>>()
+        HashMap<String, ArrayList<Cluster>>()
