@@ -123,6 +123,12 @@ class EmbedService {
         cluster.embeds.add(embed)
         saveClusters()
     }
+
+    fun removeEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
+        addEmbed(guild, embed)
+        cluster.embeds.remove(embed)
+        saveClusters()
+    }
 }
 
 private fun saveEmbeds() = save(embedFile, embedMap)

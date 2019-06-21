@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.arguments.ClusterArg
+import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
@@ -32,12 +32,12 @@ fun clusterCommands(embedService: EmbedService) = commands {
         description = "Delete a cluster and all of its embeds."
         expect(ClusterArg)
         execute {
-            val clusterName = it.args.component1() as Cluster
-            val wasDeleted = embedService.deleteCluster(it.guild!!, clusterName)
+            val cluster = it.args.component1() as Cluster
+            val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
             it.respond(
                 if (wasDeleted)
-                    "Successfully deleted the cluster :: $clusterName"
+                    "Successfully deleted the cluster :: ${cluster.name}"
                 else
                     "No such cluster with this name."
             )
@@ -85,16 +85,40 @@ fun clusterCommands(embedService: EmbedService) = commands {
         expect(arg(ClusterArg),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
-            val name = it.args.component1() as String
+            val cluster = it.args.component1() as Cluster
             val channel = it.args.component2() as TextChannel
-            val clusters = it.guild!!.getGuildClusters()
-
-            val cluster = clusters.firstOrNull { it.name.toLowerCase() == name.toLowerCase() }
-                ?: return@execute it.respond("No cluster found with that name.")
 
             cluster.embeds.filter { !it.isEmpty }.forEach {
                 channel.sendMessage(it.build()).queue()
             }
+        }
+    }
+
+    command("AddToCluster") {
+        requiresGuild = true
+        description = "Add an embed into a cluster."
+        expect(ClusterArg, EmbedArg)
+        execute {
+            val cluster = it.args.component1() as Cluster
+            val embed = it.args.component2() as Embed
+
+            embedService.addEmbedToCluster(it.guild!!, cluster, embed)
+
+            it.respond("Successfully added ${embed.name} to ${cluster.name}")
+        }
+    }
+
+    command("RemoveFromCluster") {
+        requiresGuild = true
+        description = "Add an embed into a cluster."
+        expect(ClusterArg, EmbedArg)
+        execute {
+            val cluster = it.args.component1() as Cluster
+            val embed = it.args.component2() as Embed
+
+            embedService.removeEmbedToCluster(it.guild!!, cluster, embed)
+
+            it.respond("Successfully removed ${embed.name} from ${cluster.name}")
         }
     }
 }
