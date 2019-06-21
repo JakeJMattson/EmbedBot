@@ -1,5 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
+import io.github.jakejmattson.embedbot.arguments.ClusterArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
@@ -29,9 +30,9 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("DeleteCluster") {
         requiresGuild = true
         description = "Delete a cluster and all of its embeds."
-        expect(arg(WordArg("Cluster Name")))
+        expect(ClusterArg)
         execute {
-            val clusterName = it.args.component1() as String
+            val clusterName = it.args.component1() as Cluster
             val wasDeleted = embedService.deleteCluster(it.guild!!, clusterName)
 
             it.respond(
@@ -72,7 +73,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             }
 
             embeds.reverse()
-            embedService.createClusterFromEmbeds(it.guild!!, GuildCluster(clusterName, embeds))
+            embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
 
             it.respond("Cloned ${embeds.size} embeds into $clusterName")
         }
@@ -81,7 +82,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("Deploy") {
         requiresGuild = true
         description = "Deploy a cluster into a target channel."
-        expect(arg(WordArg("Cluster Name")),
+        expect(arg(ClusterArg),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
             val name = it.args.component1() as String
