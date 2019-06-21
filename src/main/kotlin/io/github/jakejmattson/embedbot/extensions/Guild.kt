@@ -10,4 +10,5 @@ fun Guild.loadEmbed(embed: Embed) = getGuildEmbeds().load(embed)
 fun Guild.getEmbeds() = getGuildEmbeds().embedList.sortedBy { it.name }
 
 fun Guild.hasClusterWithName(name: String) = getGuildClusters().any { it.name.toLowerCase() == name.toLowerCase() }
+fun Guild.getClusterByName(name: String) = getGuildClusters().firstOrNull { it.name.toLowerCase() == name.toLowerCase() }
 fun Guild.getClusters() = getGuildClusters().sortedBy { it.name }

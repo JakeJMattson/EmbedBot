@@ -112,12 +112,9 @@ class EmbedService {
         return true
     }
 
-    fun deleteCluster(guild: Guild, name: String): Boolean {
-        if (!guild.hasClusterWithName(name))
-            return false
-
+    fun deleteCluster(guild: Guild, cluster: GuildCluster): Boolean {
         val clusters = guild.getGuildClusters()
-        clusters.remove(clusters.first { it.name.toLowerCase() == name.toLowerCase() })
+        clusters.remove(cluster)
         saveClusters()
         return true
     }
