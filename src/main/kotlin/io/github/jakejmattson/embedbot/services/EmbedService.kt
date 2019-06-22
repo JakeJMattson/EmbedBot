@@ -11,12 +11,9 @@ import java.io.File
 typealias Field = MessageEmbed.Field
 
 private lateinit var embedMap: HashMap<String, GuildEmbeds>
-private lateinit var clusterMap: HashMap<String, ArrayList<Cluster>>
-
 private val embedFile = File("config/embeds.json")
-private val clusterFile = File("config/clusters.json")
 
-data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>) {
+data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>, val clusterList: ArrayList<Cluster>) {
     fun addAndLoad(embed: Embed) {
         embedList.add(embed)
         load(embed)
@@ -29,14 +26,12 @@ data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>)
 
 data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf())
 
-fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf()) }
-fun Guild.getGuildClusters() = clusterMap.getOrPut(this.id) { arrayListOf() }
+fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf(), arrayListOf()) }
 
 @Service
 class EmbedService {
     init {
         embedMap = loadEmbeds()
-        clusterMap = loadClusters()
     }
 
     fun createEmbed(guild: Guild, name: String): Boolean {
@@ -90,49 +85,48 @@ class EmbedService {
 
     fun createCluster(guild: Guild, name: String) =
         if (!guild.hasClusterWithName(name)) {
-            val clusters = guild.getGuildClusters()
+            val clusters = guild.getGuildEmbeds().clusterList
             val newCluster = Cluster(name)
 
             clusters.add(newCluster)
-            saveClusters()
+            saveEmbeds()
             true
         }
         else
             false
 
     fun createClusterFromEmbeds(guild: Guild, cluster: Cluster): Boolean {
-        val clusters = guild.getGuildClusters()
+        val clusters = guild.getGuildEmbeds().clusterList
 
         if (guild.hasClusterWithName(cluster.name))
             return false
 
         clusters.add(cluster)
-        saveClusters()
+        saveEmbeds()
         return true
     }
 
     fun deleteCluster(guild: Guild, cluster: Cluster): Boolean {
-        val clusters = guild.getGuildClusters()
+        val clusters = guild.getGuildEmbeds().clusterList
         clusters.remove(cluster)
-        saveClusters()
+        saveEmbeds()
         return true
     }
 
     fun addEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
         removeEmbed(guild, embed)
         cluster.embeds.add(embed)
-        saveClusters()
+        saveEmbeds()
     }
 
     fun removeEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
         addEmbed(guild, embed)
         cluster.embeds.remove(embed)
-        saveClusters()
+        saveEmbeds()
     }
 }
 
 private fun saveEmbeds() = save(embedFile, embedMap)
-private fun saveClusters() = save(clusterFile, clusterMap)
 
 private fun loadEmbeds() =
     if (embedFile.exists()) {
@@ -140,10 +134,3 @@ private fun loadEmbeds() =
         gson.fromJson(embedFile.readText(), type)
     } else
         HashMap<String, GuildEmbeds>()
-
-private fun loadClusters() =
-    if (clusterFile.exists()) {
-        val type = object : TypeToken<HashMap<String, ArrayList<Cluster>>>() {}.type
-        gson.fromJson(clusterFile.readText(), type)
-    } else
-        HashMap<String, ArrayList<Cluster>>()
