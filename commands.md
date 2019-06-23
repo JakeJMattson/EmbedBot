@@ -43,12 +43,14 @@
 | RemoveField | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster
-| Commands      | Arguments                       | Description                                                  |
-| ------------- | ------------------------------- | ------------------------------------------------------------ |
-| CloneCluster  | Cluster Name, (Channel), Amount | Clone a group of embeds into a cluster.                      |
-| CreateCluster | Cluster Name                    | Create a cluster for storing and deploying groups of embeds. |
-| DeleteCluster | Cluster Name                    | Delete a cluster and all of its embeds.                      |
-| Deploy        | Cluster Name, (Channel)         | Deploy a cluster into a target channel.                      |
+| Commands          | Arguments                       | Description                                                  |
+| ----------------- | ------------------------------- | ------------------------------------------------------------ |
+| AddToCluster      | Cluster Name, Embed Name        | Add an embed into a cluster.                                 |
+| CloneCluster      | Cluster Name, (Channel), Amount | Clone a group of embeds into a cluster.                      |
+| CreateCluster     | Cluster Name                    | Create a cluster for storing and deploying groups of embeds. |
+| DeleteCluster     | Cluster Name                    | Delete a cluster and all of its embeds.                      |
+| Deploy            | Cluster Name, (Channel)         | Deploy a cluster into a target channel.                      |
+| RemoveFromCluster | Embed Name                      | Remove an embed from its cluster.                            |
 
 ## Edit
 | Commands       | Arguments      | Description                                         |
