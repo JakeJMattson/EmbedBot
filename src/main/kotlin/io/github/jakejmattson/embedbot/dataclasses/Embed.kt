@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.dataclasses
 
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
+import io.github.jakejmattson.embedbot.services.Field
 import io.github.jakejmattson.embedbot.utilities.gson
 import net.dv8tion.jda.core.EmbedBuilder
 import net.dv8tion.jda.core.entities.Guild
@@ -54,7 +55,7 @@ data class Embed(val name: String,
     fun build() = builder.build()
     fun toJson() = gson.toJson(builder)
 
-    fun isLoaded(guild: Guild) = guild.getGuildEmbeds().loadedEmbed == this
+    fun isLoaded(guild: Guild) = guild.getLoadedEmbed() == this
 }
 
 data class CopyLocation(val channelId: String, val messageId: String)

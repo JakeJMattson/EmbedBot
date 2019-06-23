@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.services
 
 import com.google.gson.reflect.TypeToken
-import io.github.jakejmattson.embedbot.dataclasses.Embed
+import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.utilities.*
 import me.aberrantfox.kjdautils.api.annotation.Service
@@ -12,19 +12,6 @@ typealias Field = MessageEmbed.Field
 
 private lateinit var embedMap: HashMap<String, GuildEmbeds>
 private val embedFile = File("config/embeds.json")
-
-data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>, val clusterList: ArrayList<Cluster>) {
-    fun addAndLoad(embed: Embed) {
-        embedList.add(embed)
-        load(embed)
-    }
-
-    fun load(embed: Embed) {
-        loadedEmbed = embed
-    }
-}
-
-data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf())
 
 fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf(), arrayListOf()) }
 
@@ -115,13 +102,13 @@ class EmbedService {
 
     fun addEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
         removeEmbed(guild, embed)
-        cluster.embeds.add(embed)
+        cluster.addEmbed(embed)
         saveEmbeds()
     }
 
-    fun removeEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
+    fun removeEmbedFromCluster(guild: Guild, cluster: Cluster, embed: Embed) {
         addEmbed(guild, embed)
-        cluster.embeds.remove(embed)
+        cluster.removeEmbed(embed)
         saveEmbeds()
     }
 }
@@ -129,8 +116,7 @@ class EmbedService {
 private fun saveEmbeds() = save(embedFile, embedMap)
 
 private fun loadEmbeds() =
-    if (embedFile.exists()) {
-        val type = object : TypeToken<HashMap<String, GuildEmbeds>>() {}.type
-        gson.fromJson(embedFile.readText(), type)
-    } else
+    if (embedFile.exists())
+        gson.fromJson(embedFile.readText(), object : TypeToken<HashMap<String, GuildEmbeds>>() {}.type)
+    else
         HashMap<String, GuildEmbeds>()

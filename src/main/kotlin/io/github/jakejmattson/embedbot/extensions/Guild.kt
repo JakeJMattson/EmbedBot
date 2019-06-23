@@ -17,7 +17,7 @@ fun Guild.getEmbedByName(name: String): Embed? {
         return embed
 
     getClusters().forEach {
-        val embedInCluster = it.embeds.firstOrNull { it.name.toLowerCase() == name.toLowerCase() }
+        val embedInCluster = it.getEmbedByName(name)
 
         if (embedInCluster != null)
             return embedInCluster

@@ -90,8 +90,7 @@ fun coreCommands(embedService: EmbedService) = commands {
                         addField("Clusters", "<No clusters>", false)
                     else
                         clusters.forEach {
-                            val clusterEmbeds = it.embeds.joinToString { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
-                            addField(it.name, clusterEmbeds, false)
+                            addField(it.name, it.toString(), false)
                         }
                 }
             )

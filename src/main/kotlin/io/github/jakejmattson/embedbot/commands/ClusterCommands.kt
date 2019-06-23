@@ -3,7 +3,7 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 import net.dv8tion.jda.core.entities.TextChannel
@@ -88,8 +88,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val cluster = it.args.component1() as Cluster
             val channel = it.args.component2() as TextChannel
 
-            cluster.embeds.filter { !it.isEmpty }.forEach {
-                channel.sendMessage(it.build()).queue()
+            cluster.build().forEach {
+                channel.sendMessage(it).queue()
             }
         }
     }
@@ -116,7 +116,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val cluster = it.args.component1() as Cluster
             val embed = it.args.component2() as Embed
 
-            embedService.removeEmbedToCluster(it.guild!!, cluster, embed)
+            embedService.removeEmbedFromCluster(it.guild!!, cluster, embed)
 
             it.respond("Successfully removed ${embed.name} from ${cluster.name}")
         }
