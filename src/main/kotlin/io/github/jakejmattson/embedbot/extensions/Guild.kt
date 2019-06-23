@@ -29,3 +29,10 @@ fun Guild.hasEmbedWithName(name: String) = getEmbedByName(name) != null
 
 fun Guild.getClusterByName(name: String) = getClusters().firstOrNull { it.name.toLowerCase() == name.toLowerCase() }
 fun Guild.hasClusterWithName(name: String) = getClusterByName(name) != null
+
+fun Guild.removeEmbed(embed: Embed) {
+    getGuildEmbeds().embedList.removeIf { it == embed }
+    getGuildEmbeds().clusterList.forEach {
+        it.removeEmbed(embed)
+    }
+}

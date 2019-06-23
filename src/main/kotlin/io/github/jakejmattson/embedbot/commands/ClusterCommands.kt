@@ -110,15 +110,14 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("RemoveFromCluster") {
         requiresGuild = true
-        description = "Add an embed into a cluster."
-        expect(ClusterArg, EmbedArg)
+        description = "Remove an embed from its cluster."
+        expect(EmbedArg)
         execute {
-            val cluster = it.args.component1() as Cluster
-            val embed = it.args.component2() as Embed
+            val embed = it.args.component1() as Embed
 
-            embedService.removeEmbedFromCluster(it.guild!!, cluster, embed)
+            embedService.removeEmbedFromCluster(it.guild!!, embed)
 
-            it.respond("Successfully removed ${embed.name} from ${cluster.name}")
+            it.respond("Successfully removed ${embed.name} from its cluster.")
         }
     }
 }

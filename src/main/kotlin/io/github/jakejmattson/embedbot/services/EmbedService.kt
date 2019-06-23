@@ -101,14 +101,14 @@ class EmbedService {
     }
 
     fun addEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
-        removeEmbed(guild, embed)
+        guild.removeEmbed(embed)
         cluster.addEmbed(embed)
         saveEmbeds()
     }
 
-    fun removeEmbedFromCluster(guild: Guild, cluster: Cluster, embed: Embed) {
+    fun removeEmbedFromCluster(guild: Guild, embed: Embed) {
+        guild.removeEmbed(embed)
         addEmbed(guild, embed)
-        cluster.removeEmbed(embed)
         saveEmbeds()
     }
 }
