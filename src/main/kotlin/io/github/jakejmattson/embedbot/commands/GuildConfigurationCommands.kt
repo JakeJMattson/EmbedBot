@@ -32,7 +32,7 @@ fun guildConfigurationCommands(configuration: Configuration,
 
     command("DeleteAll") {
         requiresGuild = true
-        description = "Delete all embeds in this guild."
+        description = "Delete all embeds and clusters in this guild."
         execute {
             val guild = it.guild!!
             val removed = embedService.removeAllFromGuild(guild)

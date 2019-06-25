@@ -31,7 +31,10 @@ fun Guild.getClusterByName(name: String) = getClusters().firstOrNull { it.name.t
 fun Guild.hasClusterWithName(name: String) = getClusterByName(name) != null
 
 fun Guild.removeEmbed(embed: Embed) {
-    getGuildEmbeds().embedList.removeIf { it == embed }
+    if (embed.isLoaded(this))
+        getGuildEmbeds().loadedEmbed = null
+
+    getGuildEmbeds().embedList.remove(embed)
     getGuildEmbeds().clusterList.forEach {
         it.removeEmbed(embed)
     }

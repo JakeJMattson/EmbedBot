@@ -52,14 +52,8 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }))
         execute {
             val embed = it.args.component1() as Embed
-            val wasRemoved = embedService.removeEmbed(it.guild!!, embed)
-
-            it.respond(
-                if (wasRemoved)
-                    "Successfully removed the embed: ${embed.name}"
-                else
-                    "No such embed exists"
-            )
+            it.guild!!.removeEmbed(embed)
+            it.respond("Successfully removed the embed: ${embed.name}")
         }
     }
 

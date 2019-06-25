@@ -44,29 +44,10 @@ class EmbedService {
         return true
     }
 
-    fun removeEmbed(guild: Guild, embed: Embed): Boolean {
-        val embeds = guild.getGuildEmbeds()
-
-        if (embed !in embeds.embedList)
-            return false
-
-        if (embed.isLoaded(guild))
-            embeds.loadedEmbed = null
-
-        embeds.embedList.remove(embed)
-        saveEmbeds()
-        return true
-    }
-
     fun removeAllFromGuild(guild: Guild): Int {
         val embeds = guild.getGuildEmbeds()
-        val removed = embeds.embedList.size
-
-        embeds.loadedEmbed = null
-        embeds.embedList.toTypedArray().forEach {
-            removeEmbed(guild, it)
-        }
-
+        val removed = embeds.clear()
+        saveEmbeds()
         return removed
     }
 
