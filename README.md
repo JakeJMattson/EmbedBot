@@ -17,7 +17,7 @@
 </p>
 
 # EmbedBot
-EmbedBot is a simple bot interface to create and modify embeds via commands as this is not possible via the traditional Discord interface. A web interface is also in the pipeline, leading to a seamless embed experience.
+EmbedBot is a simple bot interface to create and modify embeds via commands. Creating embeds is not possible with a user account via the traditional Discord interface. The bot allows you to create multiple embeds and store them all, meaning no clearing out your work every time you want to make a new one. They can be exported and imported as JSON, for easy sharing between servers, or persistent storage. You can also group embeds into clusters, which allows you to deploy multiple embeds at once. This will allow servers to easily set up a rules channel, keeping all of the related embeds grouped together and ready to send with a single command.
 
 ## Setup
 See [setup.md](setup.md) for a setup guide.
