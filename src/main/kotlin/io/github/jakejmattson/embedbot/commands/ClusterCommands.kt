@@ -79,6 +79,33 @@ fun clusterCommands(embedService: EmbedService) = commands {
         }
     }
 
+    command("UpdateCluster") {
+        requiresGuild = true
+        description = "Update the original embeds this cluster was copied from."
+        expect(ClusterArg)
+        execute {
+            val cluster = it.args.component1() as Cluster
+            val jda = it.jda
+            val failed = StringBuilder()
+            val size = cluster.size
+
+            val totalSuccessful = cluster.embeds.sumBy {
+                with(it.update(jda)) {
+                    if (!canUpdate)
+                        failed.appendln("${it.name} :: $reason")
+
+                    if (canUpdate) 1 else 0
+                }
+            }
+
+            if (totalSuccessful == size)
+                return@execute it.respond("Successfully updated all $size embeds in ${cluster.name}")
+
+            it.respond("Successfully updated $totalSuccessful out of $size in ${cluster.name}" +
+                "\nFailed the following updates:\n$failed")
+        }
+    }
+
     command("Deploy") {
         requiresGuild = true
         description = "Deploy a cluster into a target channel."

@@ -73,29 +73,12 @@ fun copyCommands(embedService: EmbedService) = commands {
             val embed = it.guild!!.getLoadedEmbed()
                 ?: return@execute it.respond("No embed loaded!")
 
-            val original = embed.copyLocation
-                ?: return@execute it.respond("This embed was not copied from another message.")
+            val updateResponse = embed.update(it.jda)
 
-            val channel = it.jda.getTextChannelById(original.channelId)
-                ?: return@execute it.respond("The channel this embed was copied from no longer exists.")
+            if (!updateResponse.canUpdate)
+                return@execute it.respond(updateResponse.reason)
 
-            val message = tryRetrieveSnowflake(it.jda) {
-                channel.getMessageById(original.messageId).complete()
-            } as Message? ?: return@execute it.respond("The message this embed was copied from no longer exists.")
-
-            if (message.author != it.jda.selfUser)
-                return@execute it.respond("The message this embed was copied from is not from this bot.")
-
-            if (embed.isEmpty)
-                return@execute it.respond("Update failed. Cannot build an empty embed.")
-
-            with(it) {
-                message.editMessage(embed.build()).queue({
-                    respond("Message updated!")
-                }) {
-                    respond("Message edit failed for an unknown reason. See stack trace:\n ${it.stackTrace}")
-                }
-            }
+            it.respond("Message updated!")
         }
     }
 }

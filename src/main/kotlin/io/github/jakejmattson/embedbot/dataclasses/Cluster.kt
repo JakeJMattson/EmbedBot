@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.dataclasses
 
-data class Cluster(var name: String, private val embeds: ArrayList<Embed> = arrayListOf()) {
+data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf()) {
     val size: Int
         get() = embeds.size
 
