@@ -9,9 +9,8 @@ fun main(args: Array<String>) {
         configure {
             globalPath = "io.github.jakejmattson.embedbot"
 
+            registerInjectionObject(this@startBot.container)
             registerInjectionObject(this)
         }
-
-        container.commands.getValue("help").category = "Utility"
     }
 }
