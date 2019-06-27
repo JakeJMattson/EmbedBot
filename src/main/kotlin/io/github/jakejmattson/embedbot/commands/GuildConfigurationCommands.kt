@@ -18,12 +18,10 @@ fun guildConfigurationCommands(configuration: Configuration,
         execute {
             val requiredRole = it.args.component1() as Role
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
+                ?: return@execute it.respond("This guild is not set up for use. Please use the `setup` command.")
 
-            if (guildConfiguration == null)
-                configuration.guildConfigurations.add(GuildConfiguration(it.guild!!.id, requiredRole.name))
-            else
-                guildConfiguration.requiredRole = requiredRole.name
 
+            guildConfiguration.requiredRole = requiredRole.name
             persistenceService.save(configuration)
 
             it.respond("Required role set to: ${requiredRole.name}")
@@ -38,6 +36,24 @@ fun guildConfigurationCommands(configuration: Configuration,
             val removed = embedService.removeAllFromGuild(guild)
 
             it.respond("Successfully deleted $removed embeds.")
+        }
+    }
+
+    command("Setup") {
+        requiresGuild = true
+        description = "Set up this bot for use."
+        expect(RoleArg("Required Role"))
+        execute {
+            val requiredRole = it.args.component1() as Role
+            val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
+
+            if (guildConfiguration != null)
+                return@execute it.respond("This guild is already setup for use.")
+
+            configuration.guildConfigurations.add(GuildConfiguration(it.guild!!.id, requiredRole.name))
+            persistenceService.save(configuration)
+
+            it.respond("This guild is now setup for use!")
         }
     }
 }

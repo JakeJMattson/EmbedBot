@@ -20,7 +20,7 @@ fun produceHasRequiredRolePrecondition(configuration: Configuration) = exit@{ ev
     val member = event.author.toMember(guild)
 
     val guildConfig = configuration.getGuildConfig(guild.id)
-        ?: return@exit Fail("This guild is not configured for use.")
+        ?: return@exit Fail("This guild is not configured for use. Please use the `setup` command.")
 
     val requiredRoleName = guildConfig.requiredRole
 

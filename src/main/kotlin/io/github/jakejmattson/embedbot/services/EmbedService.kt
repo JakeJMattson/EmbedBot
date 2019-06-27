@@ -47,6 +47,7 @@ class EmbedService {
     fun removeAllFromGuild(guild: Guild): Int {
         val embeds = guild.getGuildEmbeds()
         val removed = embeds.clear()
+        embedMap.remove(guild.id)
         saveEmbeds()
         return removed
     }

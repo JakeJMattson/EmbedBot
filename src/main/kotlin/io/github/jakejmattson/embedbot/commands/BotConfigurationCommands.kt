@@ -45,4 +45,24 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
             it.respond("Deleted $removedGuilds guild configurations and $removedEmbeds embeds.")
         }
     }
+
+    command("Leave") {
+        requiresGuild = true
+        description = "Leave this guild and delete all associated information."
+        execute {
+            val guild = it.guild!!
+            val guildConfiguration = configuration.getGuildConfig(guild.id)
+
+            if (guildConfiguration != null) {
+                configuration.guildConfigurations.remove(guildConfiguration)
+                persistenceService.save(configuration)
+            }
+
+            val removed = embedService.removeAllFromGuild(guild)
+            it.respond("Deleted all ($removed) embeds.\nDeleted all clusters." +
+                "\nDeleted guild configuration.\nLeaving guild.")
+
+            guild.leave().queue()
+        }
+    }
 }
