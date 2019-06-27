@@ -8,14 +8,16 @@
 ## BotConfiguration
 | Commands                             | Arguments | Description                                                       |
 | ------------------------------------ | --------- | ----------------------------------------------------------------- |
+| Leave                                | <none>    | Leave this guild and delete all associated information.           |
 | NukeAllSeriouslyEverythingAllTheData | <none>    | Delete all embeds in all guilds. Delete all guild configurations. |
 | SetPrefix                            | Prefix    | Set the prefix required for the bot to register a command.        |
 
 ## GuildConfiguration
-| Commands        | Arguments | Description                            |
-| --------------- | --------- | -------------------------------------- |
-| DeleteAll       | <none>    | Delete all embeds in this guild.       |
-| SetRequiredRole | Role      | Set the role required to use this bot. |
+| Commands        | Arguments     | Description                                   |
+| --------------- | ------------- | --------------------------------------------- |
+| DeleteAll       | <none>        | Delete all embeds and clusters in this guild. |
+| SetRequiredRole | Role          | Set the role required to use this bot.        |
+| Setup           | Required Role | Set up this bot for use.                      |
 
 ## Core
 | Commands   | Arguments        | Description                                |
@@ -51,6 +53,7 @@
 | DeleteCluster     | Cluster Name                    | Delete a cluster and all of its embeds.                      |
 | Deploy            | Cluster Name, (Channel)         | Deploy a cluster into a target channel.                      |
 | RemoveFromCluster | Embed Name                      | Remove an embed from its cluster.                            |
+| UpdateCluster     | Cluster Name                    | Update the original embeds this cluster was copied from.     |
 
 ## Edit
 | Commands       | Arguments      | Description                                         |
