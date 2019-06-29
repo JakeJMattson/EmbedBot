@@ -26,7 +26,6 @@
 | Delete     | (Embed Name)     | Delete the embed with this name.           |
 | Export     | <none>           | Export the currently loaded embed to JSON. |
 | Import     | Embed Name, JSON | Import a JSON String as an embed.          |
-| ListEmbeds | <none>           | List all embeds created in this guild.     |
 | Load       | Embed Name       | Load the embed with this name into memory. |
 | Send       | (Channel)        | Send the currently loaded embed.           |
 
@@ -67,6 +66,12 @@
 | SetThumbnail   | URL            | Set the thumbnail for the currently loaded embed.   |
 | SetTimestamp   | <none>         | Set the timestamp for the currently loaded embed.   |
 | SetTitle       | Text           | Set the title for the currently loaded embed.       |
+
+## Info
+| Commands   | Arguments  | Description                             |
+| ---------- | ---------- | --------------------------------------- |
+| Info       | Embed Name | Get extended info for the target embed. |
+| ListEmbeds | <none>     | List all embeds created in this guild.  |
 
 ## Utility
 | Commands     | Arguments | Description                                 |
