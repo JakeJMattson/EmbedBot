@@ -68,29 +68,6 @@ fun coreCommands(embedService: EmbedService) = commands {
         }
     }
 
-    command("ListEmbeds") {
-        requiresGuild = true
-        description = "List all embeds created in this guild."
-        execute {
-            it.respond(
-                embed {
-                    val embeds = it.guild!!.getEmbeds()
-                    val clusters = it.guild!!.getClusters()
-
-                    val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
-                    addField("Embeds", embedList, false)
-
-                    if (clusters.isEmpty())
-                        addField("Clusters", "<No clusters>", false)
-                    else
-                        clusters.forEach {
-                            addField(it.name, it.toString(), false)
-                        }
-                }
-            )
-        }
-    }
-
     command("Import") {
         requiresGuild = true
         description = "Import a JSON String as an embed."
