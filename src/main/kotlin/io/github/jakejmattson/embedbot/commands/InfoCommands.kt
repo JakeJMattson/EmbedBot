@@ -17,22 +17,20 @@ fun infoCommands() = commands {
             val guild = it.guild!!
 
             val info =
-                with(embed) {
-                    embed {
-                        addField("Embed Name", name, false)
-                        addField("Is Empty", isEmpty.toString(), false)
-                        addField("Is Loaded", isLoaded(guild).toString(), false)
-                        addField("Field Count", (lastFieldIndex + 1).toString(), false)
+                embed {
+                    addField("Embed Name", embed.name, false)
+                    addField("Is Empty", embed.isEmpty.toString(), false)
+                    addField("Is Loaded", embed.isLoaded(guild).toString(), false)
+                    addField("Field Count", embed.fieldCount.toString(), false)
 
-                        addField("Copied From",
-                            if (copyLocation == null)
-                                "<Not copied>"
-                            else
-                                "Channel ID: ${copyLocation.channelId}\n" +
-                                    "Message ID: ${copyLocation.messageId}",
-                            false
-                        )
-                    }
+                    addField("Copied From",
+                        if (embed.copyLocation == null)
+                            "<Not copied>"
+                        else
+                            "Channel ID: ${embed.copyLocation.channelId}\n" +
+                                "Message ID: ${embed.copyLocation.messageId}",
+                        false
+                    )
                 }
 
             it.respond(info)
@@ -45,8 +43,13 @@ fun infoCommands() = commands {
         execute {
             it.respond(
                 embed {
+                    val guild = it.guild!!
+
                     val embeds = it.guild!!.getEmbeds()
                     val clusters = it.guild!!.getClusters()
+
+                    val loadedEmbed = guild.getLoadedEmbed()?.name ?: "<None>"
+                    addField("Loaded", loadedEmbed, false)
 
                     val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
                     addField("Embeds", embedList, false)

@@ -19,8 +19,8 @@ data class Embed(val name: String,
     private val fields: List<Field>
         get() = builder.fields
 
-    val lastFieldIndex: Int
-        get() = fields.lastIndex
+    val fieldCount: Int
+        get() = fields.size
 
     fun setAuthor(author: String) = builder.setAuthor(author)
     fun setColor(color: Int) = builder.setColor(color)

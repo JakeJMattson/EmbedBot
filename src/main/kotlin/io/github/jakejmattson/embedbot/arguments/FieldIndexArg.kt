@@ -21,8 +21,8 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
         val index = arg.toIntOrNull()
             ?: return ArgumentResult.Error("Expected an integer, got $arg")
 
-        if (index !in 0..embed.lastFieldIndex)
-            return ArgumentResult.Error("Invalid index. Expected range: 0-${embed.lastFieldIndex}")
+        if (index !in 0 until embed.fieldCount)
+            return ArgumentResult.Error("Invalid index. Expected range: 0-${embed.fieldCount - 1}")
 
         return ArgumentResult.Single(index)
     }
