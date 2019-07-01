@@ -8,23 +8,21 @@ import kotlin.concurrent.schedule
 
 @Service
 class DocumentationService(configuration: Configuration, container: CommandsContainer) {
+
+    data class CategoryDocs(val name: String, val docString: String, private val indentLevel: String = "##") {
+        override fun toString() = "$indentLevel $name\n$docString"
+    }
+
     init {
         container.commands.getValue("help").category = "Utility"
 
-        val sortOrder =
-            arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field", "Cluster", "Edit", "Info", "Utility")
-
         if (configuration.generateDocsAtRuntime)
             Timer().schedule(500) {
-                val commandDocs = generateDocs(container)
-                val sortedDocs = arrayListOf<CategoryDocs>()
+                val sortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy",
+                    "Field", "Cluster", "Edit", "Info", "Utility")
 
-                sortOrder.forEach { sortString ->
-                    val category = commandDocs.firstOrNull { sortString == it.name }
-
-                    if (category != null)
-                        sortedDocs.add(category)
-                }
+                val categoryDocs = generateCategoryDocs(container)
+                val sortedDocs = sortCategoryDocs(categoryDocs, sortOrder)
 
                 sortedDocs.forEach {
                     println(it.toString())
@@ -32,17 +30,11 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
             }
     }
 
-    data class CategoryDocs(val name: String, val docString: String, private val indentLevel: String = "##") {
-        override fun toString() = "$indentLevel $name\n$docString"
-    }
-
-    private fun generateDocs(commandsContainer: CommandsContainer): ArrayList<CategoryDocs> {
+    private fun generateCategoryDocs(commandsContainer: CommandsContainer): ArrayList<CategoryDocs> {
 
         data class CommandData(val name: String, val args: String, val description: String) {
             fun format(format: String) = String.format(format, name, args, description)
         }
-
-        operator fun String.times(x: Int) = this.repeat(x)
 
         val commandDocs = arrayListOf<CategoryDocs>()
 
@@ -61,7 +53,7 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
             } as ArrayList
 
             with(categoryCommands) {
-                val docs = StringBuilder()
+                operator fun String.times(x: Int) = this.repeat(x)
 
                 val headers = CommandData("Commands", "Arguments", "Description")
                 add(headers)
@@ -73,6 +65,7 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
 
                 remove(headers)
 
+                val docs = StringBuilder()
                 docs.appendln(headers.format(format))
                 docs.appendln(String.format(format, "-" * longestName, "-" * longestArgs, "-" * longestDescription))
 
@@ -85,5 +78,18 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
         }
 
         return commandDocs
+    }
+
+    private fun sortCategoryDocs(categoryDocs: ArrayList<CategoryDocs>, sortOrder: ArrayList<String>): ArrayList<CategoryDocs> {
+        val sortedDocs = arrayListOf<CategoryDocs>()
+
+        sortOrder.forEach { sortString ->
+            val category = categoryDocs.firstOrNull { sortString == it.name }
+
+            if (category != null)
+                sortedDocs.add(category)
+        }
+
+        return sortedDocs
     }
 }
