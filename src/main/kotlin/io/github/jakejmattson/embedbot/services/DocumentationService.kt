@@ -2,44 +2,44 @@ package io.github.jakejmattson.embedbot.services
 
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import me.aberrantfox.kjdautils.api.annotation.Service
-import me.aberrantfox.kjdautils.api.dsl.CommandsContainer
+import me.aberrantfox.kjdautils.api.dsl.*
+import java.io.File
 import java.util.Timer
 import kotlin.concurrent.schedule
 
+private const val indentLevel: String = "##"
+
 @Service
 class DocumentationService(configuration: Configuration, container: CommandsContainer) {
-
-    data class CategoryDocs(val name: String, val docString: String, private val indentLevel: String = "##") {
-        override fun toString() = "$indentLevel $name\n$docString"
-    }
-
     init {
+        //Move the help command from the internal "utility" category, to the local "Utility" category
         container.commands.getValue("help").category = "Utility"
 
         if (configuration.generateDocsAtRuntime)
             Timer().schedule(500) {
-                val sortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy",
-                    "Field", "Cluster", "Edit", "Info", "Utility")
-
-                val categoryDocs = generateCategoryDocs(container)
-                val sortedDocs = sortCategoryDocs(categoryDocs, sortOrder)
-
-                sortedDocs.forEach {
-                    println(it.toString())
-                }
+                createDocumentation(container)
             }
     }
 
-    private fun generateCategoryDocs(commandsContainer: CommandsContainer): ArrayList<CategoryDocs> {
+    private fun createDocumentation(container: CommandsContainer) {
+        val sortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy",
+            "Field", "Cluster", "Edit", "Info", "Utility")
 
-        data class CommandData(val name: String, val args: String, val description: String) {
-            fun format(format: String) = String.format(format, name, args, description)
-        }
+        val categories = container.commands.values.groupBy { it.category }
+        val categoryDocs = generateDocsByCategory(categories)
+        val sortedDocs = sortCategoryDocs(categoryDocs, sortOrder)
 
-        val commandDocs = arrayListOf<CategoryDocs>()
+        outputDocs(sortedDocs, Output.FILE)
+    }
 
-        commandsContainer.commands.values.groupBy { it.category }.toList().forEach {
-            val categoryCommands = it.second.map {
+    private fun generateDocsByCategory(categories: Map<String, List<Command>>) =
+        categories.map {
+            data class CommandData(val name: String, val args: String, val description: String) {
+                fun format(format: String) = String.format(format, name, args, description)
+            }
+
+            //Map the commands to a data class for easier manipulation
+            val commandData = it.value.map {
                 CommandData(
                     it.name,
                     it.expectedArgs.joinToString {
@@ -52,44 +52,80 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
                 )
             } as ArrayList
 
-            with(categoryCommands) {
+            with(commandData) {
                 operator fun String.times(x: Int) = this.repeat(x)
 
+                //Determine the max width of the data in each column (including headers)
                 val headers = CommandData("Commands", "Arguments", "Description")
                 add(headers)
-
                 val longestName = maxBy { it.name.length }!!.name.length
                 val longestArgs = maxBy { it.args.length }!!.args.length
                 val longestDescription = maxBy { it.description.length }!!.description.length
-                val format = "| %-${longestName}s | %-${longestArgs}s | %-${longestDescription}s |"
-
+                val columnFormat = "| %-${longestName}s | %-${longestArgs}s | %-${longestDescription}s |"
                 remove(headers)
 
+                //Apply the column format to the command data
                 val docs = StringBuilder()
-                docs.appendln(headers.format(format))
-                docs.appendln(String.format(format, "-" * longestName, "-" * longestArgs, "-" * longestDescription))
+                docs.appendln(headers.format(columnFormat))
+                docs.appendln(String.format(columnFormat, "-" * longestName, "-" * longestArgs, "-" * longestDescription))
 
                 sortedBy { it.name }.forEach {
-                    docs.appendln(it.format(format))
+                    docs.appendln(it.format(columnFormat))
                 }
 
-                commandDocs.add(CategoryDocs(it.first, docs.toString()))
+                CategoryDocs(it.key, docs.toString())
             }
+        } as ArrayList<CategoryDocs>
+
+    private fun sortCategoryDocs(categoryDocs: ArrayList<CategoryDocs>, sortOrder: ArrayList<String>): List<CategoryDocs> {
+        val sortedMap = LinkedHashMap<String, CategoryDocs?>()
+
+        //Populate the map keys with the desired sort order
+        sortOrder.forEach {
+            sortedMap[it] = null
         }
 
-        return commandDocs
+        //Populate the (sorted) map values with docs by name
+        //If the sort order was not specified for a doc, it is appended to the end.
+        categoryDocs.forEach {
+            sortedMap[it.name] = it
+        }
+
+        //Remove dead keys (values with no data)
+        return sortedMap.values.filterNotNull()
     }
 
-    private fun sortCategoryDocs(categoryDocs: ArrayList<CategoryDocs>, sortOrder: ArrayList<String>): ArrayList<CategoryDocs> {
-        val sortedDocs = arrayListOf<CategoryDocs>()
+    private fun outputDocs(docs: List<CategoryDocs>, outputType: Output) {
+        val docsAsString = StringBuilder().apply {
+            docs.forEach {
+                appendln(it.toString())
+            }
+        }.toString()
 
-        sortOrder.forEach { sortString ->
-            val category = categoryDocs.firstOrNull { sortString == it.name }
-
-            if (category != null)
-                sortedDocs.add(category)
+        when (outputType) {
+            Output.CONSOLE -> println(docsAsString)
+            Output.FILE -> outputToFile(docsAsString)
         }
+    }
 
-        return sortedDocs
+    private fun outputToFile(docs: String) {
+        val file = File("Commands.md")
+        val fileHeader =
+            "# Commands\n\n" +
+            "$indentLevel Key\n" +
+            "| Symbol     | Meaning                    |\n" +
+            "| ---------- | -------------------------- |\n" +
+            "| (Argument) | This argument is optional. |\n"
+
+        val fileText = "$fileHeader\n$docs"
+        file.writeText(fileText)
+    }
+
+    private data class CategoryDocs(val name: String, val docString: String) {
+        override fun toString() = "$indentLevel $name\n$docString"
+    }
+
+    private enum class Output {
+        CONSOLE, FILE
     }
 }
