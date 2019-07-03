@@ -1,9 +1,9 @@
 # Commands
 
 ## Key
-| Symbol     | Meaning                          |
-| ---------- | -------------------------------- |
-| (Argument) | This argument is optional.       |
+| Symbol     | Meaning                    |
+| ---------- | -------------------------- |
+| (Argument) | This argument is optional. |
 
 ## BotConfiguration
 | Commands                             | Arguments | Description                                                       |
@@ -20,14 +20,14 @@
 | Setup           | Required Role | Set up this bot for use.                      |
 
 ## Core
-| Commands   | Arguments        | Description                                |
-| ---------- | ---------------- | ------------------------------------------ |
-| Create     | Embed Name       | Create a new embed with this name.         |
-| Delete     | (Embed Name)     | Delete the embed with this name.           |
-| Export     | <none>           | Export the currently loaded embed to JSON. |
-| Import     | Embed Name, JSON | Import a JSON String as an embed.          |
-| Load       | Embed Name       | Load the embed with this name into memory. |
-| Send       | (Channel)        | Send the currently loaded embed.           |
+| Commands | Arguments        | Description                                |
+| -------- | ---------------- | ------------------------------------------ |
+| Create   | Embed Name       | Create a new embed with this name.         |
+| Delete   | (Embed Name)     | Delete the embed with this name.           |
+| Export   | <none>           | Export the currently loaded embed to JSON. |
+| Import   | Embed Name, JSON | Import a JSON String as an embed.          |
+| Load     | Embed Name       | Load the embed with this name into memory. |
+| Send     | (Channel)        | Send the currently loaded embed.           |
 
 ## Copy
 | Commands       | Arguments                         | Description                                             |
@@ -58,7 +58,7 @@
 | Commands       | Arguments      | Description                                         |
 | -------------- | -------------- | --------------------------------------------------- |
 | Clear          | Clear Target   | Clear a target field from the loaded embed.         |
-| SetAuthor      | Text           | Set the author for the currently loaded embed.      |
+| SetAuthor      | DiscordUser    | Set the author for the currently loaded embed.      |
 | SetColor       | Hex Color      | Set the color for the currently loaded embed.       |
 | SetDescription | Text           | Set the description for the currently loaded embed. |
 | SetFooter      | Icon URL, Text | Set the footer for the currently loaded embed.      |
@@ -82,3 +82,4 @@
 | Source       | <none>    | Display the (source code) repository link.  |
 | Uptime       | <none>    | Displays how long the bot has been running. |
 | help         | (Word)    | Display a help menu                         |
+
