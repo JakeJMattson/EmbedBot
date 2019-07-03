@@ -22,7 +22,7 @@ data class Embed(val name: String,
     val fieldCount: Int
         get() = fields.size
 
-    fun setAuthor(author: String) = builder.setAuthor(author)
+    fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl)
     fun setColor(color: Int) = builder.setColor(color)
     fun setDescription(description: String) = builder.setDescription(description)
     fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)

@@ -4,6 +4,7 @@ import io.github.jakejmattson.embedbot.arguments.HexColorArg
 import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
+import net.dv8tion.jda.core.entities.User
 import java.time.LocalDateTime
 
 private const val commandResponseFormat = "Successfully updated the embed %s!"
@@ -14,12 +15,14 @@ fun editCommands() = commands {
     command("SetAuthor") {
         requiresGuild = true
         description = commandDescriptionFormat.format("author")
-        expect(SentenceArg)
+        expect(UserArg)
         execute {
-            val description = it.args.component1() as String
+            val user = it.args.component1() as User
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            embed.setAuthor(description)
+            val url = user.avatarUrl ?: user.defaultAvatarUrl
+
+            embed.setAuthor(user.name, url)
             it.respond(commandResponseFormat.format("author"))
         }
     }
