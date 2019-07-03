@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.preconditions
 
-import io.github.jakejmattson.embedbot.dataclasses.Configuration
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.toMember
 import me.aberrantfox.kjdautils.internal.command.*
@@ -8,7 +8,7 @@ import me.aberrantfox.kjdautils.internal.command.*
 private val exemptCategories = arrayListOf("BotConfiguration", "GuildConfiguration", "Utility")
 
 @Precondition
-fun produceHasRequiredRolePrecondition(configuration: Configuration) = exit@{ event: CommandEvent ->
+fun produceHasRequiredRolePrecondition(permissionsService: PermissionsService) = exit@{ event: CommandEvent ->
     val category = event.container.commands[event.commandStruct.commandName]?.category ?: return@exit Pass
 
     val guild = event.guild
@@ -19,16 +19,8 @@ fun produceHasRequiredRolePrecondition(configuration: Configuration) = exit@{ ev
 
     val member = event.author.toMember(guild)
 
-    val guildConfig = configuration.getGuildConfig(guild.id)
-        ?: return@exit Fail("This guild is not configured for use. Please use the `setup` command.")
-
-    val requiredRoleName = guildConfig.requiredRole
-
-    val requiredRole = guild.getRolesByName(requiredRoleName, true).firstOrNull()
-        ?: return@exit Fail("Guild missing the role defined in the configuration :: $requiredRoleName")
-
-    if (requiredRole !in member.roles && !member.isOwner)
-        return@exit Fail("Missing clearance to use this command. Required role: $requiredRoleName")
+    if (!permissionsService.hasClearance(member, Permission.STAFF))
+        return@exit Fail("Missing clearance to use this command. You must have the required role.")
 
     return@exit Pass
 }
