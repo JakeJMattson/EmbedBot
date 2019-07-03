@@ -71,6 +71,7 @@
 | Commands   | Arguments  | Description                             |
 | ---------- | ---------- | --------------------------------------- |
 | Info       | Embed Name | Get extended info for the target embed. |
+| Limits     | <none>     | Display the discord embed limits.       |
 | ListEmbeds | <none>     | List all embeds created in this guild.  |
 
 ## Utility

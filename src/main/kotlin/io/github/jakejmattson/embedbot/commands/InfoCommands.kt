@@ -64,4 +64,30 @@ fun infoCommands() = commands {
             )
         }
     }
+
+    command("Limits") {
+        requiresGuild = true
+        description = "Display the discord embed limits."
+        execute {
+            val bot = it.jda.selfUser
+            val footerUrl = bot.avatarUrl ?: bot.defaultAvatarUrl
+
+            it.respond(
+                embed {
+                    setTitle("Discord Limits")
+                    setDescription("Below are all the limits imposed onto embeds by Discord.")
+                    addField("Total Character Limit", "6000 characters", true)
+                    addField("Total Field Limit", "25 fields", true)
+                    addField("Title", "256 characters", true)
+                    addField("Description", "2048 characters", true)
+                    addField("Field Name", "256 characters", true)
+                    addField("Field Value", "1024 characters", true)
+                    addField("Footer", "2048 characters", true)
+                    addField("Author", "256 characters", true)
+                    addBlankField(true)
+                    setFooter("https://discordapp.com/developers/docs/resources/channel#embed-limits-limits", footerUrl)
+                }
+            )
+        }
+    }
 }
