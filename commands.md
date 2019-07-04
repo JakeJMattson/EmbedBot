@@ -6,11 +6,11 @@
 | (Argument) | This argument is optional. |
 
 ## BotConfiguration
-| Commands                             | Arguments | Description                                                       |
-| ------------------------------------ | --------- | ----------------------------------------------------------------- |
-| Leave                                | <none>    | Leave this guild and delete all associated information.           |
-| NukeAllSeriouslyEverythingAllTheData | <none>    | Delete all embeds in all guilds. Delete all guild configurations. |
-| SetPrefix                            | Prefix    | Set the prefix required for the bot to register a command.        |
+| Commands  | Arguments      | Description                                                       |
+| --------- | -------------- | ----------------------------------------------------------------- |
+| Leave     | <none>         | Leave this guild and delete all associated information.           |
+| ResetBot  | (Bot Owner ID) | Delete all embeds in all guilds. Delete all guild configurations. |
+| SetPrefix | Prefix         | Set the prefix required for the bot to register a command.        |
 
 ## GuildConfiguration
 | Commands        | Arguments     | Description                                   |

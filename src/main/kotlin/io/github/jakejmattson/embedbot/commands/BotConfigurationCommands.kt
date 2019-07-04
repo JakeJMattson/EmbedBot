@@ -23,26 +23,37 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
         }
     }
 
-    command("NukeAllSeriouslyEverythingAllTheData") {
+    command("ResetBot") {
         requiresGuild = true
         description = "Delete all embeds in all guilds. Delete all guild configurations."
+        expect(arg(WordArg("Bot Owner ID"), optional = true, default = ""))
         execute {
+            val idEntry = it.args.component1() as String
+            val ownerId = configuration.botOwner
             val jda = it.jda
             val guildConfigs = configuration.guildConfigurations
-            var removedEmbeds = 0
 
-            configuration.guildConfigurations.forEach {
-                val guild = jda.getGuildById(it.guildId)
+            if (idEntry.isEmpty())
+                return@execute it.respond("Please re-run this command and pass in the bot owner ID to confirm. " +
+                    "This deletes all embeds and all clusters in all guilds, and clears all guild configurations.")
 
-                if (guild != null)
-                    removedEmbeds += embedService.removeAllFromGuild(guild)
-            }
+            if (idEntry != ownerId)
+                return@execute it.respond("Invalid bot owner ID.")
 
-            val removedGuilds = guildConfigs.size
+            val removedEmbeds =
+                guildConfigs.sumBy {
+                    val guild = jda.getGuildById(it.guildId)
+
+                    if (guild != null)
+                        embedService.removeAllFromGuild(guild)
+                    else
+                        0
+                }
+
             guildConfigs.clear()
             persistenceService.save(configuration)
 
-            it.respond("Deleted $removedGuilds guild configurations and $removedEmbeds embeds.")
+            it.respond("Deleted ${guildConfigs.size} guild configurations and $removedEmbeds embeds.")
         }
     }
 
