@@ -13,7 +13,6 @@ import net.dv8tion.jda.core.entities.TextChannel
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
-        requiresGuild = true
         description = "Send the currently loaded embed."
         expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
@@ -30,7 +29,6 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Create") {
-        requiresGuild = true
         description = "Create a new embed with this name."
         expect(WordArg("Embed Name"))
         execute {
@@ -47,7 +45,6 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Delete") {
-        requiresGuild = true
         description = "Delete the embed with this name."
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }))
         execute {
@@ -58,7 +55,6 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Load") {
-        requiresGuild = true
         description = "Load the embed with this name into memory."
         expect(EmbedArg)
         execute {
@@ -69,7 +65,6 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Import") {
-        requiresGuild = true
         description = "Import a JSON String as an embed."
         expect(WordArg("Embed Name"), SentenceArg("JSON"))
         execute {
@@ -94,13 +89,17 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Export") {
-        requiresGuild = true
         description = "Export the currently loaded embed to JSON."
         execute {
             val embed = it.guild!!.getLoadedEmbed()
                 ?: return@execute it.respond("No embed loaded!")
 
-            it.respond(embed.toJson())
+            val json = embed.toJson()
+
+            if (json.length >= 1985)
+                it.channel.sendFile(json.toByteArray(), "$${embed.name}.json").queue()
+            else
+                it.respond("```json\n$json```")
         }
     }
 }

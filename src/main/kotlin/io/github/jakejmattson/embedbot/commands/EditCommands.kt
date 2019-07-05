@@ -13,7 +13,6 @@ private const val commandDescriptionFormat = "Set the %s for the currently loade
 @CommandSet("Edit")
 fun editCommands() = commands {
     command("SetAuthor") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("author")
         expect(UserArg)
         execute {
@@ -28,7 +27,6 @@ fun editCommands() = commands {
     }
 
     command("SetColor") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("color")
         expect(HexColorArg)
         execute {
@@ -41,7 +39,6 @@ fun editCommands() = commands {
     }
 
     command("SetDescription") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("description")
         expect(SentenceArg)
         execute {
@@ -54,7 +51,6 @@ fun editCommands() = commands {
     }
 
     command("SetFooter") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("footer")
         expect(UrlArg("Icon URL"), SentenceArg("Text"))
         execute {
@@ -68,7 +64,6 @@ fun editCommands() = commands {
     }
 
     command("SetImage") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("image")
         expect(UrlArg)
         execute {
@@ -81,7 +76,6 @@ fun editCommands() = commands {
     }
 
     command("SetThumbnail") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("thumbnail")
         expect(UrlArg)
         execute {
@@ -94,7 +88,6 @@ fun editCommands() = commands {
     }
 
     command("SetTimestamp") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("timestamp")
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
@@ -104,7 +97,6 @@ fun editCommands() = commands {
     }
 
     command("SetTitle") {
-        requiresGuild = true
         description = commandDescriptionFormat.format("title")
         expect(SentenceArg)
         execute {
@@ -117,9 +109,8 @@ fun editCommands() = commands {
     }
 
     command("Clear") {
-        requiresGuild = true
         description = "Clear a target field from the loaded embed."
-        expect(WordArg("Clear Target"))
+        expect(arg(WordArg("Clear Target"), optional = true, default = ""))
         execute {
             val field = (it.args.component1() as String).toLowerCase()
             val embed = it.guild!!.getLoadedEmbed()!!

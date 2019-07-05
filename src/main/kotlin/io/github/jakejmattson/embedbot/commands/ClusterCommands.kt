@@ -11,7 +11,6 @@ import net.dv8tion.jda.core.entities.TextChannel
 @CommandSet("Cluster")
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
-        requiresGuild = true
         description = "Create a cluster for storing and deploying groups of embeds."
         expect(arg(WordArg("Cluster Name")))
         execute {
@@ -28,7 +27,6 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("DeleteCluster") {
-        requiresGuild = true
         description = "Delete a cluster and all of its embeds."
         expect(ClusterArg)
         execute {
@@ -45,7 +43,6 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("CloneCluster") {
-        requiresGuild = true
         description = "Clone a group of embeds into a cluster."
         expect(arg(WordArg("Cluster Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
@@ -73,24 +70,27 @@ fun clusterCommands(embedService: EmbedService) = commands {
             }
 
             embeds.reverse()
-            embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
+            val wasSuccessful = embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
 
-            it.respond("Cloned ${embeds.size} embeds into $clusterName")
+            it.respond(
+                if (wasSuccessful)
+                    "Cloned ${embeds.size} embeds into $clusterName"
+                else
+                    "A cluster with that name already exists."
+            )
         }
     }
 
     command("UpdateCluster") {
-        requiresGuild = true
         description = "Update the original embeds this cluster was copied from."
         expect(ClusterArg)
-        execute {
-            val cluster = it.args.component1() as Cluster
-            val jda = it.jda
+        execute { event ->
+            val cluster = event.args.component1() as Cluster
             val failed = StringBuilder()
             val size = cluster.size
 
             val totalSuccessful = cluster.embeds.sumBy {
-                with(it.update(jda)) {
+                with(it.update(event.jda)) {
                     if (!canUpdate)
                         failed.appendln("${it.name} :: $reason")
 
@@ -99,15 +99,14 @@ fun clusterCommands(embedService: EmbedService) = commands {
             }
 
             if (totalSuccessful == size)
-                return@execute it.respond("Successfully updated all $size embeds in ${cluster.name}")
+                return@execute event.respond("Successfully updated all $size embeds in ${cluster.name}")
 
-            it.respond("Successfully updated $totalSuccessful out of $size in ${cluster.name}" +
+            event.respond("Successfully updated $totalSuccessful out of $size in ${cluster.name}" +
                 "\nFailed the following updates:\n$failed")
         }
     }
 
     command("Deploy") {
-        requiresGuild = true
         description = "Deploy a cluster into a target channel."
         expect(arg(ClusterArg),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
@@ -122,7 +121,6 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("AddToCluster") {
-        requiresGuild = true
         description = "Add an embed into a cluster."
         expect(ClusterArg, EmbedArg)
         execute {
@@ -136,7 +134,6 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("RemoveFromCluster") {
-        requiresGuild = true
         description = "Remove an embed from its cluster."
         expect(EmbedArg)
         execute {

@@ -12,7 +12,6 @@ import net.dv8tion.jda.core.entities.*
 @CommandSet("Copy")
 fun copyCommands(embedService: EmbedService) = commands {
     command("CopyTarget") {
-        requiresGuild = true
         description = "Copy an embed by its message ID."
         expect(arg(WordArg("Embed Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
@@ -41,7 +40,6 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("CopyPrevious") {
-        requiresGuild = true
         description = "Copy the previous embed in the target channel."
         expect(arg(WordArg("Embed Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
@@ -67,7 +65,6 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("UpdateOriginal") {
-        requiresGuild = true
         description = "Update the original embed this content was copied from."
         execute {
             val embed = it.guild!!.getLoadedEmbed()

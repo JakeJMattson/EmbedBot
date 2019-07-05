@@ -8,7 +8,6 @@ import me.aberrantfox.kjdautils.api.dsl.*
 @CommandSet("Field")
 fun fieldCommands() = commands {
     command("AddField") {
-        requiresGuild = true
         description = "Add a field in the following format: title|body|inline"
         expect(FieldArg)
         execute {
@@ -21,7 +20,6 @@ fun fieldCommands() = commands {
     }
 
     command("RemoveField") {
-        requiresGuild = true
         description = "Remove a field from the loaded embed by its index."
         expect(FieldIndexArg)
         execute {
@@ -34,7 +32,6 @@ fun fieldCommands() = commands {
     }
 
     command("EditField") {
-        requiresGuild = true
         description = "Edit a field at a given index with the given data."
         expect(FieldIndexArg, FieldArg)
         execute {

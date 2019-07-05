@@ -10,7 +10,6 @@ import me.aberrantfox.kjdautils.internal.di.PersistenceService
 fun botConfigurationCommands(configuration: Configuration, prefixService: PrefixService,
                              persistenceService: PersistenceService, embedService: EmbedService) = commands {
     command("SetPrefix") {
-        requiresGuild = true
         description = "Set the prefix required for the bot to register a command."
         expect(WordArg("Prefix"))
         execute {
@@ -24,7 +23,6 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("ResetBot") {
-        requiresGuild = true
         description = "Delete all embeds in all guilds. Delete all guild configurations."
         expect(arg(WordArg("Bot Owner ID"), optional = true, default = ""))
         execute {
@@ -58,7 +56,6 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("Leave") {
-        requiresGuild = true
         description = "Leave this guild and delete all associated information."
         execute {
             val guild = it.guild!!

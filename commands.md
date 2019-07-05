@@ -57,7 +57,7 @@
 ## Edit
 | Commands       | Arguments      | Description                                         |
 | -------------- | -------------- | --------------------------------------------------- |
-| Clear          | Clear Target   | Clear a target field from the loaded embed.         |
+| Clear          | (Clear Target) | Clear a target field from the loaded embed.         |
 | SetAuthor      | DiscordUser    | Set the author for the currently loaded embed.      |
 | SetColor       | Hex Color      | Set the color for the currently loaded embed.       |
 | SetDescription | Text           | Set the description for the currently loaded embed. |

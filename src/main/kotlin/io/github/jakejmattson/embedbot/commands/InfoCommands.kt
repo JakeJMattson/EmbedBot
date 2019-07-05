@@ -9,7 +9,6 @@ import me.aberrantfox.kjdautils.api.dsl.*
 fun infoCommands() = commands {
 
     command("Info") {
-        requiresGuild = true
         description = "Get extended info for the target embed."
         expect(EmbedArg)
         execute {
@@ -38,15 +37,14 @@ fun infoCommands() = commands {
     }
 
     command("ListEmbeds") {
-        requiresGuild = true
         description = "List all embeds created in this guild."
         execute {
             it.respond(
                 embed {
                     val guild = it.guild!!
 
-                    val embeds = it.guild!!.getEmbeds()
-                    val clusters = it.guild!!.getClusters()
+                    val embeds = guild.getEmbeds()
+                    val clusters = guild.getClusters()
 
                     val loadedEmbed = guild.getLoadedEmbed()?.name ?: "<None>"
                     addField("Loaded", loadedEmbed, false)
@@ -66,7 +64,6 @@ fun infoCommands() = commands {
     }
 
     command("Limits") {
-        requiresGuild = true
         description = "Display the discord embed limits."
         execute {
             val bot = it.jda.selfUser

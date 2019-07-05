@@ -15,7 +15,6 @@ private val startTime = Date()
 @CommandSet("Utility")
 fun utilityCommands() = commands {
     command("Ping") {
-        requiresGuild = true
         description = "Display the network ping of the bot."
         execute {
             it.respond("Ping: ${it.jda.ping}ms\n")
@@ -23,7 +22,6 @@ fun utilityCommands() = commands {
     }
 
     command("Source") {
-        requiresGuild = true
         description = "Display the (source code) repository link."
         execute {
             it.respond(Project.repository)
@@ -31,7 +29,6 @@ fun utilityCommands() = commands {
     }
 
     command("BotInfo") {
-        requiresGuild = true
         description = "Display the bot information."
         execute {
             it.respond(embed {
@@ -48,7 +45,6 @@ fun utilityCommands() = commands {
     }
 
     command("Uptime") {
-        requiresGuild = true
         description = "Displays how long the bot has been running."
         execute {
             val milliseconds = Date().time - startTime.time
@@ -71,13 +67,12 @@ fun utilityCommands() = commands {
     }
 
     command("ListCommands") {
-        requiresGuild = true
         description = "List all available commands."
-        execute {
-            val commands = it.container.commands.values.groupBy { it.category }.toList()
+        execute { event ->
+            val commands = event.container.commands.values.groupBy { it.category }.toList()
                 .sortedBy { (_, value) -> -value.size }.toMap()
 
-            it.respond(embed {
+            event.respond(embed {
                 commands.forEach {
                     field {
                         name = it.key

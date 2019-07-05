@@ -12,14 +12,12 @@ fun guildConfigurationCommands(configuration: Configuration,
                                persistenceService: PersistenceService,
                                embedService: EmbedService) = commands {
     command("SetRequiredRole") {
-        requiresGuild = true
         description = "Set the role required to use this bot."
         expect(RoleArg)
         execute {
             val requiredRole = it.args.component1() as Role
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
                 ?: return@execute it.respond("This guild is not set up for use. Please use the `setup` command.")
-
 
             guildConfiguration.requiredRole = requiredRole.name
             persistenceService.save(configuration)
@@ -29,7 +27,6 @@ fun guildConfigurationCommands(configuration: Configuration,
     }
 
     command("DeleteAll") {
-        requiresGuild = true
         description = "Delete all embeds and clusters in this guild."
         execute {
             val guild = it.guild!!
@@ -40,7 +37,6 @@ fun guildConfigurationCommands(configuration: Configuration,
     }
 
     command("Setup") {
-        requiresGuild = true
         description = "Set up this bot for use."
         expect(RoleArg("Required Role"))
         execute {
