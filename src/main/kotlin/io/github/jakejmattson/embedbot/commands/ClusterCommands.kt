@@ -106,6 +106,21 @@ fun clusterCommands(embedService: EmbedService) = commands {
         }
     }
 
+    command("RenameCluster") {
+        description = "Change the name of an existing cluster."
+        expect(ClusterArg, WordArg("New Name"))
+        execute {
+            val cluster = it.args.component1() as Cluster
+            val newName = it.args.component2() as String
+
+            if (it.guild!!.hasClusterWithName(newName))
+                return@execute it.respond("An embed with this name already exists.")
+            
+            cluster.name = newName
+            it.respond("Successfully changed the name of the cluster to: $newName")
+        }
+    }
+
     command("Deploy") {
         description = "Deploy a cluster into a target channel."
         expect(arg(ClusterArg),

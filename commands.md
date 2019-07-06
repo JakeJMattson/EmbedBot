@@ -52,6 +52,7 @@
 | DeleteCluster     | Cluster Name                    | Delete a cluster and all of its embeds.                      |
 | Deploy            | Cluster Name, (Channel)         | Deploy a cluster into a target channel.                      |
 | RemoveFromCluster | Embed Name                      | Remove an embed from its cluster.                            |
+| RenameCluster     | Cluster Name, New Name          | Change the name of an existing cluster.                      |
 | UpdateCluster     | Cluster Name                    | Update the original embeds this cluster was copied from.     |
 
 ## Edit
