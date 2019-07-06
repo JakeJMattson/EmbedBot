@@ -1,7 +1,8 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.arguments.HexColorArg
-import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
+import io.github.jakejmattson.embedbot.arguments.*
+import io.github.jakejmattson.embedbot.dataclasses.Embed
+import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 import net.dv8tion.jda.core.entities.User
@@ -135,6 +136,21 @@ fun editCommands() = commands {
             } ?: return@execute it.respond("Invalid field selected. $options")
 
             it.respond("Successfully cleared $field")
+        }
+    }
+
+    command("Rename") {
+        description = "Change the name of an existing embed."
+        expect(EmbedArg, WordArg("New Name"))
+        execute {
+            val embed = it.args.component1() as Embed
+            val newName = it.args.component2() as String
+
+            if (it.guild!!.hasEmbedWithName(newName))
+                return@execute it.respond("An embed with this name already exists.")
+
+            embed.name = newName
+            it.respond("Successfully changed the name of the embed to: $newName")
         }
     }
 }

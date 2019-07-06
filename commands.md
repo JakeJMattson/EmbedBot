@@ -56,17 +56,18 @@
 | UpdateCluster     | Cluster Name                    | Update the original embeds this cluster was copied from.     |
 
 ## Edit
-| Commands       | Arguments      | Description                                         |
-| -------------- | -------------- | --------------------------------------------------- |
-| Clear          | (Clear Target) | Clear a target field from the loaded embed.         |
-| SetAuthor      | DiscordUser    | Set the author for the currently loaded embed.      |
-| SetColor       | Hex Color      | Set the color for the currently loaded embed.       |
-| SetDescription | Text           | Set the description for the currently loaded embed. |
-| SetFooter      | Icon URL, Text | Set the footer for the currently loaded embed.      |
-| SetImage       | URL            | Set the image for the currently loaded embed.       |
-| SetThumbnail   | URL            | Set the thumbnail for the currently loaded embed.   |
-| SetTimestamp   | <none>         | Set the timestamp for the currently loaded embed.   |
-| SetTitle       | Text           | Set the title for the currently loaded embed.       |
+| Commands       | Arguments            | Description                                         |
+| -------------- | -------------------- | --------------------------------------------------- |
+| Clear          | (Clear Target)       | Clear a target field from the loaded embed.         |
+| Rename         | Embed Name, New Name | Change the name of an existing embed.               |
+| SetAuthor      | DiscordUser          | Set the author for the currently loaded embed.      |
+| SetColor       | Hex Color            | Set the color for the currently loaded embed.       |
+| SetDescription | Text                 | Set the description for the currently loaded embed. |
+| SetFooter      | Icon URL, Text       | Set the footer for the currently loaded embed.      |
+| SetImage       | URL                  | Set the image for the currently loaded embed.       |
+| SetThumbnail   | URL                  | Set the thumbnail for the currently loaded embed.   |
+| SetTimestamp   | <none>               | Set the timestamp for the currently loaded embed.   |
+| SetTitle       | Text                 | Set the title for the currently loaded embed.       |
 
 ## Info
 | Commands   | Arguments  | Description                             |

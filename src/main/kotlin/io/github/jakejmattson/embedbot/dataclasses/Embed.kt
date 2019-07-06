@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.entities.*
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
 
-data class Embed(val name: String,
+data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
                  val copyLocation: CopyLocation? = null) {
 
