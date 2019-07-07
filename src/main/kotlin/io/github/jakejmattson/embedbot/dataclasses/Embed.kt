@@ -22,6 +22,9 @@ data class Embed(var name: String,
     val fieldCount: Int
         get() = fields.size
 
+    val charCount: Int
+        get() = if (!isEmpty) build().length else 0
+
     fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl)
     fun setColor(color: Int) = builder.setColor(color)
     fun setDescription(description: String) = builder.setDescription(description)
@@ -82,4 +85,6 @@ data class Embed(var name: String,
 }
 
 data class UpdateResponse(val canUpdate: Boolean, val reason: String = "")
-data class CopyLocation(val channelId: String, val messageId: String)
+data class CopyLocation(val channelId: String, val messageId: String) {
+    override fun toString() = "Channel ID: $channelId\nMessage ID: $messageId"
+}

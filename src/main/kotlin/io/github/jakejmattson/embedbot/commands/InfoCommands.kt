@@ -18,18 +18,17 @@ fun infoCommands() = commands {
             val info =
                 embed {
                     addField("Embed Name", embed.name, false)
-                    addField("Is Empty", embed.isEmpty.toString(), false)
                     addField("Is Loaded", embed.isLoaded(guild).toString(), false)
-                    addField("Field Count", embed.fieldCount.toString(), false)
 
-                    addField("Copied From",
-                        if (embed.copyLocation == null)
-                            "<Not copied>"
-                        else
-                            "Channel ID: ${embed.copyLocation.channelId}\n" +
-                                "Message ID: ${embed.copyLocation.messageId}",
-                        false
-                    )
+                    if (!embed.isEmpty) {
+                        addField("Field Count", embed.fieldCount.toString(), false)
+                        addField("Character Count", embed.charCount.toString(), false)
+                    }
+                    else {
+                        addField("Is Empty", embed.isEmpty.toString(), false)
+                    }
+
+                    addField("Copied From", embed.copyLocation?.toString() ?: "<Not copied>", false)
                 }
 
             it.respond(info)
