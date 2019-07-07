@@ -145,11 +145,14 @@ fun editCommands() = commands {
         execute {
             val embed = it.args.component1() as Embed
             val newName = it.args.component2() as String
+            val guild = it.guild!!
 
-            if (it.guild!!.hasEmbedWithName(newName))
+            if (guild.hasEmbedWithName(newName))
                 return@execute it.respond("An embed with this name already exists.")
 
             embed.name = newName
+            guild.loadEmbed(embed)
+
             it.respond("Successfully changed the name of the embed to: $newName")
         }
     }
