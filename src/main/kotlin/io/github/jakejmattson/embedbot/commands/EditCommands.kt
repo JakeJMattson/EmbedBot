@@ -141,17 +141,23 @@ fun editCommands() = commands {
 
     command("Rename") {
         description = "Change the name of an existing embed."
-        expect(EmbedArg, WordArg("New Name"))
+        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }), arg(WordArg("New Name")))
         execute {
-            val embed = it.args.component1() as Embed
+            val targetEmbed = it.args.component1() as Embed
             val newName = it.args.component2() as String
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(newName))
                 return@execute it.respond("An embed with this name already exists.")
 
-            embed.name = newName
-            guild.loadEmbed(embed)
+            if (targetEmbed.isLoaded(guild)) {
+                val updatedEmbed = guild.getEmbedByName(targetEmbed.name)!!
+                updatedEmbed.name = newName
+                guild.loadEmbed(updatedEmbed)
+            }
+            else {
+                targetEmbed.name = newName
+            }
 
             it.respond("Successfully changed the name of the embed to: $newName")
         }
