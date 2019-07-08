@@ -4,6 +4,7 @@ import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.dsl.*
+import java.awt.Color
 
 @CommandSet("Info")
 fun infoCommands() = commands {
@@ -65,13 +66,11 @@ fun infoCommands() = commands {
     command("Limits") {
         description = "Display the discord embed limits."
         execute {
-            val bot = it.jda.selfUser
-            val footerUrl = bot.avatarUrl ?: bot.defaultAvatarUrl
-
             it.respond(
                 embed {
-                    setTitle("Discord Limits")
-                    setDescription("Below are all the limits imposed onto embeds by Discord.")
+                    title = "Discord Limits"
+                    description = "Below are all the limits imposed onto embeds by Discord."
+                    color = Color.orange
                     addInlineField("Total Character Limit", "6000 characters")
                     addInlineField("Total Field Limit", "25 fields")
                     addInlineField("Title", "256 characters")
@@ -80,8 +79,7 @@ fun infoCommands() = commands {
                     addInlineField("Field Value", "1024 characters")
                     addInlineField("Footer", "2048 characters")
                     addInlineField("Author", "256 characters")
-                    addBlankField(true)
-                    setFooter("https://discordapp.com/developers/docs/resources/channel#embed-limits-limits", footerUrl)
+                    addInlineField("","[Discord Docs](https://discordapp.com/developers/docs/resources/channel#embed-limits-limits)")
                 }
             )
         }

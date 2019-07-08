@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.Gson
-import io.github.jakejmattson.embedbot.extensions.addInlineField
+import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.fullName
 import java.awt.Color
@@ -35,8 +35,8 @@ fun utilityCommands() = commands {
             it.respond(embed {
                 val self = it.jda.selfUser
 
-                setColor(Color.green)
-                setThumbnail(self.effectiveAvatarUrl)
+                color = Color.green
+                thumbnail = self.effectiveAvatarUrl
                 addInlineField(self.fullName(), "A Discord embed management bot.")
                 addInlineField("Version", Project.version)
                 addInlineField("Author", Project.author)
@@ -55,9 +55,9 @@ fun utilityCommands() = commands {
             val days = (milliseconds / (1000 * 60 * 60 * 24))
 
             it.respond(embed {
-                setColor(Color.WHITE)
-                setTitle("I have been running since")
-                setDescription(startTime.toString())
+                color = Color.WHITE
+                title = "I have been running since"
+                description = startTime.toString()
 
                 field {
                     name = "That's been"
@@ -81,7 +81,7 @@ fun utilityCommands() = commands {
                         inline = true
                     }
                 }
-                setColor(Color.green)
+                color = Color.green
             })
         }
     }
