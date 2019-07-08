@@ -17,18 +17,18 @@ fun infoCommands() = commands {
 
             val info =
                 embed {
-                    addField("Embed Name", embed.name, false)
-                    addField("Is Loaded", embed.isLoaded(guild).toString(), false)
+                    addField("Embed Name", embed.name)
+                    addField("Is Loaded", embed.isLoaded(guild).toString())
 
                     if (!embed.isEmpty) {
-                        addField("Field Count", embed.fieldCount.toString(), false)
-                        addField("Character Count", embed.charCount.toString(), false)
+                        addField("Field Count", embed.fieldCount.toString())
+                        addField("Character Count", embed.charCount.toString())
                     }
                     else {
-                        addField("Is Empty", embed.isEmpty.toString(), false)
+                        addField("Is Empty", embed.isEmpty.toString())
                     }
 
-                    addField("Copied From", embed.copyLocation?.toString() ?: "<Not copied>", false)
+                    addField("Copied From", embed.copyLocation?.toString() ?: "<Not copied>")
                 }
 
             it.respond(info)
@@ -46,16 +46,16 @@ fun infoCommands() = commands {
                     val clusters = guild.getClusters()
 
                     val loadedEmbed = guild.getLoadedEmbed()?.name ?: "<None>"
-                    addField("Loaded", loadedEmbed, false)
+                    addField("Loaded", loadedEmbed)
 
                     val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
-                    addField("Embeds", embedList, false)
+                    addField("Embeds", embedList)
 
                     if (clusters.isEmpty())
-                        addField("Clusters", "<No clusters>", false)
+                        addField("Clusters", "<No clusters>")
                     else
                         clusters.forEach {
-                            addField(it.name, it.toString(), false)
+                            addField(it.name, it.toString())
                         }
                 }
             )
@@ -72,14 +72,14 @@ fun infoCommands() = commands {
                 embed {
                     setTitle("Discord Limits")
                     setDescription("Below are all the limits imposed onto embeds by Discord.")
-                    addField("Total Character Limit", "6000 characters", true)
-                    addField("Total Field Limit", "25 fields", true)
-                    addField("Title", "256 characters", true)
-                    addField("Description", "2048 characters", true)
-                    addField("Field Name", "256 characters", true)
-                    addField("Field Value", "1024 characters", true)
-                    addField("Footer", "2048 characters", true)
-                    addField("Author", "256 characters", true)
+                    addInlineField("Total Character Limit", "6000 characters")
+                    addInlineField("Total Field Limit", "25 fields")
+                    addInlineField("Title", "256 characters")
+                    addInlineField("Description", "2048 characters")
+                    addInlineField("Field Name", "256 characters")
+                    addInlineField("Field Value", "1024 characters")
+                    addInlineField("Footer", "2048 characters")
+                    addInlineField("Author", "256 characters")
                     addBlankField(true)
                     setFooter("https://discordapp.com/developers/docs/resources/channel#embed-limits-limits", footerUrl)
                 }

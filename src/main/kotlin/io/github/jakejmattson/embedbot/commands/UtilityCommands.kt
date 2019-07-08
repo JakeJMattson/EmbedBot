@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.Gson
+import io.github.jakejmattson.embedbot.extensions.addInlineField
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.fullName
 import java.awt.Color
@@ -36,10 +37,10 @@ fun utilityCommands() = commands {
 
                 setColor(Color.green)
                 setThumbnail(self.effectiveAvatarUrl)
-                addField(self.fullName(), "A Discord embed management bot.", true)
-                addField("Version", Project.version, true)
-                addField("Author", Project.author, true)
-                addField("Source", Project.repository, true)
+                addInlineField(self.fullName(), "A Discord embed management bot.")
+                addInlineField("Version", Project.version)
+                addInlineField("Author", Project.author)
+                addInlineField("Source", Project.repository)
             })
         }
     }
