@@ -32,7 +32,7 @@ fun utilityCommands() = commands {
     command("BotInfo") {
         description = "Display the bot information."
         execute {
-            it.respond(embed {
+            it.respondEmbed {
                 val self = it.jda.selfUser
 
                 color = Color.green
@@ -41,7 +41,7 @@ fun utilityCommands() = commands {
                 addInlineField("Version", Project.version)
                 addInlineField("Author", Project.author)
                 addInlineField("Source", Project.repository)
-            })
+            }
         }
     }
 
@@ -54,7 +54,7 @@ fun utilityCommands() = commands {
             val hours = (milliseconds / (1000 * 60 * 60)) % 24
             val days = (milliseconds / (1000 * 60 * 60 * 24))
 
-            it.respond(embed {
+            it.respondEmbed {
                 color = Color.WHITE
                 title = "I have been running since"
                 description = startTime.toString()
@@ -63,7 +63,7 @@ fun utilityCommands() = commands {
                     name = "That's been"
                     value = "$days day(s), $hours hour(s), $minutes minute(s) and $seconds second(s)"
                 }
-            })
+            }
         }
     }
 
@@ -73,7 +73,7 @@ fun utilityCommands() = commands {
             val commands = event.container.commands.values.groupBy { it.category }.toList()
                 .sortedBy { (_, value) -> -value.size }.toMap()
 
-            event.respond(embed {
+            event.respondEmbed {
                 commands.forEach {
                     field {
                         name = it.key
@@ -82,7 +82,7 @@ fun utilityCommands() = commands {
                     }
                 }
                 color = Color.green
-            })
+            }
         }
     }
 }
