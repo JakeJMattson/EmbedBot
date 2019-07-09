@@ -6,9 +6,8 @@ import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import java.awt.Color
 
-@CommandSet("Info")
+@CommandSet("Information")
 fun infoCommands() = commands {
-
     command("Info") {
         description = "Get extended info for the target embed."
         expect(EmbedArg)
@@ -16,7 +15,7 @@ fun infoCommands() = commands {
             val embed = it.args.component1() as Embed
             val guild = it.guild!!
 
-            val info =
+            it.respond(
                 embed {
                     addField("Embed Name", embed.name)
                     addField("Is Loaded", embed.isLoaded(guild).toString())
@@ -29,10 +28,9 @@ fun infoCommands() = commands {
                         addField("Is Empty", embed.isEmpty.toString())
                     }
 
-                    addField("Copied From", embed.copyLocation?.toString() ?: "<Not copied>")
+                    addField("Copied From", embed.copyLocationString)
                 }
-
-            it.respond(info)
+            )
         }
     }
 
@@ -42,14 +40,12 @@ fun infoCommands() = commands {
             it.respond(
                 embed {
                     val guild = it.guild!!
-
                     val embeds = guild.getEmbeds()
                     val clusters = guild.getClusters()
-
                     val loadedEmbed = guild.getLoadedEmbed()?.name ?: "<None>"
-                    addField("Loaded", loadedEmbed)
-
                     val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
+
+                    addField("Loaded", loadedEmbed)
                     addField("Embeds", embedList)
 
                     if (clusters.isEmpty())

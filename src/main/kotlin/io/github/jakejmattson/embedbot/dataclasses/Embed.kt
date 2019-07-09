@@ -11,7 +11,7 @@ import kotlin.streams.toList
 
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
-                 val copyLocation: CopyLocation? = null) {
+                 private val copyLocation: CopyLocation? = null) {
 
     val isEmpty: Boolean
         get() = builder.isEmpty
@@ -24,6 +24,9 @@ data class Embed(var name: String,
 
     val charCount: Int
         get() = if (!isEmpty) build().length else 0
+
+    val copyLocationString: String
+        get() = copyLocation?.toString() ?: "<Not copied>"
 
     fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl)
     fun setColor(color: Int) = builder.setColor(color)
