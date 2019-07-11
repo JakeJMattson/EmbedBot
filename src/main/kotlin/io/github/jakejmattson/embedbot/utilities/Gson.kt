@@ -5,7 +5,7 @@ import io.github.jakejmattson.embedbot.dataclasses.Embed
 import net.dv8tion.jda.core.EmbedBuilder
 import java.io.File
 
-val gson = GsonBuilder().setPrettyPrinting().create()
+val gson = GsonBuilder().setPrettyPrinting().create()!!
 
 fun createEmbedFromJson(name: String, json: String) = Embed(name, gson.fromJson(json, EmbedBuilder::class.java))
 

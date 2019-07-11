@@ -28,39 +28,39 @@ data class Embed(var name: String,
     val copyLocationString: String
         get() = copyLocation?.toString() ?: "<Not copied>"
 
-    fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl)
-    fun setColor(color: Int) = builder.setColor(color)
-    fun setDescription(description: String) = builder.setDescription(description)
-    fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)
-    fun setImage(url: String) = builder.setImage(url)
-    fun setThumbnail(url: String) = builder.setThumbnail(url)
-    fun setTimestamp(time: TemporalAccessor) = builder.setTimestamp(time)
-    fun setTitle(title: String) = builder.setTitle(title)
+    fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl)!!
+    fun setColor(color: Int) = builder.setColor(color)!!
+    fun setDescription(description: String) = builder.setDescription(description)!!
+    fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)!!
+    fun setImage(url: String) = builder.setImage(url)!!
+    fun setThumbnail(url: String) = builder.setThumbnail(url)!!
+    fun setTimestamp(time: TemporalAccessor) = builder.setTimestamp(time)!!
+    fun setTitle(title: String) = builder.setTitle(title)!!
 
-    fun clearAuthor() = builder.setAuthor(null)
-    fun clearColor() = builder.setColor(null)
-    fun clearDescription() = builder.setDescription(null)
-    fun clearFooter() = builder.setFooter(null, null)
-    fun clearImage() = builder.setImage(null)
-    fun clearThumbnail() = builder.setThumbnail(null)
-    fun clearTimestamp() = builder.setTimestamp(null)
-    fun clearTitle() = builder.setTitle(null)
+    fun clearAuthor() = builder.setAuthor(null)!!
+    fun clearColor() = builder.setColor(null)!!
+    fun clearDescription() = builder.setDescription(null)!!
+    fun clearFooter() = builder.setFooter(null, null)!!
+    fun clearImage() = builder.setImage(null)!!
+    fun clearThumbnail() = builder.setThumbnail(null)!!
+    fun clearTimestamp() = builder.setTimestamp(null)!!
+    fun clearTitle() = builder.setTitle(null)!!
 
-    fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
+    private fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
     fun setField(index: Int, field: Field) { builder.fields[index] = field }
-    fun addField(field: Field) = builder.addField(field)
-    fun removeField(index: Int) = builder.fields.removeAt(index)
+    fun addField(field: Field) = builder.addField(field)!!
+    fun removeField(index: Int) = builder.fields.removeAt(index)!!
 
-    fun clear() = builder.clear()
-    fun clearFields() = builder.clearFields()
+    fun clear() = builder.clear()!!
+    fun clearFields() = builder.clearFields()!!
     fun clearNonFields() {
         val fields = fields.stream().toList()
         clear()
         setFields(fields)
     }
 
-    fun build() = builder.build()
-    fun toJson() = gson.toJson(builder)
+    fun build() = builder.build()!!
+    fun toJson() = gson.toJson(builder)!!
 
     fun isLoaded(guild: Guild) = guild.getLoadedEmbed() == this
 
