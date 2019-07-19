@@ -69,6 +69,13 @@
 | SetTimestamp   | <none>                 | Set the timestamp for the currently loaded embed.   |
 | SetTitle       | Text                   | Set the title for the currently loaded embed.       |
 
+## Information
+| Commands   | Arguments  | Description                             |
+| ---------- | ---------- | --------------------------------------- |
+| Info       | Embed Name | Get extended info for the target embed. |
+| Limits     | <none>     | Display the discord embed limits.       |
+| ListEmbeds | <none>     | List all embeds created in this guild.  |
+
 ## Utility
 | Commands     | Arguments | Description                                 |
 | ------------ | --------- | ------------------------------------------- |
@@ -78,11 +85,4 @@
 | Source       | <none>    | Display the (source code) repository link.  |
 | Uptime       | <none>    | Displays how long the bot has been running. |
 | help         | (Word)    | Display a help menu                         |
-
-## Information
-| Commands   | Arguments  | Description                             |
-| ---------- | ---------- | --------------------------------------- |
-| Info       | Embed Name | Get extended info for the target embed. |
-| Limits     | <none>     | Display the discord embed limits.       |
-| ListEmbeds | <none>     | List all embeds created in this guild.  |
 
