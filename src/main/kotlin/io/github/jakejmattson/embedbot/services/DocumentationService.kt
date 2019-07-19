@@ -17,19 +17,19 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
 
         if (configuration.generateDocsAtRuntime)
             Timer().schedule(500) {
-                createDocumentation(container)
+                createDocumentation(container, Output.FILE)
             }
     }
 
-    private fun createDocumentation(container: CommandsContainer) {
+    private fun createDocumentation(container: CommandsContainer, outputType: Output) {
         val sortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy",
-            "Field", "Cluster", "Edit", "Info", "Utility")
+            "Field", "Cluster", "Edit", "Information", "Utility")
 
         val categories = container.commands.values.groupBy { it.category }
         val categoryDocs = generateDocsByCategory(categories)
         val sortedDocs = sortCategoryDocs(categoryDocs, sortOrder)
 
-        outputDocs(sortedDocs, Output.FILE)
+        outputDocs(sortedDocs, outputType)
     }
 
     private fun generateDocsByCategory(categories: Map<String, List<Command>>) =
@@ -79,6 +79,7 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
 
     private fun sortCategoryDocs(categoryDocs: ArrayList<CategoryDocs>, sortOrder: ArrayList<String>): List<CategoryDocs> {
         val sortedMap = LinkedHashMap<String, CategoryDocs?>()
+        val rogueCategories = arrayListOf<String>()
 
         //Populate the map keys with the desired sort order
         sortOrder.forEach {
@@ -88,7 +89,26 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
         //Populate the (sorted) map values with docs by name
         //If the sort order was not specified for a doc, it is appended to the end.
         categoryDocs.forEach {
+            if (!sortedMap.containsKey(it.name))
+                rogueCategories.add(it.name)
+
             sortedMap[it.name] = it
+        }
+
+        val deadCategories = sortedMap.filter { it.value == null }.map { it.key }
+
+        with (rogueCategories) {
+            if (isEmpty())
+                return@with
+
+            println("Found $size rogue categories not requested for sort. Appending to sorted docs: ${joinToString()}")
+        }
+
+        with (deadCategories) {
+            if (isEmpty())
+                return@with
+
+            println("Found $size categories with no commands requested for sorting. Ignoring: ${joinToString()}")
         }
 
         //Remove dead keys (values with no data)
@@ -109,7 +129,6 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
     }
 
     private fun outputToFile(docs: String) {
-        val file = File("Commands.md")
         val fileHeader =
             "# Commands\n\n" +
             "$indentLevel Key\n" +
@@ -118,7 +137,11 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
             "| (Argument) | This argument is optional. |\n"
 
         val fileText = "$fileHeader\n$docs"
-        file.writeText(fileText)
+
+        File("Commands.md").apply {
+            writeText(fileText)
+            println("Successfully generated documentation: $absolutePath")
+        }
     }
 
     private data class CategoryDocs(val name: String, val docString: String) {
