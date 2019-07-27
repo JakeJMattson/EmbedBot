@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.dataclasses
 
-import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
+import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.Field
 import io.github.jakejmattson.embedbot.utilities.gson
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
@@ -80,6 +80,12 @@ data class Embed(var name: String,
 
         if (isEmpty)
             return UpdateResponse(false, "Cannot build an empty embed.")
+
+        val currentEmbed = message.getEmbed()
+            ?: return UpdateResponse(false, "Target message has no embed.")
+
+        if (currentEmbed == builder.build())
+            return UpdateResponse(false, "This message is up to date.")
 
         message.editMessage(build()).complete()
 
