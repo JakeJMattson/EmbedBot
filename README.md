@@ -8,6 +8,9 @@
   <a href="https://discordapp.com/users/254786431656919051/">
     <img src="https://img.shields.io/badge/Discord-JakeyWakey%231569-lightgrey.svg" alt="Discord JakeyWakey#1569">
   </a>
+  <a href="https://discord.gg/programming">
+    <img src="https://img.shields.io/badge/Discord-lightgrey.svg" alt="Discord JakeyWakey#1569">
+  </a>
   <a href="https://GitHub.com/JakeJMattson/EmbedBot/releases/">
     <img src="https://img.shields.io/github/release/JakeJMattson/EmbedBot.svg" alt="Release">
   </a>
