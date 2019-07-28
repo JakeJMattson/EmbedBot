@@ -51,25 +51,19 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val clusterName = it.args.component1() as String
             val channel = it.args.component2() as TextChannel
             val amount = it.args.component3() as Int
-            val embeds = ArrayList<Embed>()
 
             if (amount <= 0)
                 return@execute it.respond("Cluster size should be 1 or greater.")
 
-            var index = 1
+            val messagesWithEmbeds = channel.iterableHistory.complete().filter { it.getEmbed() != null }.take(amount)
+               as ArrayList
 
-            channel.iterableHistory.complete().takeWhile {
-                val embed = it.getEmbed()
+            messagesWithEmbeds.reverse()
 
-                if (embed != null) {
-                    embeds.add(Embed("$clusterName-$index", embed.toEmbedBuilder(), CopyLocation(channel.id, it.id)))
-                    index++
-                }
+            val embeds = messagesWithEmbeds.mapIndexed { index, message ->
+                Embed("$clusterName-${index + 1}", message.getEmbed()!!.toEmbedBuilder(), CopyLocation(channel.id, message.id))
+            } as ArrayList
 
-                embeds.size != amount
-            }
-
-            embeds.reverse()
             val wasSuccessful = embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
 
             it.respond(
