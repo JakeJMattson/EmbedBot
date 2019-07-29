@@ -39,6 +39,7 @@
 ## Field
 | Commands        | Arguments               | Description                                              |
 | --------------- | ----------------------- | -------------------------------------------------------- |
+| AddBlankField   | (isInline - Boolean)    | Add a blank field to the loaded embed.                   |
 | AddField        | Field Data              | Add a field in the following format: title\|body\|inline |
 | EditField       | Field Index, Field Data | Edit a field at a given index with the given data.       |
 | EditFieldInline | Field Index, Boolean    | Get a field by its index and edit its inline value.      |

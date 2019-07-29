@@ -49,6 +49,7 @@ data class Embed(var name: String,
     private fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
     fun setField(index: Int, field: Field) { builder.fields[index] = field }
     fun addField(field: Field) = builder.addField(field)!!
+    fun addBlankField(isInline: Boolean) = builder.addBlankField(isInline)!!
     fun removeField(index: Int) = builder.fields.removeAt(index)!!
 
     fun setFieldName(index: Int, name: String) = setField(index, Field(name, fields[index].value, fields[index].isInline))

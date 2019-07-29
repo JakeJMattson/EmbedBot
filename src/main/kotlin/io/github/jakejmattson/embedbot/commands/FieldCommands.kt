@@ -20,6 +20,18 @@ fun fieldCommands() = commands {
         }
     }
 
+    command("AddBlankField") {
+        description = "Add a blank field to the loaded embed."
+        expect(arg(BooleanArg("isInline - Boolean"), optional = true, default = false))
+        execute {
+            val isInline = it.args.component1() as Boolean
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            embed.addBlankField(isInline)
+            it.respond("Field added.")
+        }
+    }
+
     command("RemoveField") {
         description = "Remove a field from the loaded embed by its index."
         expect(FieldIndexArg)
@@ -54,7 +66,6 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldName(index, newTitle)
-
             it.respond("Field updated.")
         }
     }
@@ -68,7 +79,6 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldText(index, newText)
-
             it.respond("Field updated.")
         }
     }
@@ -82,7 +92,6 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldInline(index, newInline)
-
             it.respond("Field updated.")
         }
     }
