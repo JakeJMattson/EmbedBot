@@ -37,11 +37,14 @@
 | UpdateOriginal | <none>                            | Update the original embed this content was copied from. |
 
 ## Field
-| Commands    | Arguments               | Description                                              |
-| ----------- | ----------------------- | -------------------------------------------------------- |
-| AddField    | Field Data              | Add a field in the following format: title\|body\|inline |
-| EditField   | Field Index, Field Data | Edit a field at a given index with the given data.       |
-| RemoveField | Field Index             | Remove a field from the loaded embed by its index.       |
+| Commands        | Arguments               | Description                                              |
+| --------------- | ----------------------- | -------------------------------------------------------- |
+| AddField        | Field Data              | Add a field in the following format: title\|body\|inline |
+| EditField       | Field Index, Field Data | Edit a field at a given index with the given data.       |
+| EditFieldInline | Field Index, Boolean    | Edit a field's inline at the given index.                |
+| EditFieldText   | Field Index, Text       | Edit a field's text at the given index.                  |
+| EditFieldTitle  | Field Index, Text       | Edit a field's title at the given index.                 |
+| RemoveField     | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster
 | Commands          | Arguments                       | Description                                                  |

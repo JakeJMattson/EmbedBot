@@ -4,6 +4,8 @@ import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import io.github.jakejmattson.embedbot.services.Field
 import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.internal.command.arguments.SentenceArg
+import net.dv8tion.jda.core.entities.MessageEmbed
 
 @CommandSet("Field")
 fun fieldCommands() = commands {
@@ -40,7 +42,55 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setField(index, field)
-            it.respond("Field set.")
+            it.respond("Field updated.")
+        }
+    }
+
+    command("EditFieldTitle") {
+        description = "Edit a field's title at the given index."
+        expect(FieldIndexArg, SentenceArg)
+        execute {
+            val index = it.args.component1() as Int
+            val newTitle = it.args.component2() as String
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            val oldField = embed.fields[index]
+            val newField = MessageEmbed.Field(newTitle, oldField.value, oldField.isInline)
+
+            embed.setField(index, newField)
+            it.respond("Field updated.")
+        }
+    }
+
+    command("EditFieldText") {
+        description = "Edit a field's text at the given index."
+        expect(FieldIndexArg, SentenceArg)
+        execute {
+            val index = it.args.component1() as Int
+            val newText = it.args.component2() as String
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            val oldField = embed.fields[index]
+            val newField = MessageEmbed.Field(oldField.name, newText, oldField.isInline)
+
+            embed.setField(index, newField)
+            it.respond("Field updated.")
+        }
+    }
+
+    command("EditFieldInline") {
+        description = "Edit a field's inline at the given index."
+        expect(FieldIndexArg, BooleanArg)
+        execute {
+            val index = it.args.component1() as Int
+            val newInline = it.args.component2() as Boolean
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            val oldField = embed.fields[index]
+            val newField = MessageEmbed.Field(oldField.name, oldField.value, newInline)
+
+            embed.setField(index, newField)
+            it.respond("Field updated.")
         }
     }
 }

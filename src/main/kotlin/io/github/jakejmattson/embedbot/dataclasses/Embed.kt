@@ -16,7 +16,7 @@ data class Embed(var name: String,
     val isEmpty: Boolean
         get() = builder.isEmpty
 
-    private val fields: List<Field>
+    val fields: List<Field>
         get() = builder.fields
 
     val fieldCount: Int
