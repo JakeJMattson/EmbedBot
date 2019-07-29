@@ -32,6 +32,19 @@ fun fieldCommands() = commands {
         }
     }
 
+    command("InsertField") {
+        description = "Insert a field at an index to the loaded embed."
+        expect(FieldIndexArg, FieldArg)
+        execute {
+            val index = it.args.component1() as Int
+            val field = it.args.component2() as Field
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            embed.insertField(index, field)
+            it.respond("Field inserted at index $index")
+        }
+    }
+
     command("RemoveField") {
         description = "Remove a field from the loaded embed by its index."
         expect(FieldIndexArg)

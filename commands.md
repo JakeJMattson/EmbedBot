@@ -45,6 +45,7 @@
 | EditFieldInline | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
 | EditFieldText   | Field Index, Text       | Get a field by its index and edit its text value.        |
 | EditFieldTitle  | Field Index, Text       | Get a field by its index and edit its title value.       |
+| InsertField     | Field Index, Field Data | Insert a field at an index to the loaded embed.          |
 | RemoveField     | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster

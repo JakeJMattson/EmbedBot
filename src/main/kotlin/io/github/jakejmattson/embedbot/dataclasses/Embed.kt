@@ -16,7 +16,7 @@ data class Embed(var name: String,
     val isEmpty: Boolean
         get() = builder.isEmpty
 
-    private val fields: List<Field>
+    private val fields: MutableList<Field>
         get() = builder.fields
 
     val fieldCount: Int
@@ -47,14 +47,14 @@ data class Embed(var name: String,
     fun clearTitle() = builder.setTitle(null)!!
 
     private fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
-    fun setField(index: Int, field: Field) { builder.fields[index] = field }
+    fun setField(index: Int, field: Field) { fields[index] = field }
     fun addField(field: Field) = builder.addField(field)!!
     fun addBlankField(isInline: Boolean) = builder.addBlankField(isInline)!!
-    fun removeField(index: Int) = builder.fields.removeAt(index)!!
-
-    fun setFieldName(index: Int, name: String) = setField(index, Field(name, fields[index].value, fields[index].isInline))
-    fun setFieldText(index: Int, value: String) = setField(index, Field(fields[index].name, value, fields[index].isInline))
-    fun setFieldInline(index: Int, isInline: Boolean) = setField(index, Field(fields[index].name, fields[index].value, isInline))
+    fun removeField(index: Int) = fields.removeAt(index)
+    fun insertField(index: Int, field: Field) = fields.add(index, field)
+    fun setFieldName(index: Int, name: String) = with(fields[index]) { setField(index, Field(name, value, isInline)) }
+    fun setFieldText(index: Int, value: String) = with(fields[index]) { setField(index, Field(name, value, isInline)) }
+    fun setFieldInline(index: Int, isInline: Boolean) = with(fields[index]) { setField(index, Field(name, value, isInline)) }
 
     fun clear() = builder.clear()!!
     fun clearFields() = builder.clearFields()!!
