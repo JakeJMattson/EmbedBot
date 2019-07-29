@@ -41,9 +41,9 @@
 | --------------- | ----------------------- | -------------------------------------------------------- |
 | AddField        | Field Data              | Add a field in the following format: title\|body\|inline |
 | EditField       | Field Index, Field Data | Edit a field at a given index with the given data.       |
-| EditFieldInline | Field Index, Boolean    | Edit a field's inline at the given index.                |
-| EditFieldText   | Field Index, Text       | Edit a field's text at the given index.                  |
-| EditFieldTitle  | Field Index, Text       | Edit a field's title at the given index.                 |
+| EditFieldInline | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
+| EditFieldText   | Field Index, Text       | Get a field by its index and edit its text value.        |
+| EditFieldTitle  | Field Index, Text       | Get a field by its index and edit its title value.       |
 | RemoveField     | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster

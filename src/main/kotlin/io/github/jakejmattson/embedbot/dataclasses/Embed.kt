@@ -16,7 +16,7 @@ data class Embed(var name: String,
     val isEmpty: Boolean
         get() = builder.isEmpty
 
-    val fields: List<Field>
+    private val fields: List<Field>
         get() = builder.fields
 
     val fieldCount: Int
@@ -50,6 +50,10 @@ data class Embed(var name: String,
     fun setField(index: Int, field: Field) { builder.fields[index] = field }
     fun addField(field: Field) = builder.addField(field)!!
     fun removeField(index: Int) = builder.fields.removeAt(index)!!
+
+    fun setFieldName(index: Int, name: String) = setField(index, Field(name, fields[index].value, fields[index].isInline))
+    fun setFieldText(index: Int, value: String) = setField(index, Field(fields[index].name, value, fields[index].isInline))
+    fun setFieldInline(index: Int, isInline: Boolean) = setField(index, Field(fields[index].name, fields[index].value, isInline))
 
     fun clear() = builder.clear()!!
     fun clearFields() = builder.clearFields()!!
