@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.*
-import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
+import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.Field
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.SentenceArg
@@ -10,6 +10,7 @@ import me.aberrantfox.kjdautils.internal.command.arguments.SentenceArg
 fun fieldCommands() = commands {
     command("AddField") {
         description = "Add a field in the following format: title|body|inline"
+        requiresLoadedEmbed = true
         expect(FieldArg)
         execute {
             val field = it.args.component1() as Field
@@ -22,6 +23,7 @@ fun fieldCommands() = commands {
 
     command("AddBlankField") {
         description = "Add a blank field to the loaded embed."
+        requiresLoadedEmbed = true
         expect(arg(BooleanArg("isInline - Boolean"), optional = true, default = false))
         execute {
             val isInline = it.args.component1() as Boolean
@@ -34,6 +36,7 @@ fun fieldCommands() = commands {
 
     command("InsertField") {
         description = "Insert a field at an index to the loaded embed."
+        requiresLoadedEmbed = true
         expect(FieldIndexArg, FieldArg)
         execute {
             val index = it.args.component1() as Int
@@ -47,6 +50,7 @@ fun fieldCommands() = commands {
 
     command("RemoveField") {
         description = "Remove a field from the loaded embed by its index."
+        requiresLoadedEmbed = true
         expect(FieldIndexArg)
         execute {
             val index = it.args.component1() as Int
@@ -59,6 +63,7 @@ fun fieldCommands() = commands {
 
     command("EditField") {
         description = "Edit a field at a given index with the given data."
+        requiresLoadedEmbed = true
         expect(FieldIndexArg, FieldArg)
         execute {
             val index = it.args.component1() as Int
@@ -72,6 +77,7 @@ fun fieldCommands() = commands {
 
     command("EditFieldTitle") {
         description = "Get a field by its index and edit its title value."
+        requiresLoadedEmbed = true
         expect(FieldIndexArg, SentenceArg)
         execute {
             val index = it.args.component1() as Int
@@ -85,6 +91,7 @@ fun fieldCommands() = commands {
 
     command("EditFieldText") {
         description = "Get a field by its index and edit its text value."
+        requiresLoadedEmbed = true
         expect(FieldIndexArg, SentenceArg)
         execute {
             val index = it.args.component1() as Int
@@ -98,6 +105,7 @@ fun fieldCommands() = commands {
 
     command("EditFieldInline") {
         description = "Get a field by its index and edit its inline value."
+        requiresLoadedEmbed = true
         expect(FieldIndexArg, BooleanArg)
         execute {
             val index = it.args.component1() as Int

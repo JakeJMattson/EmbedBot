@@ -66,10 +66,9 @@ fun copyCommands(embedService: EmbedService) = commands {
 
     command("UpdateOriginal") {
         description = "Update the original embed this content was copied from."
+        requiresLoadedEmbed = true
         execute {
-            val embed = it.guild!!.getLoadedEmbed()
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = it.guild!!.getLoadedEmbed()!!
             val updateResponse = embed.update(it.jda)
 
             if (!updateResponse.canUpdate)

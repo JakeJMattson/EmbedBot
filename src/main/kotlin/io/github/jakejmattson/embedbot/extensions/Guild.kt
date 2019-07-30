@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.entities.Guild
 fun Guild.getEmbeds() = getGuildEmbeds().embedList.sortedBy { it.name }
 fun Guild.getClusters() = getGuildEmbeds().clusterList.sortedBy { it.name }
 
+fun Guild.hasLoadedEmbed() = getLoadedEmbed() != null
 fun Guild.getLoadedEmbed() = getGuildEmbeds().loadedEmbed
 fun Guild.loadEmbed(embed: Embed) = getGuildEmbeds().load(embed)
 

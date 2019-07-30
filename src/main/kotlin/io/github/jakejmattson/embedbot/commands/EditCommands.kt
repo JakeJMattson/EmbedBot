@@ -15,6 +15,7 @@ private const val commandDescriptionFormat = "Set the %s for the currently loade
 fun editCommands() = commands {
     command("SetAuthor") {
         description = commandDescriptionFormat.format("author")
+        requiresLoadedEmbed = true
         expect(UserArg)
         execute {
             val user = it.args.component1() as User
@@ -29,6 +30,7 @@ fun editCommands() = commands {
 
     command("SetColor") {
         description = commandDescriptionFormat.format("color")
+        requiresLoadedEmbed = true
         expect(HexColorArg)
         execute {
             val color = it.args.component1() as Int
@@ -41,6 +43,7 @@ fun editCommands() = commands {
 
     command("SetDescription") {
         description = commandDescriptionFormat.format("description")
+        requiresLoadedEmbed = true
         expect(SentenceArg)
         execute {
             val description = it.args.component1() as String
@@ -53,6 +56,7 @@ fun editCommands() = commands {
 
     command("SetFooter") {
         description = commandDescriptionFormat.format("footer")
+        requiresLoadedEmbed = true
         expect(UrlArg("Icon URL"), SentenceArg("Text"))
         execute {
             val url = it.args.component1() as String
@@ -66,6 +70,7 @@ fun editCommands() = commands {
 
     command("SetImage") {
         description = commandDescriptionFormat.format("image")
+        requiresLoadedEmbed = true
         expect(UrlArg)
         execute {
             val url = it.args.component1() as String
@@ -78,6 +83,7 @@ fun editCommands() = commands {
 
     command("SetThumbnail") {
         description = commandDescriptionFormat.format("thumbnail")
+        requiresLoadedEmbed = true
         expect(UrlArg)
         execute {
             val url = it.args.component1() as String
@@ -90,6 +96,7 @@ fun editCommands() = commands {
 
     command("SetTimestamp") {
         description = commandDescriptionFormat.format("timestamp")
+        requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
             embed.setTimestamp(LocalDateTime.now())
@@ -99,6 +106,7 @@ fun editCommands() = commands {
 
     command("SetTitle") {
         description = commandDescriptionFormat.format("title")
+        requiresLoadedEmbed = true
         expect(SentenceArg)
         execute {
             val title = it.args.component1() as String
@@ -111,6 +119,7 @@ fun editCommands() = commands {
 
     command("Clear") {
         description = "Clear a target field from the loaded embed."
+        requiresLoadedEmbed = true
         expect(arg(WordArg("Clear Target"), optional = true, default = ""))
         execute {
             val field = (it.args.component1() as String).toLowerCase()
@@ -141,6 +150,7 @@ fun editCommands() = commands {
 
     command("Rename") {
         description = "Change the name of an existing embed."
+        requiresLoadedEmbed = true
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }), arg(WordArg("New Name")))
         execute {
             val targetEmbed = it.args.component1() as Embed

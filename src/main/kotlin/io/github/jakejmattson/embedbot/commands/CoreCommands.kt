@@ -14,12 +14,12 @@ import net.dv8tion.jda.core.entities.TextChannel
 fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         description = "Send the currently loaded embed."
+        requiresLoadedEmbed = true
         expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute {
             val channel = it.args.component1() as TextChannel
 
-            val embed = it.guild!!.getLoadedEmbed()
-                ?: return@execute it.respond("No embed loaded!")
+            val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
                 return@execute it.respond("This embed is empty.")
@@ -46,6 +46,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Delete") {
         description = "Delete the embed with this name."
+        requiresLoadedEmbed = true
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }))
         execute {
             val embed = it.args.component1() as Embed
@@ -90,10 +91,9 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Export") {
         description = "Export the currently loaded embed to JSON."
+        requiresLoadedEmbed = true
         execute {
-            val embed = it.guild!!.getLoadedEmbed()
-                ?: return@execute it.respond("No embed loaded!")
-
+            val embed = it.guild!!.getLoadedEmbed()!!
             val json = embed.toJson()
 
             if (json.length >= 1985)
