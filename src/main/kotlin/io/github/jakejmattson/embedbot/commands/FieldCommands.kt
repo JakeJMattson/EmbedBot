@@ -37,7 +37,7 @@ fun fieldCommands() = commands {
     command("InsertField") {
         description = "Insert a field at an index to the loaded embed."
         requiresLoadedEmbed = true
-        expect(FieldIndexArg, FieldArg)
+        expect(FieldIndexArg("Index"), FieldArg)
         execute {
             val index = it.args.component1() as Int
             val field = it.args.component2() as Field

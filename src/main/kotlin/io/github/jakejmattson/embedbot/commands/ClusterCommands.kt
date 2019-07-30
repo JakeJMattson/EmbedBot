@@ -136,9 +136,25 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val cluster = it.args.component1() as Cluster
             val embed = it.args.component2() as Embed
 
-            embedService.addEmbedToCluster(it.guild!!, cluster, embed)
+            cluster.addEmbed(it.guild!!, embed)
 
             it.respond("Successfully added ${embed.name} to ${cluster.name}")
+        }
+    }
+
+    command("InsertIntoCluster") {
+        description = "Insert an embed into a cluster at an index."
+        expect(ClusterArg, IntegerArg("Index"), EmbedArg)
+        execute {
+            val cluster = it.args.component1() as Cluster
+            val index = it.args.component2() as Int
+            val embed = it.args.component3() as Embed
+
+            if (index !in 0..cluster.size)
+                return@execute it.respond("Invalid Index. Expected range: 0-${cluster.size}")
+
+            cluster.insertEmbed(it.guild!!, index, embed)
+            it.respond("Cluster inserted at index $index")
         }
     }
 

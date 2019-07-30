@@ -82,12 +82,6 @@ class EmbedService {
         return true
     }
 
-    fun addEmbedToCluster(guild: Guild, cluster: Cluster, embed: Embed) {
-        guild.removeEmbed(embed)
-        cluster.addEmbed(embed)
-        saveEmbeds()
-    }
-
     fun removeEmbedFromCluster(guild: Guild, embed: Embed) {
         guild.removeEmbed(embed)
         addEmbed(guild, embed)
@@ -95,7 +89,7 @@ class EmbedService {
     }
 }
 
-private fun saveEmbeds() = save(embedFile, embedMap)
+fun saveEmbeds() = save(embedFile, embedMap)
 
 private fun loadEmbeds() =
     if (embedFile.exists())
