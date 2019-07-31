@@ -24,7 +24,7 @@ fun fieldCommands() = commands {
     command("AddBlankField") {
         description = "Add a blank field to the loaded embed."
         requiresLoadedEmbed = true
-        expect(arg(BooleanArg("isInline - Boolean"), optional = true, default = false))
+        expect(arg(BooleanArg("isInline"), optional = true, default = false))
         execute {
             val isInline = it.args.component1() as Boolean
             val embed = it.guild!!.getLoadedEmbed()!!

@@ -20,14 +20,14 @@
 | Setup           | Required Role | Set up this bot for use.                      |
 
 ## Core
-| Commands | Arguments                          | Description                                |
-| -------- | ---------------------------------- | ------------------------------------------ |
-| Create   | Embed Name                         | Create a new embed with this name.         |
-| Delete   | (Embed Name)                       | Delete the embed with this name.           |
-| Export   | <none>                             | Export the currently loaded embed to JSON. |
-| Import   | Embed Name, JSON                   | Import a JSON String as an embed.          |
-| Load     | Embed Name                         | Load the embed with this name into memory. |
-| Send     | (Channel), (shouldTrack - Boolean) | Send the currently loaded embed.           |
+| Commands | Arguments                | Description                                |
+| -------- | ------------------------ | ------------------------------------------ |
+| Create   | Embed Name               | Create a new embed with this name.         |
+| Delete   | (Embed Name)             | Delete the embed with this name.           |
+| Export   | <none>                   | Export the currently loaded embed to JSON. |
+| Import   | Embed Name, JSON         | Import a JSON String as an embed.          |
+| Load     | Embed Name               | Load the embed with this name into memory. |
+| Send     | (Channel), (shouldTrack) | Send the currently loaded embed.           |
 
 ## Copy
 | Commands       | Arguments                         | Description                                             |
@@ -39,7 +39,7 @@
 ## Field
 | Commands        | Arguments               | Description                                              |
 | --------------- | ----------------------- | -------------------------------------------------------- |
-| AddBlankField   | (isInline - Boolean)    | Add a blank field to the loaded embed.                   |
+| AddBlankField   | (isInline)              | Add a blank field to the loaded embed.                   |
 | AddField        | Field Data              | Add a field in the following format: title\|body\|inline |
 | EditField       | Field Index, Field Data | Edit a field at a given index with the given data.       |
 | EditFieldInline | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
@@ -49,17 +49,17 @@
 | RemoveField     | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster
-| Commands          | Arguments                       | Description                                                  |
-| ----------------- | ------------------------------- | ------------------------------------------------------------ |
-| AddToCluster      | Cluster Name, Embed Name        | Add an embed into a cluster.                                 |
-| CloneCluster      | Cluster Name, (Channel), Amount | Clone a group of embeds into a cluster.                      |
-| CreateCluster     | Cluster Name                    | Create a cluster for storing and deploying groups of embeds. |
-| DeleteCluster     | Cluster Name                    | Delete a cluster and all of its embeds.                      |
-| Deploy            | Cluster Name, (Channel)         | Deploy a cluster into a target channel.                      |
-| InsertIntoCluster | Cluster Name, Index, Embed Name | Insert an embed into a cluster at an index.                  |
-| RemoveFromCluster | Embed Name                      | Remove an embed from its cluster.                            |
-| RenameCluster     | Cluster Name, New Name          | Change the name of an existing cluster.                      |
-| UpdateCluster     | Cluster Name                    | Update the original embeds this cluster was copied from.     |
+| Commands          | Arguments                              | Description                                                  |
+| ----------------- | -------------------------------------- | ------------------------------------------------------------ |
+| AddToCluster      | Cluster Name, Embed Name               | Add an embed into a cluster.                                 |
+| CloneCluster      | Cluster Name, (Channel), Amount        | Clone a group of embeds into a cluster.                      |
+| CreateCluster     | Cluster Name                           | Create a cluster for storing and deploying groups of embeds. |
+| DeleteCluster     | Cluster Name                           | Delete a cluster and all of its embeds.                      |
+| Deploy            | Cluster Name, (Channel), (shouldTrack) | Deploy a cluster into a target channel.                      |
+| InsertIntoCluster | Cluster Name, Index, Embed Name        | Insert an embed into a cluster at an index.                  |
+| RemoveFromCluster | Embed Name                             | Remove an embed from its cluster.                            |
+| RenameCluster     | Cluster Name, New Name                 | Change the name of an existing cluster.                      |
+| UpdateCluster     | Cluster Name                           | Update the original embeds this cluster was copied from.     |
 
 ## Edit
 | Commands       | Arguments              | Description                                         |

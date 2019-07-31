@@ -16,7 +16,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = "Send the currently loaded embed."
         requiresLoadedEmbed = true
         expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
-            arg(BooleanArg("shouldTrack - Boolean"), optional = true, default = false))
+            arg(BooleanArg("shouldTrack"), optional = true, default = false))
         execute {
             val channel = it.args.component1() as TextChannel
             val shouldTrack = it.args.component2() as Boolean

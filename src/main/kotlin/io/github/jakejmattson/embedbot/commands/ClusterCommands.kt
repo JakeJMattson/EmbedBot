@@ -118,13 +118,18 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("Deploy") {
         description = "Deploy a cluster into a target channel."
         expect(arg(ClusterArg),
-                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
+                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
+                arg(BooleanArg("shouldTrack"), optional = true, default = false))
         execute {
             val cluster = it.args.component1() as Cluster
             val channel = it.args.component2() as TextChannel
+            val shouldTrack = it.args.component3() as Boolean
 
-            cluster.build().forEach {
-                channel.sendMessage(it).queue()
+            cluster.embeds.forEach { embed ->
+                channel.sendMessage(embed.build()).queue { message ->
+                    if (shouldTrack)
+                        embed.copyLocation = CopyLocation(channel.id, message.id)
+                }
             }
         }
     }
