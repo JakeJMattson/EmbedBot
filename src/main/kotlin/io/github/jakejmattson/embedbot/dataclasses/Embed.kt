@@ -11,7 +11,7 @@ import kotlin.streams.toList
 
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
-                 private val copyLocation: CopyLocation? = null) {
+                 var copyLocation: CopyLocation? = null) {
 
     val isEmpty: Boolean
         get() = builder.isEmpty

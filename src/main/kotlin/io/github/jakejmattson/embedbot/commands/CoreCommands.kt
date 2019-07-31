@@ -1,8 +1,8 @@
 package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.JsonSyntaxException
-import io.github.jakejmattson.embedbot.arguments.EmbedArg
-import io.github.jakejmattson.embedbot.dataclasses.Embed
+import io.github.jakejmattson.embedbot.arguments.*
+import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.EmbedService
 import io.github.jakejmattson.embedbot.utilities.createEmbedFromJson
@@ -15,16 +15,21 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         description = "Send the currently loaded embed."
         requiresLoadedEmbed = true
-        expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
+        expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
+            arg(BooleanArg("shouldTrack - Boolean"), optional = true, default = false))
         execute {
             val channel = it.args.component1() as TextChannel
+            val shouldTrack = it.args.component2() as Boolean
 
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
                 return@execute it.respond("This embed is empty.")
 
-            channel.sendMessage(embed.build()).queue()
+            channel.sendMessage(embed.build()).queue { message ->
+                if (shouldTrack)
+                    embed.copyLocation = CopyLocation(channel.id, message.id)
+            }
         }
     }
 
