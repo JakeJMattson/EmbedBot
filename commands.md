@@ -20,14 +20,15 @@
 | Setup           | Required Role | Set up this bot for use.                      |
 
 ## Core
-| Commands | Arguments                | Description                                |
-| -------- | ------------------------ | ------------------------------------------ |
-| Create   | Embed Name               | Create a new embed with this name.         |
-| Delete   | (Embed Name)             | Delete the embed with this name.           |
-| Export   | <none>                   | Export the currently loaded embed to JSON. |
-| Import   | Embed Name, JSON         | Import a JSON String as an embed.          |
-| Load     | Embed Name               | Load the embed with this name into memory. |
-| Send     | (Channel), (shouldTrack) | Send the currently loaded embed.           |
+| Commands  | Arguments                | Description                                |
+| --------- | ------------------------ | ------------------------------------------ |
+| Create    | Embed Name               | Create a new embed with this name.         |
+| Delete    | (Embed Name)             | Delete the embed with this name.           |
+| Duplicate | Embed Name, Embed Name   | Create a new embed from an existing embed. |
+| Export    | <none>                   | Export the currently loaded embed to JSON. |
+| Import    | Embed Name, JSON         | Import a JSON String as an embed.          |
+| Load      | Embed Name               | Load the embed with this name into memory. |
+| Send      | (Channel), (shouldTrack) | Send the currently loaded embed.           |
 
 ## Copy
 | Commands       | Arguments                         | Description                                             |

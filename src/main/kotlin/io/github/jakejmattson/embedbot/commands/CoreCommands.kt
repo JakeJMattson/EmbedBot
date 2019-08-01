@@ -49,6 +49,24 @@ fun coreCommands(embedService: EmbedService) = commands {
         }
     }
 
+    command("Duplicate") {
+        description = "Create a new embed from an existing embed."
+        expect(WordArg("Embed Name"), EmbedArg)
+        execute {
+            val embedName = it.args.component1() as String
+            val existingEmbed = it.args.component2() as Embed
+            val embed = createEmbedFromJson(embedName, existingEmbed.toJson())
+            val wasCreated = embedService.addEmbed(it.guild!!, embed)
+
+            it.respond(
+                if (wasCreated)
+                    "Successfully added the embed: $embedName"
+                else
+                    "An embed with this name already exists."
+            )
+        }
+    }
+
     command("Delete") {
         description = "Delete the embed with this name."
         requiresLoadedEmbed = true
