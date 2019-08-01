@@ -9,12 +9,10 @@ fun CommandEvent.respondEmbed(init: EmbedDSLHandle.() -> Unit) {
     respond(embed.build())
 }
 
-private object PropertyStore {
-    val severities = WeakHashMap<Command, Boolean>()
+private object CommandPropertyStore {
+    val requiresLoaded = WeakHashMap<Command, Boolean>()
 }
 
 var Command.requiresLoadedEmbed
-    get() = PropertyStore.severities[this] ?: false
-    set(value) {
-        PropertyStore.severities[this] = value
-    }
+    get() = CommandPropertyStore.requiresLoaded[this] ?: false
+    set(value) { CommandPropertyStore.requiresLoaded[this] = value }
