@@ -20,7 +20,6 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val channel = it.args.component1() as TextChannel
             val shouldTrack = it.args.component2() as Boolean
-
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
@@ -40,12 +39,13 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embedName = it.args.component1() as String
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
-            it.respond(
+            val response =
                 if (wasCreated)
                     "Successfully added the embed: $embedName"
                 else
                     "An embed with this name already exists."
-            )
+
+            it.respond(response)
         }
     }
 
@@ -58,12 +58,13 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = createEmbedFromJson(embedName, existingEmbed.toJson())
             val wasCreated = embedService.addEmbed(it.guild!!, embed)
 
-            it.respond(
+            val response =
                 if (wasCreated)
                     "Successfully added the embed: $embedName"
                 else
                     "An embed with this name already exists."
-            )
+
+            it.respond(response)
         }
     }
 
@@ -99,7 +100,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             if (guild.hasEmbedWithName(name))
                 return@execute it.respond("An embed with this name already exists.")
 
-            it.respond(
+            val response =
                 try {
                     val embed = createEmbedFromJson(name, json)
                     val wasAdded = embedService.addEmbed(guild, embed)
@@ -108,7 +109,8 @@ fun coreCommands(embedService: EmbedService) = commands {
                 } catch (e: JsonSyntaxException) {
                     "Invalid JSON! ${e.message?.substringAfter("Exception: ")}"
                 }
-            )
+
+            it.respond(response)
         }
     }
 

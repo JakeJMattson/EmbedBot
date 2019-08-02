@@ -21,9 +21,7 @@ fun editCommands() = commands {
             val user = it.args.component1() as User
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            val url = user.avatarUrl ?: user.defaultAvatarUrl
-
-            embed.setAuthor(user.name, url)
+            embed.setAuthor(user.name, user.effectiveAvatarUrl)
             it.respond(commandResponseFormat.format("author"))
         }
     }
@@ -99,6 +97,7 @@ fun editCommands() = commands {
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
+
             embed.setTimestamp(LocalDateTime.now())
             it.respond(commandResponseFormat.format("timestamp"))
         }

@@ -9,15 +9,20 @@ import net.dv8tion.jda.core.entities.*
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
 
+data class UpdateResponse(val canUpdate: Boolean, val reason: String = "")
+data class CopyLocation(val channelId: String, val messageId: String) {
+    override fun toString() = "Channel ID: $channelId\nMessage ID: $messageId"
+}
+
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
                  var copyLocation: CopyLocation? = null) {
 
-    val isEmpty: Boolean
-        get() = builder.isEmpty
-
     private val fields: MutableList<Field>
         get() = builder.fields
+
+    val isEmpty: Boolean
+        get() = builder.isEmpty
 
     val fieldCount: Int
         get() = fields.size
@@ -78,7 +83,7 @@ data class Embed(var name: String,
 
         val message = tryRetrieveSnowflake(jda) {
             channel.getMessageById(original.messageId).complete()
-        } as Message? ?: return UpdateResponse(false,  "The message this embed was copied from no longer exists.")
+        } as Message? ?: return UpdateResponse(false, "The message this embed was copied from no longer exists.")
 
         if (message.author != jda.selfUser)
             return UpdateResponse(false, "The message this embed was copied from is not from this bot.")
@@ -92,13 +97,8 @@ data class Embed(var name: String,
         if (currentEmbed == builder.build())
             return UpdateResponse(false, "This message is up to date.")
 
-        message.editMessage(build()).complete()
+        message.editMessage(build()).queue()
 
         return UpdateResponse(true)
     }
-}
-
-data class UpdateResponse(val canUpdate: Boolean, val reason: String = "")
-data class CopyLocation(val channelId: String, val messageId: String) {
-    override fun toString() = "Channel ID: $channelId\nMessage ID: $messageId"
 }

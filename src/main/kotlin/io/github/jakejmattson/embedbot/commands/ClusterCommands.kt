@@ -17,12 +17,13 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val clusterName = it.args.component1() as String
             val wasCreated = embedService.createCluster(it.guild!!, clusterName)
 
-            it.respond(
+            val response =
                 if (wasCreated)
                     "Successfully created the cluster :: $clusterName"
                 else
                     "A cluster with this name already exists."
-            )
+
+            it.respond(response)
         }
     }
 
@@ -33,12 +34,13 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val cluster = it.args.component1() as Cluster
             val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
-            it.respond(
+            val response =
                 if (wasDeleted)
                     "Successfully deleted the cluster :: ${cluster.name}"
                 else
                     "No such cluster with this name."
-            )
+
+            it.respond(response)
         }
     }
 
@@ -66,12 +68,13 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
             val wasSuccessful = embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
 
-            it.respond(
+            val response =
                 if (wasSuccessful)
                     "Cloned ${embeds.size} embeds into $clusterName"
                 else
                     "A cluster with that name already exists."
-            )
+
+            it.respond(response)
         }
     }
 
@@ -80,13 +83,13 @@ fun clusterCommands(embedService: EmbedService) = commands {
         expect(ClusterArg)
         execute { event ->
             val cluster = event.args.component1() as Cluster
-            val failed = StringBuilder()
+            val failures = ArrayList<String>()
             val size = cluster.size
 
             val totalSuccessful = cluster.embeds.sumBy {
                 with(it.update(event.jda)) {
                     if (!canUpdate)
-                        failed.appendln("${it.name} :: $reason")
+                        failures.add("${it.name} :: $reason")
 
                     if (canUpdate) 1 else 0
                 }
@@ -96,7 +99,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 return@execute event.respond("Successfully updated all $size embeds in ${cluster.name}")
 
             event.respond("Successfully updated $totalSuccessful out of $size in ${cluster.name}" +
-                "\nFailed the following updates:\n$failed")
+                "\nFailed the following updates:\n${failures.joinToString("\n")}")
         }
     }
 

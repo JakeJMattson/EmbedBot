@@ -7,7 +7,7 @@ import me.aberrantfox.kjdautils.internal.command.*
 open class BooleanArg(override val name: String = "Boolean") : ArgumentType {
     companion object : BooleanArg()
 
-    override val examples = arrayListOf("True", "true", "T")
+    override val examples = arrayListOf("True", "true", "False", "false")
     override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent) =
         if (arg.isBooleanValue())

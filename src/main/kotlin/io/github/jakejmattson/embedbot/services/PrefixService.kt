@@ -5,12 +5,13 @@ import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.KJDAConfiguration
 
 @Service
-class PrefixService(configuration: Configuration, private val kjdaConfiguration: KJDAConfiguration) {
+class PrefixService(private val configuration: Configuration, private val kjdaConfiguration: KJDAConfiguration) {
     init {
         setPrefix(configuration.prefix)
     }
 
     fun setPrefix(prefix: String) {
+        configuration.prefix = prefix
         kjdaConfiguration.prefix = prefix
     }
 }

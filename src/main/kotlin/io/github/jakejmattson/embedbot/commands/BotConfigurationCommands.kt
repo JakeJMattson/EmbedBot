@@ -66,9 +66,12 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
                 persistenceService.save(configuration)
             }
 
-            val removed = embedService.removeAllFromGuild(guild)
-            it.respond("Deleted all ($removed) embeds.\nDeleted all clusters." +
-                "\nDeleted guild configuration.\nLeaving guild.")
+            val removedEmbeds = embedService.removeAllFromGuild(guild)
+            val removedClusters = guild.getGuildEmbeds().clusterList.size
+            it.respond("Deleted all ($removedEmbeds) embeds." +
+                    "\nDeleted all ($removedClusters) clusters." +
+                    "\nDeleted guild configuration for `${guild.name}`." +
+                    "\nLeaving guild. Goodbye.")
 
             guild.leave().queue()
         }

@@ -17,7 +17,7 @@ class PermissionsService(private val configuration: Configuration) {
     fun hasClearance(member: Member, requiredPermissionLevel: Permission) = member.getPermissionLevel().ordinal <= requiredPermissionLevel.ordinal
 
     private fun Member.getPermissionLevel() =
-        when (true) {
+        when {
             isBotOwner() -> Permission.BOT_OWNER
             isGuildOwner() -> Permission.GUILD_OWNER
             isStaff() -> Permission.STAFF
