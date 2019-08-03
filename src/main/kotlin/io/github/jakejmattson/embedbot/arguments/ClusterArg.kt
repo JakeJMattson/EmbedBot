@@ -4,7 +4,7 @@ import io.github.jakejmattson.embedbot.extensions.getClusterByName
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
-open class ClusterArg(override val name: String = "Cluster Name") : ArgumentType {
+open class ClusterArg(override val name: String = "Cluster") : ArgumentType {
     companion object : ClusterArg()
 
     override val examples = arrayListOf("")

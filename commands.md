@@ -23,11 +23,11 @@
 | Commands  | Arguments                | Description                                |
 | --------- | ------------------------ | ------------------------------------------ |
 | Create    | Embed Name               | Create a new embed with this name.         |
-| Delete    | (Embed Name)             | Delete the embed with this name.           |
-| Duplicate | Embed Name, Embed Name   | Create a new embed from an existing embed. |
+| Delete    | (Embed)                  | Delete the embed with this name.           |
+| Duplicate | Embed Name, Embed        | Create a new embed from an existing embed. |
 | Export    | <none>                   | Export the currently loaded embed to JSON. |
 | Import    | Embed Name, JSON         | Import a JSON String as an embed.          |
-| Load      | Embed Name               | Load the embed with this name into memory. |
+| Load      | Embed                    | Load the embed with this name into memory. |
 | Send      | (Channel), (shouldTrack) | Send the currently loaded embed.           |
 
 ## Copy
@@ -50,38 +50,38 @@
 | RemoveField     | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster
-| Commands          | Arguments                              | Description                                                  |
-| ----------------- | -------------------------------------- | ------------------------------------------------------------ |
-| AddToCluster      | Cluster Name, Embed Name...            | Add an embed into a cluster.                                 |
-| CloneCluster      | Cluster Name, (Channel), Amount        | Clone a group of embeds into a cluster.                      |
-| CreateCluster     | Cluster Name, (Embed Name...)          | Create a cluster for storing and deploying groups of embeds. |
-| DeleteCluster     | Cluster Name                           | Delete a cluster and all of its embeds.                      |
-| Deploy            | Cluster Name, (Channel), (shouldTrack) | Deploy a cluster into a target channel.                      |
-| InsertIntoCluster | Cluster Name, Index, Embed Name        | Insert an embed into a cluster at an index.                  |
-| RemoveFromCluster | Embed Name...                          | Remove embeds from their current cluster.                    |
-| RenameCluster     | Cluster Name, New Name                 | Change the name of an existing cluster.                      |
-| UpdateCluster     | Cluster Name                           | Update the original embeds this cluster was copied from.     |
+| Commands          | Arguments                         | Description                                                  |
+| ----------------- | --------------------------------- | ------------------------------------------------------------ |
+| AddToCluster      | Cluster, Embed...                 | Add an embed into a cluster.                                 |
+| CloneCluster      | Cluster Name, (Channel), Amount   | Clone a group of embeds into a cluster.                      |
+| CreateCluster     | Cluster Name, (Embed...)          | Create a cluster for storing and deploying groups of embeds. |
+| DeleteCluster     | Cluster                           | Delete a cluster and all of its embeds.                      |
+| Deploy            | Cluster, (Channel), (shouldTrack) | Deploy a cluster into a target channel.                      |
+| InsertIntoCluster | Cluster, Index, Embed             | Insert an embed into a cluster at an index.                  |
+| RemoveFromCluster | Embed...                          | Remove embeds from their current cluster.                    |
+| RenameCluster     | Cluster, New Name                 | Change the name of an existing cluster.                      |
+| UpdateCluster     | Cluster                           | Update the original embeds this cluster was copied from.     |
 
 ## Edit
-| Commands       | Arguments              | Description                                         |
-| -------------- | ---------------------- | --------------------------------------------------- |
-| Clear          | (Clear Target)         | Clear a target field from the loaded embed.         |
-| Rename         | (Embed Name), New Name | Change the name of an existing embed.               |
-| SetAuthor      | DiscordUser            | Set the author for the currently loaded embed.      |
-| SetColor       | Hex Color              | Set the color for the currently loaded embed.       |
-| SetDescription | Text                   | Set the description for the currently loaded embed. |
-| SetFooter      | Icon URL, Text         | Set the footer for the currently loaded embed.      |
-| SetImage       | URL                    | Set the image for the currently loaded embed.       |
-| SetThumbnail   | URL                    | Set the thumbnail for the currently loaded embed.   |
-| SetTimestamp   | <none>                 | Set the timestamp for the currently loaded embed.   |
-| SetTitle       | Text                   | Set the title for the currently loaded embed.       |
+| Commands       | Arguments         | Description                                         |
+| -------------- | ----------------- | --------------------------------------------------- |
+| Clear          | (Clear Target)    | Clear a target field from the loaded embed.         |
+| Rename         | (Embed), New Name | Change the name of an existing embed.               |
+| SetAuthor      | DiscordUser       | Set the author for the currently loaded embed.      |
+| SetColor       | Hex Color         | Set the color for the currently loaded embed.       |
+| SetDescription | Text              | Set the description for the currently loaded embed. |
+| SetFooter      | Icon URL, Text    | Set the footer for the currently loaded embed.      |
+| SetImage       | URL               | Set the image for the currently loaded embed.       |
+| SetThumbnail   | URL               | Set the thumbnail for the currently loaded embed.   |
+| SetTimestamp   | <none>            | Set the timestamp for the currently loaded embed.   |
+| SetTitle       | Text              | Set the title for the currently loaded embed.       |
 
 ## Information
-| Commands   | Arguments  | Description                             |
-| ---------- | ---------- | --------------------------------------- |
-| Info       | Embed Name | Get extended info for the target embed. |
-| Limits     | <none>     | Display the discord embed limits.       |
-| ListEmbeds | <none>     | List all embeds created in this guild.  |
+| Commands   | Arguments | Description                             |
+| ---------- | --------- | --------------------------------------- |
+| Info       | Embed     | Get extended info for the target embed. |
+| Limits     | <none>    | Display the discord embed limits.       |
+| ListEmbeds | <none>    | List all embeds created in this guild.  |
 
 ## Utility
 | Commands     | Arguments | Description                                 |

@@ -4,7 +4,7 @@ import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
-open class EmbedArg(override val name: String = "Embed Name") : ArgumentType {
+open class EmbedArg(override val name: String = "Embed") : ArgumentType {
     companion object : EmbedArg()
 
     override val examples = arrayListOf("")
