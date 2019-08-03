@@ -12,18 +12,19 @@ import net.dv8tion.jda.core.entities.TextChannel
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
         description = "Create a cluster for storing and deploying groups of embeds."
-        expect(arg(WordArg("Cluster Name")))
+        expect(arg(WordArg("Cluster Name")), arg(MultipleArg(EmbedArg), optional = true, default = listOf<Embed>()))
         execute {
             val clusterName = it.args.component1() as String
-            val wasCreated = embedService.createCluster(it.guild!!, clusterName)
+            val embeds = it.args.component2() as List<Embed>
+            val guild = it.guild!!
+            val cluster = embedService.createCluster(guild, clusterName)
+                ?: return@execute it.respond("A cluster with this name already exists.")
 
-            val response =
-                if (wasCreated)
-                    "Successfully created the cluster :: $clusterName"
-                else
-                    "A cluster with this name already exists."
+            embeds.forEach {
+                cluster.addEmbed(guild, it)
+            }
 
-            it.respond(response)
+            it.respond("Successfully created the cluster :: $clusterName")
         }
     }
 
@@ -139,14 +140,19 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("AddToCluster") {
         description = "Add an embed into a cluster."
-        expect(ClusterArg, EmbedArg)
+        expect(ClusterArg, MultipleArg(EmbedArg))
         execute {
             val cluster = it.args.component1() as Cluster
-            val embed = it.args.component2() as Embed
+            val embeds = it.args.component2() as List<Embed>
+            val guild = it.guild!!
+            val additions = arrayListOf<String>()
 
-            cluster.addEmbed(it.guild!!, embed)
+            embeds.forEach {
+                cluster.addEmbed(guild, it)
+                additions.add(it.name)
+            }
 
-            it.respond("Successfully added ${embed.name} to ${cluster.name}")
+            it.respond("Successfully added the following embeds to ${cluster.name}:\n${additions.joinToString()}")
         }
     }
 
@@ -167,14 +173,18 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("RemoveFromCluster") {
-        description = "Remove an embed from its cluster."
-        expect(EmbedArg)
+        description = "Remove embeds from their current cluster."
+        expect(MultipleArg(EmbedArg))
         execute {
-            val embed = it.args.component1() as Embed
+            val embeds = it.args.component1() as List<Embed>
+            val removals = arrayListOf<String>()
 
-            embedService.removeEmbedFromCluster(it.guild!!, embed)
+            embeds.forEach { embed ->
+                embedService.removeEmbedFromCluster(it.guild!!, embed)
+                removals.add(embed.name)
+            }
 
-            it.respond("Successfully removed ${embed.name} from its cluster.")
+            it.respond("Successfully removed the following embeds from their cluster:\n${removals.joinToString()}")
         }
     }
 }

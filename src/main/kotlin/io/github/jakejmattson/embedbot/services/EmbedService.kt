@@ -59,10 +59,10 @@ class EmbedService {
 
             clusters.add(newCluster)
             saveEmbeds()
-            true
+            newCluster
         }
         else
-            false
+            null
 
     fun createClusterFromEmbeds(guild: Guild, cluster: Cluster): Boolean {
         val clusters = guild.getGuildEmbeds().clusterList

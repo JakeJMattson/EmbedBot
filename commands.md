@@ -52,13 +52,13 @@
 ## Cluster
 | Commands          | Arguments                              | Description                                                  |
 | ----------------- | -------------------------------------- | ------------------------------------------------------------ |
-| AddToCluster      | Cluster Name, Embed Name               | Add an embed into a cluster.                                 |
+| AddToCluster      | Cluster Name, Embed Name...            | Add an embed into a cluster.                                 |
 | CloneCluster      | Cluster Name, (Channel), Amount        | Clone a group of embeds into a cluster.                      |
-| CreateCluster     | Cluster Name                           | Create a cluster for storing and deploying groups of embeds. |
+| CreateCluster     | Cluster Name, (Embed Name...)          | Create a cluster for storing and deploying groups of embeds. |
 | DeleteCluster     | Cluster Name                           | Delete a cluster and all of its embeds.                      |
 | Deploy            | Cluster Name, (Channel), (shouldTrack) | Deploy a cluster into a target channel.                      |
 | InsertIntoCluster | Cluster Name, Index, Embed Name        | Insert an embed into a cluster at an index.                  |
-| RemoveFromCluster | Embed Name                             | Remove an embed from its cluster.                            |
+| RemoveFromCluster | Embed Name...                          | Remove embeds from their current cluster.                    |
 | RenameCluster     | Cluster Name, New Name                 | Change the name of an existing cluster.                      |
 | UpdateCluster     | Cluster Name                           | Update the original embeds this cluster was copied from.     |
 
