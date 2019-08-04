@@ -5,17 +5,20 @@
   <a href="https://gitlab.com/Aberrantfox/KUtils">
     <img src="https://img.shields.io/badge/KUtils-0.9.17-blue.svg" alt="KUtils 0.9.17">
   </a>
-  <a href="https://discordapp.com/users/254786431656919051/">
-    <img src="https://img.shields.io/badge/Discord-JakeyWakey%231569-lightgrey.svg" alt="Discord JakeyWakey#1569">
-  </a>
-  <a href="https://discord.gg/kh253yg">
-    <img src="https://img.shields.io/badge/Discord-KUtils-lightgrey.svg" alt="KUtils">
-  </a>
   <a href="https://GitHub.com/JakeJMattson/EmbedBot/releases/">
     <img src="https://img.shields.io/github/release/JakeJMattson/EmbedBot.svg" alt="Release">
   </a>
   <a href="LICENSE.md">
     <img src="https://img.shields.io/github/license/JakeJMattson/EmbedBot.svg" alt="License">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://discord.gg/kh253yg">
+    <img src="https://img.shields.io/discord/453208597082406912?logo=discord" alt="chat on Discord">
+  </a>
+  <a href="https://discordapp.com/users/254786431656919051/">
+    <img src="https://img.shields.io/badge/Me-JakeyWakey%231569-lightgrey.svg" alt="Discord JakeyWakey#1569">
   </a>
 </p>
 
