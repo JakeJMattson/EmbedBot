@@ -3,6 +3,7 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import java.awt.Color
 
@@ -62,14 +63,14 @@ fun infoCommands() = commands {
                 title = "Discord Limits"
                 description = "Below are all the limits imposed onto embeds by Discord."
                 color = Color.orange
-                addInlineField("Total Character Limit", "6000 characters")
-                addInlineField("Total Field Limit", "25 fields")
-                addInlineField("Title", "256 characters")
-                addInlineField("Description", "2048 characters")
-                addInlineField("Field Name", "256 characters")
-                addInlineField("Field Value", "1024 characters")
-                addInlineField("Footer", "2048 characters")
-                addInlineField("Author", "256 characters")
+                addInlineField("Total Character Limit", "$CHAR_LIMIT characters")
+                addInlineField("Total Field Limit", "$FIELD_LIMIT fields")
+                addInlineField("Title", "$TITLE_LIMIT characters")
+                addInlineField("Description", "$DESCRIPTION_LIMIT characters")
+                addInlineField("Field Name", "$FIELD_NAME_LIMIT characters")
+                addInlineField("Field Value", "$FIELD_VALUE_LIMIT characters")
+                addInlineField("Footer", "$FOOTER_LIMIT characters")
+                addInlineField("Author", "$AUTHOR_LIMIT characters")
                 addInlineField("","[Discord Docs](https://discordapp.com/developers/docs/resources/channel#embed-limits-limits)")
             }
         }

@@ -2,19 +2,16 @@ package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.Gson
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.services.InfoService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.fullName
 import java.awt.Color
 import java.util.Date
 
-private data class Properties(val version: String, val author: String, val repository: String)
-
-private val propFile = Properties::class.java.getResource("/properties.json").readText()
-private val Project = Gson().fromJson(propFile, Properties::class.java)
 private val startTime = Date()
 
 @CommandSet("Utility")
-fun utilityCommands() = commands {
+fun utilityCommands(infoService: InfoService) = commands {
     command("Ping") {
         description = "Display the network ping of the bot."
         execute {
@@ -25,23 +22,14 @@ fun utilityCommands() = commands {
     command("Source") {
         description = "Display the (source code) repository link."
         execute {
-            it.respond(Project.repository)
+            it.respond(infoService.source)
         }
     }
 
     command("BotInfo") {
         description = "Display the bot information."
         execute {
-            it.respondEmbed {
-                val self = it.jda.selfUser
-
-                color = Color.green
-                thumbnail = self.effectiveAvatarUrl
-                addInlineField(self.fullName(), "A Discord embed management bot.")
-                addInlineField("Version", Project.version)
-                addInlineField("Author", Project.author)
-                addInlineField("Source", Project.repository)
-            }
+            it.respond(infoService.botInfo(it.guild!!))
         }
     }
 
