@@ -33,7 +33,7 @@ class InfoService(private val configuration: Configuration) {
 
     fun botInfo(guild: Guild) = embed {
         val self = guild.jda.selfUser
-        val requiredRole = configuration.getGuildConfig(guild.id)?.requiredRole ?: "<Missing Configuration>"
+        val requiredRole = configuration.getGuildConfig(guild.id)?.requiredRole ?: "<Not Configured>"
 
         color = Color.green
         thumbnail = self.effectiveAvatarUrl
