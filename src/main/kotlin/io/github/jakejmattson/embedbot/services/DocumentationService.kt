@@ -1,24 +1,26 @@
 package io.github.jakejmattson.embedbot.services
 
-import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.*
 import java.io.File
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-private const val indentLevel: String = "##"
+private data class CategoryDocs(val name: String, val docString: String)
+
+private enum class Output {
+    CONSOLE, FILE, NONE
+}
 
 @Service
-class DocumentationService(configuration: Configuration, container: CommandsContainer) {
+class DocumentationService(container: CommandsContainer) {
     init {
         //Move the help command from the internal "utility" category, to the local "Utility" category
         container.commands.getValue("help").category = "Utility"
 
-        if (configuration.generateDocsAtRuntime)
-            Timer().schedule(500) {
-                createDocumentation(container, Output.FILE)
-            }
+        Timer().schedule(500) {
+            createDocumentation(container, Output.FILE)
+        }
     }
 
     private fun createDocumentation(container: CommandsContainer, outputType: Output) {
@@ -115,40 +117,27 @@ class DocumentationService(configuration: Configuration, container: CommandsCont
         return sortedMap.values.filterNotNull()
     }
 
-    private fun outputDocs(docs: List<CategoryDocs>, outputType: Output) {
-        val docsAsString = StringBuilder().apply {
-            docs.forEach {
-                appendln(it.toString())
+    private fun outputDocs(rawDocs: List<CategoryDocs>, outputType: Output) {
+        val indentLevel: String = "##"
+        val header =
+                "# Commands\n\n" +
+                "$indentLevel Key\n" +
+                "| Symbol     | Meaning                    |\n" +
+                "| ---------- | -------------------------- |\n" +
+                "| (Argument) | This argument is optional. |\n"
+
+        val docsAsString = buildString {
+            rawDocs.forEach {
+                appendln("$indentLevel ${it.name}\n${it.docString}")
             }
-        }.toString()
+        }
+
+        val completeDocs = "$header\n$docsAsString"
 
         when (outputType) {
-            Output.CONSOLE -> println(docsAsString)
-            Output.FILE -> outputToFile(docsAsString)
+            Output.CONSOLE -> println(completeDocs)
+            Output.FILE -> File("commands.md").writeText(completeDocs)
+            Output.NONE -> Unit
         }
-    }
-
-    private fun outputToFile(docs: String) {
-        val fileHeader =
-            "# Commands\n\n" +
-            "$indentLevel Key\n" +
-            "| Symbol     | Meaning                    |\n" +
-            "| ---------- | -------------------------- |\n" +
-            "| (Argument) | This argument is optional. |\n"
-
-        val fileText = "$fileHeader\n$docs"
-
-        File("Commands.md").apply {
-            writeText(fileText)
-            println("Successfully generated documentation: $absolutePath")
-        }
-    }
-
-    private data class CategoryDocs(val name: String, val docString: String) {
-        override fun toString() = "$indentLevel $name\n$docString"
-    }
-
-    private enum class Output {
-        CONSOLE, FILE
     }
 }
