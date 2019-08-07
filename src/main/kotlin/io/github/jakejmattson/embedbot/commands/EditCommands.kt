@@ -3,13 +3,15 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 import net.dv8tion.jda.core.entities.User
 import java.time.LocalDateTime
 
-private const val commandResponseFormat = "Successfully updated the embed %s!"
 private const val commandDescriptionFormat = "Set the %s for the currently loaded embed."
+private const val commandSuccessFormat = "Successfully updated the embed %s!"
+private const val commandFailFormat = "Failed to update! Limit is %s."
 
 @CommandSet("Edit")
 fun editCommands() = commands {
@@ -22,7 +24,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setAuthor(user.name, user.effectiveAvatarUrl)
-            it.respond(commandResponseFormat.format("author"))
+            it.respond(commandSuccessFormat.format("author"))
         }
     }
 
@@ -35,7 +37,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setColor(color)
-            it.respond(commandResponseFormat.format("color"))
+            it.respond(commandSuccessFormat.format("color"))
         }
     }
 
@@ -47,8 +49,11 @@ fun editCommands() = commands {
             val description = it.args.component1() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
+            if (description.length >= DESCRIPTION_LIMIT)
+                return@execute it.respond(commandFailFormat.format("$DESCRIPTION_LIMIT characters"))
+
             embed.setDescription(description)
-            it.respond(commandResponseFormat.format("description"))
+            it.respond(commandSuccessFormat.format("description"))
         }
     }
 
@@ -61,8 +66,11 @@ fun editCommands() = commands {
             val text = it.args.component2() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
+            if (text.length >= FOOTER_LIMIT)
+                return@execute it.respond(commandFailFormat.format("$FOOTER_LIMIT characters"))
+
             embed.setFooter(text, url)
-            it.respond(commandResponseFormat.format("footer"))
+            it.respond(commandSuccessFormat.format("footer"))
         }
     }
 
@@ -75,7 +83,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setImage(url)
-            it.respond(commandResponseFormat.format("image"))
+            it.respond(commandSuccessFormat.format("image"))
         }
     }
 
@@ -88,7 +96,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setThumbnail(url)
-            it.respond(commandResponseFormat.format("thumbnail"))
+            it.respond(commandSuccessFormat.format("thumbnail"))
         }
     }
 
@@ -99,7 +107,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setTimestamp(LocalDateTime.now())
-            it.respond(commandResponseFormat.format("timestamp"))
+            it.respond(commandSuccessFormat.format("timestamp"))
         }
     }
 
@@ -111,8 +119,11 @@ fun editCommands() = commands {
             val title = it.args.component1() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
+            if (title.length >= TITLE_LIMIT)
+                return@execute it.respond(commandFailFormat.format("$TITLE_LIMIT characters"))
+
             embed.setTitle(title)
-            it.respond(commandResponseFormat.format("title"))
+            it.respond(commandSuccessFormat.format("title"))
         }
     }
 
