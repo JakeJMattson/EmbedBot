@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.services
 
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import me.aberrantfox.kjdautils.api.annotation.Service
-import net.dv8tion.jda.core.entities.Member
+import net.dv8tion.jda.api.entities.Member
 
 enum class Permission {
     BOT_OWNER,

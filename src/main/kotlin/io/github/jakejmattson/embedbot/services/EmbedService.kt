@@ -5,7 +5,7 @@ import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.utilities.*
 import me.aberrantfox.kjdautils.api.annotation.Service
-import net.dv8tion.jda.core.entities.*
+import net.dv8tion.jda.api.entities.*
 import java.io.File
 
 typealias Field = MessageEmbed.Field

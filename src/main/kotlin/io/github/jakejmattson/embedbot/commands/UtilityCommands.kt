@@ -1,10 +1,8 @@
 package io.github.jakejmattson.embedbot.commands
 
-import com.google.gson.Gson
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.InfoService
 import me.aberrantfox.kjdautils.api.dsl.*
-import me.aberrantfox.kjdautils.extensions.jda.fullName
 import java.awt.Color
 import java.util.Date
 
@@ -15,7 +13,7 @@ fun utilityCommands(infoService: InfoService) = commands {
     command("Ping") {
         description = "Display the network ping of the bot."
         execute {
-            it.respond("Ping: ${it.jda.ping}ms\n")
+            it.respond("Ping: ${it.discord.jda.gatewayPing}ms\n")
         }
     }
 

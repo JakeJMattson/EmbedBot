@@ -10,7 +10,7 @@ open class RoleArg(override val name: String = "Role", private val guildId: Stri
     override val consumptionType = ConsumptionType.Multiple
     override fun convert(arg: String, args: List<String>, event: CommandEvent): ArgumentResult {
 
-        val guild = if (guildId.isNotEmpty()) event.jda.getGuildById(guildId) else event.guild
+        val guild = if (guildId.isNotEmpty()) event.discord.jda.getGuildById(guildId) else event.guild
         guild ?: return ArgumentResult.Error("Failed to resolve guild! Pass a valid guild id to RoleArg.")
 
         var roles = guild.roles

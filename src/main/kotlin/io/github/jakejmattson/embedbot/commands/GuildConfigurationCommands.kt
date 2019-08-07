@@ -5,7 +5,7 @@ import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
-import net.dv8tion.jda.core.entities.Role
+import net.dv8tion.jda.api.entities.Role
 
 @CommandSet("GuildConfiguration")
 fun guildConfigurationCommands(configuration: Configuration,

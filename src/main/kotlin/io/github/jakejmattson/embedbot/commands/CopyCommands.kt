@@ -7,7 +7,7 @@ import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
-import net.dv8tion.jda.core.entities.*
+import net.dv8tion.jda.api.entities.*
 
 @CommandSet("Copy")
 fun copyCommands(embedService: EmbedService) = commands {
@@ -25,8 +25,8 @@ fun copyCommands(embedService: EmbedService) = commands {
             if (guild.hasEmbedWithName(name))
                 return@execute it.respond("An embed with this name already exists.")
 
-            val message = tryRetrieveSnowflake(it.jda) {
-                channel.getMessageById(messageId.trimToID()).complete()
+            val message = tryRetrieveSnowflake(it.discord.jda) {
+                channel.retrieveMessageById(messageId.trimToID()).complete()
             } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel.")
 
             val messageEmbed = message.getEmbed()
@@ -69,7 +69,7 @@ fun copyCommands(embedService: EmbedService) = commands {
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
-            val updateResponse = embed.update(it.jda)
+            val updateResponse = embed.update(it.discord.jda)
 
             if (!updateResponse.canUpdate)
                 return@execute it.respond(updateResponse.reason)

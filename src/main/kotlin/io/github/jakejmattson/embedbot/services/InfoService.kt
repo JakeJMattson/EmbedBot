@@ -2,14 +2,11 @@ package io.github.jakejmattson.embedbot.services
 
 import com.google.gson.Gson
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
-import io.github.jakejmattson.embedbot.extensions.addField
-import io.github.jakejmattson.embedbot.extensions.addInlineField
-import io.github.jakejmattson.embedbot.extensions.color
-import io.github.jakejmattson.embedbot.extensions.thumbnail
+import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.extensions.jda.fullName
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 import java.awt.Color
 
 const val CHAR_LIMIT = 6000

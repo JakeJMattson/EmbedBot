@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.dataclasses
 
 import io.github.jakejmattson.embedbot.extensions.removeEmbed
 import io.github.jakejmattson.embedbot.services.saveEmbeds
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf()) {
     val size: Int

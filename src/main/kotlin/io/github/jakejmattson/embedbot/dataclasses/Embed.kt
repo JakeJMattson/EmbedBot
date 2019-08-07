@@ -4,8 +4,8 @@ import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.Field
 import io.github.jakejmattson.embedbot.utilities.gson
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
-import net.dv8tion.jda.core.*
-import net.dv8tion.jda.core.entities.*
+import net.dv8tion.jda.api.*
+import net.dv8tion.jda.api.entities.*
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
 
@@ -82,7 +82,7 @@ data class Embed(var name: String,
             ?: return UpdateResponse(false, "The channel this embed was copied from no longer exists.")
 
         val message = tryRetrieveSnowflake(jda) {
-            channel.getMessageById(original.messageId).complete()
+            channel.retrieveMessageById(original.messageId).complete()
         } as Message? ?: return UpdateResponse(false, "The message this embed was copied from no longer exists.")
 
         if (message.author != jda.selfUser)

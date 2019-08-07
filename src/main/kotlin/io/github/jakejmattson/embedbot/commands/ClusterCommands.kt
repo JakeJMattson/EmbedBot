@@ -1,12 +1,14 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.*
+import io.github.jakejmattson.embedbot.arguments.BooleanArg
+import io.github.jakejmattson.embedbot.arguments.MultipleArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
-import net.dv8tion.jda.core.entities.TextChannel
+import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Cluster")
 fun clusterCommands(embedService: EmbedService) = commands {
@@ -88,7 +90,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val size = cluster.size
 
             val totalSuccessful = cluster.embeds.sumBy {
-                with(it.update(event.jda)) {
+                with(it.update(event.discord.jda)) {
                     if (!canUpdate)
                         failures.add("${it.name} :: $reason")
 

@@ -28,7 +28,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
         execute {
             val idEntry = it.args.component1() as String
             val ownerId = configuration.botOwner
-            val jda = it.jda
+            val jda = it.discord.jda
             val guildConfigs = configuration.guildConfigurations
 
             if (idEntry.isEmpty())

@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.utilities
 
 import com.google.gson.GsonBuilder
 import io.github.jakejmattson.embedbot.dataclasses.Embed
-import net.dv8tion.jda.core.EmbedBuilder
+import net.dv8tion.jda.api.EmbedBuilder
 import java.io.File
 
 val gson = GsonBuilder().setPrettyPrinting().create()!!

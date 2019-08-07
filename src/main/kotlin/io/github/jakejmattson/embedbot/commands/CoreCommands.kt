@@ -2,13 +2,14 @@ package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.JsonSyntaxException
 import io.github.jakejmattson.embedbot.arguments.*
+import io.github.jakejmattson.embedbot.arguments.BooleanArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.EmbedService
 import io.github.jakejmattson.embedbot.utilities.createEmbedFromJson
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
-import net.dv8tion.jda.core.entities.TextChannel
+import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {

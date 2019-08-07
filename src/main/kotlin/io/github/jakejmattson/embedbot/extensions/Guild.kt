@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.extensions
 
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.services.getGuildEmbeds
-import net.dv8tion.jda.core.entities.Guild
+import net.dv8tion.jda.api.entities.Guild
 
 fun Guild.getEmbeds() = getGuildEmbeds().embedList.sortedBy { it.name }
 fun Guild.getClusters() = getGuildEmbeds().clusterList.sortedBy { it.name }

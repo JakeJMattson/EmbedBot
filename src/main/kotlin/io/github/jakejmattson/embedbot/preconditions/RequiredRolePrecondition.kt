@@ -17,7 +17,7 @@ fun produceHasRequiredRolePrecondition(permissionsService: PermissionsService) =
     if (category in exemptCategories)
         return@exit Pass
 
-    val member = event.author.toMember(guild)
+    val member = event.author.toMember(guild)!!
 
     if (!permissionsService.hasClearance(member, Permission.STAFF))
         return@exit Fail("Missing clearance to use this command. You must have the required role.")
