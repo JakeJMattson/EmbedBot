@@ -3,13 +3,16 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.EmbedService
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Cluster")
 fun clusterCommands(embedService: EmbedService) = commands {
+
+    requiredPermissionLevel = Permission.STAFF
+
     command("CreateCluster") {
         description = "Create a cluster for storing and deploying groups of embeds."
         expect(arg(WordArg("Cluster Name")), arg(MultipleArg(EmbedArg), optional = true, default = listOf<Embed>()))

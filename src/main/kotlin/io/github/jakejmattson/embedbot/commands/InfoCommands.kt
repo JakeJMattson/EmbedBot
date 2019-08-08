@@ -9,6 +9,9 @@ import java.awt.Color
 
 @CommandSet("Information")
 fun infoCommands() = commands {
+
+    requiredPermissionLevel = Permission.STAFF
+
     command("Info") {
         description = "Get extended info for the target embed."
         expect(EmbedArg)

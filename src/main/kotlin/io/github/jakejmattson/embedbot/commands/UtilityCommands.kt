@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.InfoService
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import java.awt.Color
 import java.util.Date
@@ -10,6 +10,9 @@ private val startTime = Date()
 
 @CommandSet("Utility")
 fun utilityCommands(infoService: InfoService) = commands {
+
+    requiredPermissionLevel = Permission.STAFF
+
     command("Ping") {
         description = "Display the network ping of the bot."
         execute {

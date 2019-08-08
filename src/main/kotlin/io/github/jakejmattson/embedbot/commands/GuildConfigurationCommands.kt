@@ -1,7 +1,8 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.*
-import io.github.jakejmattson.embedbot.services.EmbedService
+import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.RoleArg
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
@@ -11,6 +12,9 @@ import net.dv8tion.jda.api.entities.Role
 fun guildConfigurationCommands(configuration: Configuration,
                                persistenceService: PersistenceService,
                                embedService: EmbedService) = commands {
+
+    requiredPermissionLevel = Permission.GUILD_OWNER
+
     command("SetRequiredRole") {
         description = "Set the role required to use this bot."
         expect(RoleArg)

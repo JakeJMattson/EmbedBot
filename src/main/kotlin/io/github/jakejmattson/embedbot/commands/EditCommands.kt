@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.arguments.*
+import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
@@ -15,6 +15,9 @@ private const val commandFailFormat = "Failed to update! Limit is %s."
 
 @CommandSet("Edit")
 fun editCommands() = commands {
+
+    requiredPermissionLevel = Permission.STAFF
+
     command("SetAuthor") {
         description = commandDescriptionFormat.format("author")
         requiresLoadedEmbed = true
