@@ -1,8 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.*
-import io.github.jakejmattson.embedbot.arguments.BooleanArg
-import io.github.jakejmattson.embedbot.arguments.MultipleArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.EmbedService

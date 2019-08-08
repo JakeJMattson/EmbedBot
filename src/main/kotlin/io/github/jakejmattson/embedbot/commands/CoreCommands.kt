@@ -2,7 +2,6 @@ package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.JsonSyntaxException
 import io.github.jakejmattson.embedbot.arguments.*
-import io.github.jakejmattson.embedbot.arguments.BooleanArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.EmbedService
