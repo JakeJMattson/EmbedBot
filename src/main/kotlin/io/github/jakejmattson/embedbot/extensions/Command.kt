@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.extensions
 
-import io.github.jakejmattson.embedbot.services.Permission
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import java.util.WeakHashMap
 
@@ -23,13 +23,9 @@ private object CommandsContainerPropertyStore {
 }
 
 var CommandsContainer.requiredPermissionLevel
-    get() = CommandsContainerPropertyStore.permissions[this] ?: Permission.NONE
+    get() = CommandsContainerPropertyStore.permissions[this] ?: DEFAULT_REQUIRED_PERMISSION
     set(value) { CommandsContainerPropertyStore.permissions[this] = value }
 
 val Command.requiredPermissionLevel: Permission
-    get() {
-        val commandsContainerData = CommandsContainerPropertyStore.permissions
-        val category = commandsContainerData.filter { it.key.commands.containsValue(this) }
-
-        return category.toList().firstOrNull<Pair<CommandsContainer, Permission>>()?.second ?: Permission.NONE
-    }
+    get() = CommandsContainerPropertyStore.permissions.toList()
+        .firstOrNull { it.first.commands.containsValue(this) }?.second ?: DEFAULT_REQUIRED_PERMISSION

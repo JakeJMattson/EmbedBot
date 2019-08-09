@@ -15,9 +15,6 @@ private const val commandFailFormat = "Failed to update! Limit is %s."
 
 @CommandSet("Edit")
 fun editCommands() = commands {
-
-    requiredPermissionLevel = Permission.STAFF
-
     command("SetAuthor") {
         description = commandDescriptionFormat.format("author")
         requiresLoadedEmbed = true

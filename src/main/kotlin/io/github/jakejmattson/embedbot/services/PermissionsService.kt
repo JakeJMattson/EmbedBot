@@ -11,6 +11,8 @@ enum class Permission {
     NONE
 }
 
+val DEFAULT_REQUIRED_PERMISSION = Permission.STAFF
+
 @Service
 class PermissionsService(private val configuration: Configuration) {
 

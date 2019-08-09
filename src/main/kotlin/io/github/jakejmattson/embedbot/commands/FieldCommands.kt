@@ -2,15 +2,12 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.services.Field
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.arguments.*
 
 @CommandSet("Field")
 fun fieldCommands() = commands {
-
-    requiredPermissionLevel = Permission.STAFF
-
     command("AddField") {
         description = "Add a field in the following format: title|body|inline"
         requiresLoadedEmbed = true

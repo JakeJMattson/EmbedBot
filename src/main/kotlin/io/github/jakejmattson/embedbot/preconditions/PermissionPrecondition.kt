@@ -9,7 +9,7 @@ import me.aberrantfox.kjdautils.internal.command.*
 @Precondition
 fun produceHasPermissionPrecondition(permissionsService: PermissionsService) = exit@{ event: CommandEvent ->
     val command = event.container.commands[event.commandStruct.commandName]
-    val requiredPermissionLevel = command?.requiredPermissionLevel ?: Permission.NONE
+    val requiredPermissionLevel = command?.requiredPermissionLevel ?: DEFAULT_REQUIRED_PERMISSION
     val guild = event.guild ?: return@exit Fail("This can only be executed within a guild.")
     val member = event.author.toMember(guild)!!
 

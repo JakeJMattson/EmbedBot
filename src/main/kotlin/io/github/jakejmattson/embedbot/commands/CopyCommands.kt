@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.*
+import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
 import me.aberrantfox.kjdautils.internal.command.arguments.*
@@ -11,9 +11,6 @@ import net.dv8tion.jda.api.entities.*
 
 @CommandSet("Copy")
 fun copyCommands(embedService: EmbedService) = commands {
-
-    requiredPermissionLevel = Permission.STAFF
-
     command("CopyTarget") {
         description = "Copy an embed by its message ID."
         expect(arg(WordArg("Embed Name")),
