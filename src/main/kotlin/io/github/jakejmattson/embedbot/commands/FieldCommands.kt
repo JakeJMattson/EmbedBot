@@ -85,7 +85,7 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldName(index, newTitle)
-            it.respond("Field updated.")
+            it.respond("Field title value updated.")
         }
     }
 
@@ -99,7 +99,7 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldText(index, newText)
-            it.respond("Field updated.")
+            it.respond("Field text value updated.")
         }
     }
 
@@ -113,7 +113,7 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldInline(index, newInline)
-            it.respond("Field updated.")
+            it.respond("Field inline value updated.")
         }
     }
 }
