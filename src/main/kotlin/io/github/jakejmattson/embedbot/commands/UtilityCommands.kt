@@ -1,15 +1,16 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.InfoService
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.extensions.jda.toMember
 import java.awt.Color
 import java.util.Date
 
 private val startTime = Date()
 
 @CommandSet("Utility")
-fun utilityCommands(infoService: InfoService) = commands {
+fun utilityCommands(infoService: InfoService, permissionsService: PermissionsService) = commands {
     command("Ping") {
         description = "Display the network ping of the bot."
         execute {
@@ -52,16 +53,18 @@ fun utilityCommands(infoService: InfoService) = commands {
     command("ListCommands") {
         description = "List all available commands."
         execute { event ->
-            val commands = event.container.commands.values.groupBy { it.category }.toList()
-                .sortedBy { (_, value) -> -value.size }.toMap()
+            val member = event.author.toMember(event.guild!!)!!
+
+            val commands = event.container.commands.values.asSequence()
+                .filter { permissionsService.hasClearance(member, it.requiredPermissionLevel) }
+                .groupBy { it.category }.toList()
+                .filter { it.second.isNotEmpty() }
+                .sortedBy { (_, value) -> -value.size }
+                .toList().toMap()
 
             event.respondEmbed {
                 commands.forEach {
-                    field {
-                        name = it.key
-                        value = it.value.sortedBy { it.name }.joinToString("\n") { it.name }
-                        inline = true
-                    }
+                    addInlineField(it.key, it.value.sortedBy { it.name }.joinToString("\n") { it.name })
                 }
                 color = Color.green
             }
