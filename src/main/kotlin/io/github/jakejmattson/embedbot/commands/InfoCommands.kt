@@ -5,7 +5,6 @@ import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
-import java.awt.Color
 
 @CommandSet("Information")
 fun infoCommands() = commands {
@@ -21,8 +20,8 @@ fun infoCommands() = commands {
                 addField("Is Loaded", embed.isLoaded(guild).toString())
 
                 if (!embed.isEmpty) {
-                    addField("Field Count", embed.fieldCount.toString())
-                    addField("Character Count", embed.charCount.toString())
+                    addField("Field Count", "${embed.fieldCount}/$FIELD_LIMIT")
+                    addField("Character Count", "${embed.charCount}/$CHAR_LIMIT")
                 }
                 else {
                     addField("Is Empty", embed.isEmpty.toString())
@@ -40,18 +39,19 @@ fun infoCommands() = commands {
                 val guild = it.guild!!
                 val embeds = guild.getEmbeds()
                 val clusters = guild.getClusters()
-                val loadedEmbed = guild.getLoadedEmbed()?.name ?: "<None>"
+                val loadedEmbed = guild.getLoadedEmbed()
                 val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
 
-                addField("Loaded", loadedEmbed)
+                if (loadedEmbed != null)
+                    addField("Loaded", loadedEmbed.name)
+
                 addField("Embeds", embedList)
 
-                if (clusters.isEmpty())
-                    addField("Clusters", "<No clusters>")
-                else
+                if (clusters.isNotEmpty()) {
                     clusters.forEach {
                         addField(it.name, it.toString())
                     }
+                }
             }
         }
     }
@@ -62,7 +62,6 @@ fun infoCommands() = commands {
             it.respondEmbed {
                 title = "Discord Limits"
                 description = "Below are all the limits imposed onto embeds by Discord."
-                color = Color.orange
                 addInlineField("Total Character Limit", "$CHAR_LIMIT characters")
                 addInlineField("Total Field Limit", "$FIELD_LIMIT fields")
                 addInlineField("Title", "$TITLE_LIMIT characters")

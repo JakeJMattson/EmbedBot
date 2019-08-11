@@ -2,10 +2,12 @@ package io.github.jakejmattson.embedbot.extensions
 
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
+import java.awt.Color
 import java.util.WeakHashMap
 
 fun CommandEvent.respondEmbed(init: EmbedDSLHandle.() -> Unit) {
     val embed = EmbedDSLHandle()
+    embed.color(Color(0x00bfff))
     embed.init()
     respond(embed.build())
 }

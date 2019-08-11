@@ -4,7 +4,6 @@ import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.toMember
-import java.awt.Color
 import java.util.Date
 
 private val startTime = Date()
@@ -38,7 +37,6 @@ fun utilityCommands(infoService: InfoService, permissionsService: PermissionsSer
             val seconds = (Date().time - startTime.time) / 1000
 
             it.respondEmbed {
-                color = Color.WHITE
                 title = "I have been running since"
                 description = startTime.toString()
 
@@ -66,7 +64,6 @@ fun utilityCommands(infoService: InfoService, permissionsService: PermissionsSer
                 commands.forEach {
                     addInlineField(it.key, it.value.sortedBy { it.name }.joinToString("\n") { it.name })
                 }
-                color = Color.green
             }
         }
     }
