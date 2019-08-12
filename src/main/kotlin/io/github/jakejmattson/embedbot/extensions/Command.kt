@@ -7,7 +7,7 @@ import java.util.WeakHashMap
 
 fun CommandEvent.respondEmbed(init: EmbedDSLHandle.() -> Unit) {
     val embed = EmbedDSLHandle()
-    embed.color(Color(0x00bfff))
+    embed.color = Color(0x00bfff)
     embed.init()
     respond(embed.build())
 }

@@ -2,7 +2,6 @@ package io.github.jakejmattson.embedbot.services
 
 import com.google.gson.Gson
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
-import io.github.jakejmattson.embedbot.extensions.*
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.extensions.jda.fullName
