@@ -51,10 +51,12 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Duplicate") {
         description = "Create a new embed from an existing embed."
-        expect(WordArg("Embed Name"), EmbedArg)
+        expect(arg(WordArg("Embed Name")), arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embedName = it.args.component1() as String
-            val existingEmbed = it.args.component2() as Embed
+            val existingEmbed = it.args.component2() as Embed?
+                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+
             val embed = createEmbedFromJson(embedName, existingEmbed.toJson())
             val wasCreated = embedService.addEmbed(it.guild!!, embed)
 
@@ -70,11 +72,13 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Delete") {
         description = "Delete the embed with this name."
-        requiresLoadedEmbed = true
-        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() as Any }))
+        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
-            val embed = it.args.component1() as Embed
+            val embed = it.args.component1() as Embed?
+                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+
             it.guild!!.removeEmbed(embed)
+
             it.respond("Successfully removed the embed: ${embed.name}")
         }
     }
@@ -116,9 +120,11 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Export") {
         description = "Export the currently loaded embed to JSON."
-        requiresLoadedEmbed = true
+        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
-            val embed = it.guild!!.getLoadedEmbed()!!
+            val embed = it.args.component1() as Embed?
+                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+
             val json = embed.toJson()
 
             if (json.length >= 1985)

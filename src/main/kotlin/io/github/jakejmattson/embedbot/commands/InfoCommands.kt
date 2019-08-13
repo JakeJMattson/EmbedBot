@@ -10,9 +10,11 @@ import me.aberrantfox.kjdautils.api.dsl.*
 fun infoCommands() = commands {
     command("Info") {
         description = "Get extended info for the target embed."
-        expect(EmbedArg)
+        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
-            val embed = it.args.component1() as Embed
+            val embed = it.args.component1() as Embed?
+                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+            
             val guild = it.guild!!
 
             it.respondEmbed {
