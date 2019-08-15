@@ -31,7 +31,7 @@ class InfoService(private val configuration: Configuration) {
         val self = guild.jda.selfUser
         val requiredRole = configuration.getGuildConfig(guild.id)?.requiredRole ?: "<Not Configured>"
 
-        color = Color.green
+        color = Color(0x00bfff)
         thumbnail = self.effectiveAvatarUrl
         addField(self.fullName(), "A bot for creating and managing embeds.")
         addInlineField("Author", "[$author](https://discordapp.com/users/254786431656919051/)")
