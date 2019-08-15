@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.Field
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
 
@@ -84,6 +84,9 @@ fun fieldCommands() = commands {
             val newTitle = it.args.component2() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
+            if (newTitle.length >= FIELD_NAME_LIMIT)
+                return@execute it.respond("Max field name length is ${FIELD_NAME_LIMIT - 1} characters. Input was ${newTitle.length}")
+
             embed.setFieldName(index, newTitle)
             it.respond("Field title value updated.")
         }
@@ -97,6 +100,9 @@ fun fieldCommands() = commands {
             val index = it.args.component1() as Int
             val newText = it.args.component2() as String
             val embed = it.guild!!.getLoadedEmbed()!!
+
+            if (newText.length >= FIELD_VALUE_LIMIT)
+                return@execute it.respond("Max field value length is ${FIELD_VALUE_LIMIT - 1} characters. Input was ${newText.length}")
 
             embed.setFieldText(index, newText)
             it.respond("Field text value updated.")
