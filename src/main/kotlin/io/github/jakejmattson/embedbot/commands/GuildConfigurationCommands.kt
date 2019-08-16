@@ -26,7 +26,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             guildConfiguration.requiredRole = requiredRole.name
             persistenceService.save(configuration)
 
-            it.respondSuccess("Required role set to: ${requiredRole.name}")
+            it.respond("Required role set to: ${requiredRole.name}")
         }
     }
 
@@ -36,7 +36,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             val guild = it.guild!!
             val removed = embedService.removeAllFromGuild(guild)
 
-            it.respondSuccess("Successfully deleted $removed embeds.")
+            it.respond("Successfully deleted $removed embeds.")
         }
     }
 
@@ -53,7 +53,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             configuration.guildConfigurations.add(GuildConfiguration(it.guild!!.id, requiredRole.name))
             persistenceService.save(configuration)
 
-            it.respondSuccess("This guild is now setup for use!")
+            it.respond("This guild is now setup for use!")
         }
     }
 }

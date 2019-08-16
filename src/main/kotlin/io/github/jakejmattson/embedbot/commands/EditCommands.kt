@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.entities.User
 import java.time.LocalDateTime
 
 private const val commandDescriptionFormat = "Set the %s for the currently loaded embed."
-private const val commandSuccessFormat = "Successfully updated the embed %s!"
 
 @CommandSet("Edit")
 fun editCommands() = commands {
@@ -23,7 +22,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setAuthor(user.name, user.effectiveAvatarUrl)
-            it.respondSuccess(commandSuccessFormat.format("author"))
+            it.reactSuccess()
         }
     }
 
@@ -36,7 +35,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setColor(color)
-            it.respondSuccess(commandSuccessFormat.format("color"))
+            it.reactSuccess()
         }
     }
 
@@ -52,7 +51,7 @@ fun editCommands() = commands {
                 return@execute it.respond("Max description length is $DESCRIPTION_LIMIT characters. Input was ${description.length}.")
 
             embed.setDescription(description)
-            it.respondSuccess(commandSuccessFormat.format("description"))
+            it.reactSuccess()
         }
     }
 
@@ -69,7 +68,7 @@ fun editCommands() = commands {
                 return@execute it.respond("Max footer length is $FOOTER_LIMIT characters. Input was ${text.length}.")
 
             embed.setFooter(text, url)
-            it.respondSuccess(commandSuccessFormat.format("footer"))
+            it.reactSuccess()
         }
     }
 
@@ -82,7 +81,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setImage(url)
-            it.respondSuccess(commandSuccessFormat.format("image"))
+            it.reactSuccess()
         }
     }
 
@@ -95,7 +94,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setThumbnail(url)
-            it.respondSuccess(commandSuccessFormat.format("thumbnail"))
+            it.reactSuccess()
         }
     }
 
@@ -106,7 +105,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setTimestamp(LocalDateTime.now())
-            it.respondSuccess(commandSuccessFormat.format("timestamp"))
+            it.reactSuccess()
         }
     }
 
@@ -122,7 +121,7 @@ fun editCommands() = commands {
                 return@execute it.respond("Max title limit is $TITLE_LIMIT characters. Input was ${title.length}.")
 
             embed.setTitle(title)
-            it.respondSuccess(commandSuccessFormat.format("title"))
+            it.reactSuccess()
         }
     }
 
@@ -153,7 +152,7 @@ fun editCommands() = commands {
                 }
             } ?: return@execute it.respond("Invalid field selected. $options")
 
-            it.respondSuccess("Successfully cleared $field")
+            it.reactSuccess()
         }
     }
 
@@ -179,7 +178,7 @@ fun editCommands() = commands {
                 targetEmbed.name = newName
             }
 
-            it.respondSuccess("Successfully changed the name of the embed to: $newName")
+            it.reactSuccess()
         }
     }
 }

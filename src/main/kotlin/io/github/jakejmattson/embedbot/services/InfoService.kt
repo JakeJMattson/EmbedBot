@@ -17,8 +17,6 @@ const val FIELD_VALUE_LIMIT = 1024
 const val FOOTER_LIMIT = 2048
 const val AUTHOR_LIMIT = 256
 
-var isSilentMode = false
-
 @Service
 class InfoService(private val configuration: Configuration) {
     private data class Properties(val version: String, val author: String, val repository: String)

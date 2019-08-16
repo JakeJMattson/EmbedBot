@@ -24,7 +24,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 cluster.addEmbed(guild, it)
             }
 
-            it.respondSuccess("Successfully created the cluster :: $clusterName")
+            it.reactSuccess()
         }
     }
 
@@ -38,7 +38,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             if (!wasDeleted)
                 it.respond("No such cluster with this name.")
 
-            it.respondSuccess("Successfully deleted the cluster :: ${cluster.name}")
+            it.reactSuccess()
         }
     }
 
@@ -69,7 +69,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             if (!wasSuccessful)
                 it.respond("A cluster with that name already exists.")
 
-            it.respondSuccess("Cloned ${embeds.size} embeds into $clusterName")
+            it.respond("Cloned ${embeds.size} embeds into $clusterName")
         }
     }
 
@@ -109,7 +109,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 return@execute it.respond("An embed with this name already exists.")
             
             cluster.name = newName
-            it.respondSuccess("Successfully changed the name of the cluster to: $newName")
+            it.reactSuccess()
         }
     }
 
@@ -131,6 +131,9 @@ fun clusterCommands(embedService: EmbedService) = commands {
                     }
                 }
             }
+
+            if (channel != it.channel)
+                it.reactSuccess()
         }
     }
 
@@ -148,7 +151,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 additions.add(it.name)
             }
 
-            it.respondSuccess("Successfully added the following embeds to ${cluster.name}:\n${additions.joinToString()}")
+            it.reactSuccess()
         }
     }
 
@@ -164,7 +167,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 return@execute it.respond("Invalid Index. Expected range: 0-${cluster.size}")
 
             cluster.insertEmbed(it.guild!!, index, embed)
-            it.respondSuccess("Cluster inserted at index $index")
+
+            it.reactSuccess()
         }
     }
 
@@ -180,7 +184,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 removals.add(embed.name)
             }
 
-            it.respondSuccess("Successfully removed the following embeds from their cluster:\n${removals.joinToString()}")
+            it.reactSuccess()
         }
     }
 }

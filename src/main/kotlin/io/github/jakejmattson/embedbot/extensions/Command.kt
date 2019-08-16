@@ -12,8 +12,6 @@ fun CommandEvent.respondEmbed(init: EmbedDSLHandle.() -> Unit) {
     respond(embed.build())
 }
 
-fun CommandEvent.respondSuccess(string: String) = if (isSilentMode) reactSuccess() else respond(string)
-
 fun CommandEvent.reactSuccess() = message.addReaction("✅").queue()
 
 private object CommandPropertyStore {

@@ -34,8 +34,10 @@ fun copyCommands(embedService: EmbedService) = commands {
 
             val builder = messageEmbed.toEmbedBuilder()
             val embed = Embed(name, builder, CopyLocation(channel.id, messageId))
+
             embedService.addEmbed(guild, embed)
-            it.respondSuccess("Successfully copied the embed as: ${embed.name}")
+
+            it.reactSuccess()
         }
     }
 
@@ -59,8 +61,10 @@ fun copyCommands(embedService: EmbedService) = commands {
 
             val builder = previousEmbedMessage.getEmbed()!!.toEmbedBuilder()
             val previousEmbed = Embed(name, builder, CopyLocation(channel.id, previousEmbedMessage.id))
+
             embedService.addEmbed(guild, previousEmbed)
-            it.respondSuccess("Successfully copied the embed as: ${previousEmbed.name}")
+
+            it.reactSuccess()
         }
     }
 
@@ -74,7 +78,7 @@ fun copyCommands(embedService: EmbedService) = commands {
             if (!updateResponse.canUpdate)
                 return@execute it.respond(updateResponse.reason)
 
-            it.respondSuccess("Message updated!")
+            it.reactSuccess()
         }
     }
 }

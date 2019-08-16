@@ -20,7 +20,7 @@ fun fieldCommands() = commands {
                 return@execute it.respond("Embeds can only hold $FIELD_LIMIT fields.")
 
             embed.addField(field)
-            it.respondSuccess("Field added.")
+            it.reactSuccess()
         }
     }
 
@@ -36,7 +36,7 @@ fun fieldCommands() = commands {
                 return@execute it.respond("Embeds can only hold $FIELD_LIMIT fields.")
 
             embed.addBlankField(isInline)
-            it.respondSuccess("Field added.")
+            it.reactSuccess()
         }
     }
 
@@ -53,7 +53,7 @@ fun fieldCommands() = commands {
                 return@execute it.respond("Embeds can only hold $FIELD_LIMIT fields.")
 
             embed.insertField(index, field)
-            it.respondSuccess("Field inserted at index $index")
+            it.reactSuccess()
         }
     }
 
@@ -66,7 +66,7 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.removeField(index)
-            it.respondSuccess("Field removed.")
+            it.reactSuccess()
         }
     }
 
@@ -80,7 +80,7 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setField(index, field)
-            it.respondSuccess("Field updated.")
+            it.reactSuccess()
         }
     }
 
@@ -97,7 +97,7 @@ fun fieldCommands() = commands {
                 return@execute it.respond("Max field name length is $FIELD_NAME_LIMIT characters. Input was ${newTitle.length}.")
 
             embed.setFieldName(index, newTitle)
-            it.respondSuccess("Field title value updated.")
+            it.reactSuccess()
         }
     }
 
@@ -114,7 +114,7 @@ fun fieldCommands() = commands {
                 return@execute it.respond("Max field value length is $FIELD_VALUE_LIMIT characters. Input was ${newText.length}.")
 
             embed.setFieldText(index, newText)
-            it.respondSuccess("Field text value updated.")
+            it.reactSuccess()
         }
     }
 
@@ -128,7 +128,7 @@ fun fieldCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldInline(index, newInline)
-            it.respondSuccess("Field inline value updated.")
+            it.reactSuccess()
         }
     }
 }

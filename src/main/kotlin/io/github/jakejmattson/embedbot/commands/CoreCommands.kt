@@ -7,12 +7,11 @@ import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
 import io.github.jakejmattson.embedbot.utilities.createEmbedFromJson
 import me.aberrantfox.kjdautils.api.dsl.*
-import me.aberrantfox.kjdautils.discord.Discord
 import me.aberrantfox.kjdautils.internal.arguments.*
 import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Core")
-fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
+fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         description = "Send the currently loaded embed."
         requiresLoadedEmbed = true
@@ -30,6 +29,9 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
                 if (shouldTrack)
                     embed.copyLocation = CopyLocation(channel.id, message.id)
             }
+            
+            if (channel != it.channel)
+                it.reactSuccess()
         }
     }
 
@@ -43,7 +45,7 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
             if (!wasCreated)
                 return@execute it.respond("An embed with this name already exists.")
 
-            it.respondSuccess("Successfully added the embed: $embedName")
+            it.reactSuccess()
         }
     }
 
@@ -61,7 +63,7 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
             if (!wasCreated)
                 it.respond("An embed with this name already exists.")
 
-            it.respondSuccess("Successfully added the embed: $embedName")
+            it.reactSuccess()
         }
     }
 
@@ -74,7 +76,7 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
 
             it.guild!!.removeEmbed(embed)
 
-            it.respondSuccess("Successfully removed the embed: ${embed.name}")
+            it.reactSuccess()
         }
     }
 
@@ -84,7 +86,7 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
         execute {
             val embed = it.args.component1() as Embed
             it.guild!!.loadEmbed(embed)
-            it.respondSuccess("Successfully loaded the embed: ${embed.name}")
+            it.reactSuccess()
         }
     }
 
@@ -106,7 +108,7 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
                 if (!wasAdded)
                     it.respond("An embed with this name already exists")
 
-                it.respondSuccess("Successfully imported the embed: ${embed.name}")
+                it.reactSuccess()
             } catch (e: JsonSyntaxException) {
                 it.respond("Invalid JSON! ${e.message?.substringAfter("Exception: ")}")
             }
@@ -126,22 +128,6 @@ fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
                 it.channel.sendFile(json.toByteArray(), "$${embed.name}.json").queue()
             else
                 it.respond("```json\n$json```")
-        }
-    }
-
-    command("SilentMode") {
-        description = "Silent mode ignores"
-        expect(OnOffArg)
-        execute {
-            val isOn = it.args.component1() as Boolean
-
-            discord.configuration.reactToCommands = !isOn
-            isSilentMode = isOn
-
-            if (isOn)
-                it.respond("Silent mode is now on. Text responses will no longer be sent on successful invocations.")
-            else
-                it.respond("Silent mode is now off. Text responses will now be sent on successful invocations.")
         }
     }
 }

@@ -22,7 +22,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
             prefixService.setPrefix(prefix)
             persistenceService.save(configuration)
 
-            it.respondSuccess("Prefix set to: $prefix")
+            it.respond("Prefix set to: $prefix")
         }
     }
 
