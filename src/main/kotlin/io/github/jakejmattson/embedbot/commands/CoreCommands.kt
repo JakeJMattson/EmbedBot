@@ -4,14 +4,15 @@ import com.google.gson.JsonSyntaxException
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.EmbedService
+import io.github.jakejmattson.embedbot.services.*
 import io.github.jakejmattson.embedbot.utilities.createEmbedFromJson
 import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.discord.Discord
 import me.aberrantfox.kjdautils.internal.arguments.*
 import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Core")
-fun coreCommands(embedService: EmbedService) = commands {
+fun coreCommands(embedService: EmbedService, discord: Discord) = commands {
     command("Send") {
         description = "Send the currently loaded embed."
         requiresLoadedEmbed = true
@@ -39,13 +40,10 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embedName = it.args.component1() as String
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
-            val response =
-                if (wasCreated)
-                    "Successfully added the embed: $embedName"
-                else
-                    "An embed with this name already exists."
+            if (!wasCreated)
+                return@execute it.respond("An embed with this name already exists.")
 
-            it.respond(response)
+            it.respondSuccess("Successfully added the embed: $embedName")
         }
     }
 
@@ -60,13 +58,10 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = createEmbedFromJson(embedName, existingEmbed.toJson())
             val wasCreated = embedService.addEmbed(it.guild!!, embed)
 
-            val response =
-                if (wasCreated)
-                    "Successfully added the embed: $embedName"
-                else
-                    "An embed with this name already exists."
+            if (!wasCreated)
+                it.respond("An embed with this name already exists.")
 
-            it.respond(response)
+            it.respondSuccess("Successfully added the embed: $embedName")
         }
     }
 
@@ -79,7 +74,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
             it.guild!!.removeEmbed(embed)
 
-            it.respond("Successfully removed the embed: ${embed.name}")
+            it.respondSuccess("Successfully removed the embed: ${embed.name}")
         }
     }
 
@@ -89,7 +84,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val embed = it.args.component1() as Embed
             it.guild!!.loadEmbed(embed)
-            it.respond("Successfully loaded the embed: ${embed.name}")
+            it.respondSuccess("Successfully loaded the embed: ${embed.name}")
         }
     }
 
@@ -104,17 +99,17 @@ fun coreCommands(embedService: EmbedService) = commands {
             if (guild.hasEmbedWithName(name))
                 return@execute it.respond("An embed with this name already exists.")
 
-            val response =
-                try {
-                    val embed = createEmbedFromJson(name, json)
-                    val wasAdded = embedService.addEmbed(guild, embed)
+            try {
+                val embed = createEmbedFromJson(name, json)
+                val wasAdded = embedService.addEmbed(guild, embed)
 
-                    if (wasAdded) "Successfully imported the embed: ${embed.name}" else "An embed with this name already exists"
-                } catch (e: JsonSyntaxException) {
-                    "Invalid JSON! ${e.message?.substringAfter("Exception: ")}"
-                }
+                if (!wasAdded)
+                    it.respond("An embed with this name already exists")
 
-            it.respond(response)
+                it.respondSuccess("Successfully imported the embed: ${embed.name}")
+            } catch (e: JsonSyntaxException) {
+                it.respond("Invalid JSON! ${e.message?.substringAfter("Exception: ")}")
+            }
         }
     }
 
@@ -131,6 +126,22 @@ fun coreCommands(embedService: EmbedService) = commands {
                 it.channel.sendFile(json.toByteArray(), "$${embed.name}.json").queue()
             else
                 it.respond("```json\n$json```")
+        }
+    }
+
+    command("SilentMode") {
+        description = "Silent mode ignores"
+        expect(OnOffArg)
+        execute {
+            val isOn = it.args.component1() as Boolean
+
+            discord.configuration.reactToCommands = !isOn
+            isSilentMode = isOn
+
+            if (isOn)
+                it.respond("Silent mode is now on. Text responses will no longer be sent on successful invocations.")
+            else
+                it.respond("Silent mode is now off. Text responses will now be sent on successful invocations.")
         }
     }
 }

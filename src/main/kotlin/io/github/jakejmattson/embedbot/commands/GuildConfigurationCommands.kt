@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.*
-import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
+import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.RoleArg
@@ -26,7 +26,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             guildConfiguration.requiredRole = requiredRole.name
             persistenceService.save(configuration)
 
-            it.respond("Required role set to: ${requiredRole.name}")
+            it.respondSuccess("Required role set to: ${requiredRole.name}")
         }
     }
 
@@ -36,7 +36,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             val guild = it.guild!!
             val removed = embedService.removeAllFromGuild(guild)
 
-            it.respond("Successfully deleted $removed embeds.")
+            it.respondSuccess("Successfully deleted $removed embeds.")
         }
     }
 
@@ -53,7 +53,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             configuration.guildConfigurations.add(GuildConfiguration(it.guild!!.id, requiredRole.name))
             persistenceService.save(configuration)
 
-            it.respond("This guild is now setup for use!")
+            it.respondSuccess("This guild is now setup for use!")
         }
     }
 }

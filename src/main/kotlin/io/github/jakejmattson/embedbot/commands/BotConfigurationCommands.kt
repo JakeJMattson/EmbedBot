@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
-import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
+import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.WordArg
@@ -22,7 +22,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
             prefixService.setPrefix(prefix)
             persistenceService.save(configuration)
 
-            it.respond("Prefix set to: $prefix")
+            it.respondSuccess("Prefix set to: $prefix")
         }
     }
 

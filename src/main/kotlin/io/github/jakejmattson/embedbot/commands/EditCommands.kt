@@ -23,7 +23,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setAuthor(user.name, user.effectiveAvatarUrl)
-            it.respond(commandSuccessFormat.format("author"))
+            it.respondSuccess(commandSuccessFormat.format("author"))
         }
     }
 
@@ -36,7 +36,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setColor(color)
-            it.respond(commandSuccessFormat.format("color"))
+            it.respondSuccess(commandSuccessFormat.format("color"))
         }
     }
 
@@ -52,7 +52,7 @@ fun editCommands() = commands {
                 return@execute it.respond("Max description length is $DESCRIPTION_LIMIT characters. Input was ${description.length}.")
 
             embed.setDescription(description)
-            it.respond(commandSuccessFormat.format("description"))
+            it.respondSuccess(commandSuccessFormat.format("description"))
         }
     }
 
@@ -69,7 +69,7 @@ fun editCommands() = commands {
                 return@execute it.respond("Max footer length is $FOOTER_LIMIT characters. Input was ${text.length}.")
 
             embed.setFooter(text, url)
-            it.respond(commandSuccessFormat.format("footer"))
+            it.respondSuccess(commandSuccessFormat.format("footer"))
         }
     }
 
@@ -82,7 +82,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setImage(url)
-            it.respond(commandSuccessFormat.format("image"))
+            it.respondSuccess(commandSuccessFormat.format("image"))
         }
     }
 
@@ -95,7 +95,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setThumbnail(url)
-            it.respond(commandSuccessFormat.format("thumbnail"))
+            it.respondSuccess(commandSuccessFormat.format("thumbnail"))
         }
     }
 
@@ -106,7 +106,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setTimestamp(LocalDateTime.now())
-            it.respond(commandSuccessFormat.format("timestamp"))
+            it.respondSuccess(commandSuccessFormat.format("timestamp"))
         }
     }
 
@@ -122,7 +122,7 @@ fun editCommands() = commands {
                 return@execute it.respond("Max title limit is $TITLE_LIMIT characters. Input was ${title.length}.")
 
             embed.setTitle(title)
-            it.respond(commandSuccessFormat.format("title"))
+            it.respondSuccess(commandSuccessFormat.format("title"))
         }
     }
 
@@ -153,7 +153,7 @@ fun editCommands() = commands {
                 }
             } ?: return@execute it.respond("Invalid field selected. $options")
 
-            it.respond("Successfully cleared $field")
+            it.respondSuccess("Successfully cleared $field")
         }
     }
 
@@ -179,7 +179,7 @@ fun editCommands() = commands {
                 targetEmbed.name = newName
             }
 
-            it.respond("Successfully changed the name of the embed to: $newName")
+            it.respondSuccess("Successfully changed the name of the embed to: $newName")
         }
     }
 }

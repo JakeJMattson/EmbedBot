@@ -24,7 +24,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 cluster.addEmbed(guild, it)
             }
 
-            it.respond("Successfully created the cluster :: $clusterName")
+            it.respondSuccess("Successfully created the cluster :: $clusterName")
         }
     }
 
@@ -35,13 +35,10 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val cluster = it.args.component1() as Cluster
             val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
-            val response =
-                if (wasDeleted)
-                    "Successfully deleted the cluster :: ${cluster.name}"
-                else
-                    "No such cluster with this name."
+            if (!wasDeleted)
+                it.respond("No such cluster with this name.")
 
-            it.respond(response)
+            it.respondSuccess("Successfully deleted the cluster :: ${cluster.name}")
         }
     }
 
@@ -69,13 +66,10 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
             val wasSuccessful = embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
 
-            val response =
-                if (wasSuccessful)
-                    "Cloned ${embeds.size} embeds into $clusterName"
-                else
-                    "A cluster with that name already exists."
+            if (!wasSuccessful)
+                it.respond("A cluster with that name already exists.")
 
-            it.respond(response)
+            it.respondSuccess("Cloned ${embeds.size} embeds into $clusterName")
         }
     }
 
@@ -115,7 +109,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 return@execute it.respond("An embed with this name already exists.")
             
             cluster.name = newName
-            it.respond("Successfully changed the name of the cluster to: $newName")
+            it.respondSuccess("Successfully changed the name of the cluster to: $newName")
         }
     }
 
@@ -154,7 +148,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 additions.add(it.name)
             }
 
-            it.respond("Successfully added the following embeds to ${cluster.name}:\n${additions.joinToString()}")
+            it.respondSuccess("Successfully added the following embeds to ${cluster.name}:\n${additions.joinToString()}")
         }
     }
 
@@ -170,7 +164,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 return@execute it.respond("Invalid Index. Expected range: 0-${cluster.size}")
 
             cluster.insertEmbed(it.guild!!, index, embed)
-            it.respond("Cluster inserted at index $index")
+            it.respondSuccess("Cluster inserted at index $index")
         }
     }
 
@@ -186,7 +180,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 removals.add(embed.name)
             }
 
-            it.respond("Successfully removed the following embeds from their cluster:\n${removals.joinToString()}")
+            it.respondSuccess("Successfully removed the following embeds from their cluster:\n${removals.joinToString()}")
         }
     }
 }
