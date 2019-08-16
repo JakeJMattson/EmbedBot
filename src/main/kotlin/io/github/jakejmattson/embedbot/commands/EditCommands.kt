@@ -11,7 +11,6 @@ import java.time.LocalDateTime
 
 private const val commandDescriptionFormat = "Set the %s for the currently loaded embed."
 private const val commandSuccessFormat = "Successfully updated the embed %s!"
-private const val commandFailFormat = "Failed to update! Limit is %s."
 
 @CommandSet("Edit")
 fun editCommands() = commands {
@@ -49,8 +48,8 @@ fun editCommands() = commands {
             val description = it.args.component1() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            if (description.length >= DESCRIPTION_LIMIT)
-                return@execute it.respond(commandFailFormat.format("$DESCRIPTION_LIMIT characters"))
+            if (description.length > DESCRIPTION_LIMIT)
+                return@execute it.respond("Max description length is $DESCRIPTION_LIMIT characters. Input was ${description.length}.")
 
             embed.setDescription(description)
             it.respond(commandSuccessFormat.format("description"))
@@ -66,8 +65,8 @@ fun editCommands() = commands {
             val text = it.args.component2() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            if (text.length >= FOOTER_LIMIT)
-                return@execute it.respond(commandFailFormat.format("$FOOTER_LIMIT characters"))
+            if (text.length > FOOTER_LIMIT)
+                return@execute it.respond("Max footer length is $FOOTER_LIMIT characters. Input was ${text.length}.")
 
             embed.setFooter(text, url)
             it.respond(commandSuccessFormat.format("footer"))
@@ -119,8 +118,8 @@ fun editCommands() = commands {
             val title = it.args.component1() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            if (title.length >= TITLE_LIMIT)
-                return@execute it.respond(commandFailFormat.format("$TITLE_LIMIT characters"))
+            if (title.length > TITLE_LIMIT)
+                return@execute it.respond("Max title limit is $TITLE_LIMIT characters. Input was ${title.length}.")
 
             embed.setTitle(title)
             it.respond(commandSuccessFormat.format("title"))

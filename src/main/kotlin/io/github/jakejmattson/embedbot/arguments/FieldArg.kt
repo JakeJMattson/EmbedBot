@@ -23,11 +23,11 @@ open class FieldArg(override val name: String = "Field Data", val delimiter: Str
         val value = data.component2()
         val inline = if (data.size == 3) data.component3().toBoolean() else false
 
-        if (name.length >= FIELD_NAME_LIMIT)
-            return ArgumentResult.Error("Max field name length is ${FIELD_NAME_LIMIT - 1} characters. Input was ${name.length}")
+        if (name.length > FIELD_NAME_LIMIT)
+            return ArgumentResult.Error("Max field name length is $FIELD_NAME_LIMIT characters. Input was ${name.length}.")
 
-        if (value.length >= FIELD_VALUE_LIMIT)
-            return ArgumentResult.Error("Max field value length is ${FIELD_VALUE_LIMIT - 1} characters. Input was ${value.length}")
+        if (value.length > FIELD_VALUE_LIMIT)
+            return ArgumentResult.Error("Max field value length is $FIELD_VALUE_LIMIT characters. Input was ${value.length}.")
 
         val field = Field(name, value, inline)
 

@@ -16,6 +16,9 @@ fun fieldCommands() = commands {
             val field = it.args.component1() as Field
             val embed = it.guild!!.getLoadedEmbed()!!
 
+            if (embed.fieldCount == FIELD_LIMIT)
+                return@execute it.respond("Embeds can only hold $FIELD_LIMIT fields.")
+
             embed.addField(field)
             it.respond("Field added.")
         }
@@ -28,6 +31,9 @@ fun fieldCommands() = commands {
         execute {
             val isInline = it.args.component1() as Boolean
             val embed = it.guild!!.getLoadedEmbed()!!
+
+            if (embed.fieldCount == FIELD_LIMIT)
+                return@execute it.respond("Embeds can only hold $FIELD_LIMIT fields.")
 
             embed.addBlankField(isInline)
             it.respond("Field added.")
@@ -42,6 +48,9 @@ fun fieldCommands() = commands {
             val index = it.args.component1() as Int
             val field = it.args.component2() as Field
             val embed = it.guild!!.getLoadedEmbed()!!
+
+            if (embed.fieldCount == FIELD_LIMIT)
+                return@execute it.respond("Embeds can only hold $FIELD_LIMIT fields.")
 
             embed.insertField(index, field)
             it.respond("Field inserted at index $index")
@@ -84,8 +93,8 @@ fun fieldCommands() = commands {
             val newTitle = it.args.component2() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            if (newTitle.length >= FIELD_NAME_LIMIT)
-                return@execute it.respond("Max field name length is ${FIELD_NAME_LIMIT - 1} characters. Input was ${newTitle.length}")
+            if (newTitle.length > FIELD_NAME_LIMIT)
+                return@execute it.respond("Max field name length is $FIELD_NAME_LIMIT characters. Input was ${newTitle.length}.")
 
             embed.setFieldName(index, newTitle)
             it.respond("Field title value updated.")
@@ -101,8 +110,8 @@ fun fieldCommands() = commands {
             val newText = it.args.component2() as String
             val embed = it.guild!!.getLoadedEmbed()!!
 
-            if (newText.length >= FIELD_VALUE_LIMIT)
-                return@execute it.respond("Max field value length is ${FIELD_VALUE_LIMIT - 1} characters. Input was ${newText.length}")
+            if (newText.length > FIELD_VALUE_LIMIT)
+                return@execute it.respond("Max field value length is $FIELD_VALUE_LIMIT characters. Input was ${newText.length}.")
 
             embed.setFieldText(index, newText)
             it.respond("Field text value updated.")
