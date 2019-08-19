@@ -89,7 +89,6 @@
 | BotInfo      | <none>    | Display the bot information.                |
 | ListCommands | <none>    | List all available commands.                |
 | Ping         | <none>    | Display the network ping of the bot.        |
-| Source       | <none>    | Display the (source code) repository link.  |
 | Uptime       | <none>    | Displays how long the bot has been running. |
 | help         | (Word)    | Display a help menu                         |
 

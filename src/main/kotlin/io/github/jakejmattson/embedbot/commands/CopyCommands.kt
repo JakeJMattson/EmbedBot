@@ -45,26 +45,26 @@ fun copyCommands(embedService: EmbedService) = commands {
         description = "Copy the previous embed in the target channel."
         expect(arg(WordArg("Embed Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
-        execute {
-            val name = it.args.component1() as String
-            val channel = it.args.component2() as TextChannel
-            val guild = it.guild!!
+        execute { event ->
+            val name = event.args.component1() as String
+            val channel = event.args.component2() as TextChannel
+            val guild = event.guild!!
             val limit = 50
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists.")
+                return@execute event.respond("An embed with this name already exists.")
 
-            val previousMessages = channel.getHistoryBefore(it.message.id, limit).complete().retrievedHistory
+            val previousMessages = channel.getHistoryBefore(event.message.id, limit).complete().retrievedHistory
 
             val previousEmbedMessage = previousMessages.firstOrNull { it.getEmbed() != null }
-                ?: return@execute it.respond("No embeds found in the previous $limit messages.")
+                ?: return@execute event.respond("No embeds found in the previous $limit messages.")
 
             val builder = previousEmbedMessage.getEmbed()!!.toEmbedBuilder()
             val previousEmbed = Embed(name, builder, CopyLocation(channel.id, previousEmbedMessage.id))
 
             embedService.addEmbed(guild, previousEmbed)
 
-            it.reactSuccess()
+            event.reactSuccess()
         }
     }
 

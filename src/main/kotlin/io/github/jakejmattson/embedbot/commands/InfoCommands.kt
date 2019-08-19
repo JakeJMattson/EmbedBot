@@ -36,9 +36,9 @@ fun infoCommands() = commands {
 
     command("ListEmbeds") {
         description = "List all embeds created in this guild."
-        execute {
-            it.respondEmbed {
-                val guild = it.guild!!
+        execute { event ->
+            event.respondEmbed {
+                val guild = event.guild!!
                 val embeds = guild.getEmbeds()
                 val clusters = guild.getClusters()
                 val loadedEmbed = guild.getLoadedEmbed()
@@ -50,8 +50,8 @@ fun infoCommands() = commands {
                 addField("Embeds", embedList)
 
                 if (clusters.isNotEmpty()) {
-                    clusters.forEach {
-                        addField(it.name, it.toString())
+                    clusters.forEach { cluster ->
+                        addField(cluster.name, cluster.toString())
                     }
                 }
             }

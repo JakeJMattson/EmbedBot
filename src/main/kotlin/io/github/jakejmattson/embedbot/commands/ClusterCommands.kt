@@ -20,8 +20,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val cluster = embedService.createCluster(guild, clusterName)
                 ?: return@execute it.respond("A cluster with this name already exists.")
 
-            embeds.forEach {
-                cluster.addEmbed(guild, it)
+            embeds.forEach { embed ->
+                cluster.addEmbed(guild, embed)
             }
 
             it.reactSuccess()
@@ -47,13 +47,13 @@ fun clusterCommands(embedService: EmbedService) = commands {
         expect(arg(WordArg("Cluster Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
                 arg(IntegerArg("Amount")))
-        execute {
-            val clusterName = it.args.component1() as String
-            val channel = it.args.component2() as TextChannel
-            val amount = it.args.component3() as Int
+        execute { event ->
+            val clusterName = event.args.component1() as String
+            val channel = event.args.component2() as TextChannel
+            val amount = event.args.component3() as Int
 
             if (amount <= 0)
-                return@execute it.respond("Cluster size should be 1 or greater.")
+                return@execute event.respond("Cluster size should be 1 or greater.")
 
             val messagesWithEmbeds = channel.iterableHistory.complete().filter { it.getEmbed() != null }.take(amount)
                as ArrayList
@@ -64,12 +64,12 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 Embed("$clusterName-${index + 1}", message.getEmbed()!!.toEmbedBuilder(), CopyLocation(channel.id, message.id))
             } as ArrayList
 
-            val wasSuccessful = embedService.createClusterFromEmbeds(it.guild!!, Cluster(clusterName, embeds))
+            val wasSuccessful = embedService.createClusterFromEmbeds(event.guild!!, Cluster(clusterName, embeds))
 
             if (!wasSuccessful)
-                it.respond("A cluster with that name already exists.")
+                event.respond("A cluster with that name already exists.")
 
-            it.respond("Cloned ${embeds.size} embeds into $clusterName")
+            event.respond("Cloned ${embeds.size} embeds into $clusterName")
         }
     }
 
@@ -146,9 +146,9 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val guild = it.guild!!
             val additions = arrayListOf<String>()
 
-            embeds.forEach {
-                cluster.addEmbed(guild, it)
-                additions.add(it.name)
+            embeds.forEach { embed ->
+                cluster.addEmbed(guild, embed)
+                additions.add(embed.name)
             }
 
             it.reactSuccess()

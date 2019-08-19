@@ -43,8 +43,8 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
                 return@execute it.respond("Invalid bot owner ID.")
 
             val removedEmbeds =
-                guildConfigs.sumBy {
-                    val guild = jda.getGuildById(it.guildId)
+                guildConfigs.sumBy { guildConfiguration ->
+                    val guild = jda.getGuildById(guildConfiguration.guildId)
 
                     if (guild != null)
                         embedService.removeAllFromGuild(guild)

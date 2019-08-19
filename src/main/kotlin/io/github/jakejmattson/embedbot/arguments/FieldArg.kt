@@ -5,7 +5,7 @@ import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
-open class FieldArg(override val name: String = "Field Data", val delimiter: String = "|") : ArgumentType {
+open class FieldArg(override val name: String = "Field Data", private val delimiter: String = "|") : ArgumentType {
     companion object : FieldArg()
 
     override val examples = arrayListOf("Title|Body")

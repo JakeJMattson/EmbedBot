@@ -17,13 +17,6 @@ fun utilityCommands(infoService: InfoService, permissionsService: PermissionsSer
         }
     }
 
-    command("Source") {
-        description = "Display the (source code) repository link."
-        execute {
-            it.respond(infoService.source)
-        }
-    }
-
     command("BotInfo") {
         description = "Display the bot information."
         execute {
@@ -61,8 +54,8 @@ fun utilityCommands(infoService: InfoService, permissionsService: PermissionsSer
                 .toList().toMap()
 
             event.respondEmbed {
-                commands.forEach {
-                    addInlineField(it.key, it.value.sortedBy { it.name }.joinToString("\n") { it.name })
+                commands.forEach { entry ->
+                    addInlineField(entry.key, entry.value.sortedBy { it.name }.joinToString("\n") { it.name })
                 }
             }
         }

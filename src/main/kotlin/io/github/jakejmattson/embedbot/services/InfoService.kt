@@ -23,10 +23,6 @@ class InfoService(private val configuration: Configuration) {
     private val propFile = Properties::class.java.getResource("/properties.json").readText()
     private val project = Gson().fromJson(propFile, Properties::class.java)
 
-    val version = project.version
-    val author = project.author
-    val source = project.repository
-
     fun botInfo(guild: Guild) = embed {
         val self = guild.jda.selfUser
         val requiredRole = configuration.getGuildConfig(guild.id)?.requiredRole ?: "<Not Configured>"
@@ -34,10 +30,10 @@ class InfoService(private val configuration: Configuration) {
         color = Color(0x00bfff)
         thumbnail = self.effectiveAvatarUrl
         addField(self.fullName(), "A bot for creating and managing embeds.")
-        addInlineField("Author", "[$author](https://discordapp.com/users/254786431656919051/)")
-        addInlineField("Version", version)
-        addInlineField("Prefix", configuration.prefix)
         addInlineField("Required role", requiredRole)
-        addInlineField("Source", source)
+        addInlineField("Prefix", configuration.prefix)
+        addInlineField("Author", "[${project.author}](https://discordapp.com/users/254786431656919051/)")
+        addInlineField("Version", project.version)
+        addInlineField("Source", project.repository)
     }
 }
