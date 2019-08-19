@@ -1,8 +1,7 @@
 package io.github.jakejmattson.embedbot.dataclasses
 
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.services.Field
-import io.github.jakejmattson.embedbot.utilities.gson
+import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import net.dv8tion.jda.api.*
 import net.dv8tion.jda.api.entities.*

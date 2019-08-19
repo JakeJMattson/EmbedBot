@@ -5,7 +5,6 @@ import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.services.*
-import io.github.jakejmattson.embedbot.utilities.createEmbedFromJson
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
 import net.dv8tion.jda.api.entities.TextChannel

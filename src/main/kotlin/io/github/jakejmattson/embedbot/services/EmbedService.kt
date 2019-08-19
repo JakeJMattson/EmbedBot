@@ -1,14 +1,17 @@
 package io.github.jakejmattson.embedbot.services
 
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
-import io.github.jakejmattson.embedbot.utilities.*
 import me.aberrantfox.kjdautils.api.annotation.Service
+import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.*
 import java.io.File
 
 typealias Field = MessageEmbed.Field
+
+val gson = GsonBuilder().setPrettyPrinting().create()!!
 
 private lateinit var embedMap: HashMap<String, GuildEmbeds>
 private val embedFile = File("config/embeds.json")
@@ -89,7 +92,9 @@ class EmbedService {
     }
 }
 
-fun saveEmbeds() = save(embedFile, embedMap)
+fun saveEmbeds() = embedFile.writeText(gson.toJson(embedMap))
+
+fun createEmbedFromJson(name: String, json: String) = Embed(name, gson.fromJson(json, EmbedBuilder::class.java))
 
 private fun loadEmbeds() =
     if (embedFile.exists())
