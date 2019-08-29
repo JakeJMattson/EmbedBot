@@ -73,7 +73,30 @@ fun copyCommands(embedService: EmbedService) = commands {
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
-            val updateResponse = embed.update(it.discord.jda)
+
+            val original = embed.copyLocation
+                ?: return@execute it.respond("This embed was not copied from another message.")
+
+            val updateResponse = embed.update(it.discord.jda, original.channelId, original.messageId)
+
+            if (!updateResponse.canUpdate)
+                return@execute it.respond(updateResponse.reason)
+
+            it.reactSuccess()
+        }
+    }
+
+    command("UpdateTarget") {
+        description = "Replace the target message embed with the loaded embed."
+        requiresLoadedEmbed = true
+        expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
+                arg(WordArg("Message ID")))
+        execute {
+            val channel = it.args.component1() as TextChannel
+            val messageId = it.args.component2() as String
+            val embed = it.guild!!.getLoadedEmbed()!!
+
+            val updateResponse = embed.update(it.discord.jda, channel.id, messageId)
 
             if (!updateResponse.canUpdate)
                 return@execute it.respond(updateResponse.reason)

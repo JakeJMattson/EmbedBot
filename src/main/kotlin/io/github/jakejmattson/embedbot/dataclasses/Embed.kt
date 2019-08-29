@@ -73,19 +73,16 @@ data class Embed(var name: String,
 
     fun isLoaded(guild: Guild) = guild.getLoadedEmbed() == this
 
-    fun update(jda: JDA): UpdateResponse {
-        val original = copyLocation
-            ?: return UpdateResponse(false, "This embed was not copied from another message.")
-
-        val channel = jda.getTextChannelById(original.channelId)
-            ?: return UpdateResponse(false, "The channel this embed was copied from no longer exists.")
+    fun update(jda: JDA, channelId: String, messageId: String): UpdateResponse {
+        val channel = jda.getTextChannelById(channelId)
+            ?: return UpdateResponse(false, "Target channel `$channelId` does not exist.")
 
         val message = tryRetrieveSnowflake(jda) {
-            channel.retrieveMessageById(original.messageId).complete()
-        } as Message? ?: return UpdateResponse(false, "The message this embed was copied from no longer exists.")
+            channel.retrieveMessageById(messageId).complete()
+        } as Message? ?: return UpdateResponse(false, "Target message does not exist.")
 
         if (message.author != jda.selfUser)
-            return UpdateResponse(false, "The message this embed was copied from is not from this bot.")
+            return UpdateResponse(false, "Target message is not from this bot.")
 
         if (isEmpty)
             return UpdateResponse(false, "Cannot build an empty embed.")

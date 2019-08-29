@@ -81,10 +81,20 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val failures = ArrayList<String>()
             val size = cluster.size
 
-            val totalSuccessful = cluster.embeds.sumBy {
-                with(it.update(event.discord.jda)) {
+            val totalSuccessful = cluster.embeds.sumBy { embed ->
+
+                val location = embed.copyLocation
+
+                if (location == null) {
+                    failures.add("This embed was not copied from another message.")
+                    return@sumBy 0
+                }
+
+                val updateResponse = embed.update(event.discord.jda, location.channelId, location.messageId)
+
+                with (updateResponse) {
                     if (!canUpdate)
-                        failures.add("${it.name} :: $reason")
+                        failures.add("${embed.name} :: ${updateResponse.reason}")
 
                     if (canUpdate) 1 else 0
                 }
