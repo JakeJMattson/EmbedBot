@@ -1,11 +1,8 @@
 package io.github.jakejmattson.embedbot.services
 
-import io.github.jakejmattson.embedbot.dataclasses.Configuration
+import io.github.jakejmattson.embedbot.dataclasses.*
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.discord.Discord
-
-private data class ValidationResult(val isValid: Boolean, val message: String)
-private infix fun Boolean.withMessage(message: String) = ValidationResult(this, message)
 
 @Service
 class ValidationService(private val configuration: Configuration, private val discord: Discord) {
@@ -13,12 +10,12 @@ class ValidationService(private val configuration: Configuration, private val di
 
     init {
         with(validateConfiguration()) {
-            require(isValid) { message }
+            require(wasSuccessful) { message }
             println(message)
         }
     }
 
-    private fun validateConfiguration(): ValidationResult {
+    private fun validateConfiguration(): OperationResult {
         if (configuration.prefix.isEmpty())
             return false withMessage "The configured prefix is empty."
 

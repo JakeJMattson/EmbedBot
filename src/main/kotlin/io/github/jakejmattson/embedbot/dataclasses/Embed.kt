@@ -8,11 +8,6 @@ import net.dv8tion.jda.api.entities.*
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
 
-data class UpdateResponse(val canUpdate: Boolean, val reason: String = "")
-data class CopyLocation(val channelId: String, val messageId: String) {
-    override fun toString() = "Channel ID: $channelId\nMessage ID: $messageId"
-}
-
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
                  var copyLocation: CopyLocation? = null) {
@@ -73,28 +68,27 @@ data class Embed(var name: String,
 
     fun isLoaded(guild: Guild) = guild.getLoadedEmbed() == this
 
-    fun update(jda: JDA, channelId: String, messageId: String): UpdateResponse {
+    fun update(jda: JDA, channelId: String, messageId: String): OperationResult {
         val channel = jda.getTextChannelById(channelId)
-            ?: return UpdateResponse(false, "Target channel `$channelId` does not exist.")
+            ?: return false withMessage "Target channel `$channelId` does not exist."
 
         val message = tryRetrieveSnowflake(jda) {
             channel.retrieveMessageById(messageId).complete()
-        } as Message? ?: return UpdateResponse(false, "Target message does not exist.")
+        } as Message? ?: return false withMessage "Target message does not exist."
 
         if (message.author != jda.selfUser)
-            return UpdateResponse(false, "Target message is not from this bot.")
+            return false withMessage "Target message is not from this bot."
 
         if (isEmpty)
-            return UpdateResponse(false, "Cannot build an empty embed.")
+            return false withMessage "Cannot build an empty embed."
 
         val currentEmbed = message.getEmbed()
-            ?: return UpdateResponse(false, "Target message has no embed.")
-
+            ?: return false withMessage "Target message has no embed."
         if (currentEmbed == builder.build())
-            return UpdateResponse(false, "This message is up to date.")
+            return false withMessage "This message is up to date."
 
         message.editMessage(build()).queue()
 
-        return UpdateResponse(true)
+        return true withMessage "Update successful."
     }
 }

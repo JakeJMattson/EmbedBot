@@ -93,10 +93,10 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 val updateResponse = embed.update(event.discord.jda, location.channelId, location.messageId)
 
                 with (updateResponse) {
-                    if (!canUpdate)
-                        failures.add("${embed.name} :: ${updateResponse.reason}")
+                    if (!wasSuccessful)
+                        failures.add("${embed.name} :: ${updateResponse.message}")
 
-                    if (canUpdate) 1 else 0
+                    if (wasSuccessful) 1 else 0
                 }
             }
 

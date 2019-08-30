@@ -79,8 +79,8 @@ fun copyCommands(embedService: EmbedService) = commands {
 
             val updateResponse = embed.update(it.discord.jda, original.channelId, original.messageId)
 
-            if (!updateResponse.canUpdate)
-                return@execute it.respond(updateResponse.reason)
+            if (!updateResponse.wasSuccessful)
+                return@execute it.respond(updateResponse.message)
 
             it.reactSuccess()
         }
@@ -98,8 +98,8 @@ fun copyCommands(embedService: EmbedService) = commands {
 
             val updateResponse = embed.update(it.discord.jda, channel.id, messageId)
 
-            if (!updateResponse.canUpdate)
-                return@execute it.respond(updateResponse.reason)
+            if (!updateResponse.wasSuccessful)
+                return@execute it.respond(updateResponse.message)
 
             it.reactSuccess()
         }
