@@ -8,6 +8,11 @@ import net.dv8tion.jda.api.entities.*
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
 
+private fun EmbedBuilder.save(): EmbedBuilder {
+    saveEmbeds()
+    return this
+}
+
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
                  var copyLocation: CopyLocation? = null) {
@@ -27,23 +32,23 @@ data class Embed(var name: String,
     val copyLocationString: String
         get() = copyLocation?.toString() ?: "<Not copied>"
 
-    fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl)
-    fun setColor(color: Int) = builder.setColor(color)
-    fun setDescription(description: String) = builder.setDescription(description)
-    fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl)
-    fun setImage(url: String) = builder.setImage(url)
-    fun setThumbnail(url: String) = builder.setThumbnail(url)
-    fun setTimestamp(time: TemporalAccessor) = builder.setTimestamp(time)
-    fun setTitle(title: String) = builder.setTitle(title)
+    fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl).save()
+    fun setColor(color: Int) = builder.setColor(color).save()
+    fun setDescription(description: String) = builder.setDescription(description).save()
+    fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl).save()
+    fun setImage(url: String) = builder.setImage(url).save()
+    fun setThumbnail(url: String) = builder.setThumbnail(url).save()
+    fun setTimestamp(time: TemporalAccessor) = builder.setTimestamp(time).save()
+    fun setTitle(title: String) = builder.setTitle(title).save()
 
-    fun clearAuthor() = builder.setAuthor(null)
-    fun clearColor() = builder.setColor(null)
-    fun clearDescription() = builder.setDescription(null)
-    fun clearFooter() = builder.setFooter(null, null)
-    fun clearImage() = builder.setImage(null)
-    fun clearThumbnail() = builder.setThumbnail(null)
-    fun clearTimestamp() = builder.setTimestamp(null)
-    fun clearTitle() = builder.setTitle(null)
+    fun clearAuthor() = builder.setAuthor(null).save()
+    fun clearColor() = builder.setColor(null).save()
+    fun clearDescription() = builder.setDescription(null).save()
+    fun clearFooter() = builder.setFooter(null, null).save()
+    fun clearImage() = builder.setImage(null).save()
+    fun clearThumbnail() = builder.setThumbnail(null).save()
+    fun clearTimestamp() = builder.setTimestamp(null).save()
+    fun clearTitle() = builder.setTitle(null).save()
 
     private fun setFields(fields: List<Field>) = clearFields().also { fields.forEach { builder.addField(it) } }
     fun setField(index: Int, field: Field) { fields[index] = field }
@@ -55,8 +60,8 @@ data class Embed(var name: String,
     fun setFieldText(index: Int, value: String) = with(fields[index]) { setField(index, Field(name, value, isInline)) }
     fun setFieldInline(index: Int, isInline: Boolean) = with(fields[index]) { setField(index, Field(name, value, isInline)) }
 
-    fun clear() = builder.clear()
-    fun clearFields() = builder.clearFields()
+    fun clear() = builder.clear().save()
+    fun clearFields() = builder.clearFields().save()
     fun clearNonFields() {
         val fields = fields.stream().toList()
         clear()
