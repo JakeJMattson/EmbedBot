@@ -3,6 +3,7 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
@@ -11,7 +12,7 @@ import net.dv8tion.jda.api.entities.TextChannel
 @CommandSet("Cluster")
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
-        description = "Create a cluster for storing and deploying groups of embeds."
+        description = messages.descriptions.CREATE_CLUSTER
         expect(arg(WordArg("Cluster Name")), arg(MultipleArg(EmbedArg), optional = true, default = listOf<Embed>()))
         execute {
             val clusterName = it.args.component1() as String
@@ -29,7 +30,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("DeleteCluster") {
-        description = "Delete a cluster and all of its embeds."
+        description = messages.descriptions.DELETE_CLUSTER
         expect(ClusterArg)
         execute {
             val cluster = it.args.component1() as Cluster
@@ -43,7 +44,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("CloneCluster") {
-        description = "Clone a group of embeds into a cluster."
+        description = messages.descriptions.CLONE_CLUSTER
         expect(arg(WordArg("Cluster Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
                 arg(IntegerArg("Amount")))
@@ -74,7 +75,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("UpdateCluster") {
-        description = "Update the original embeds this cluster was copied from."
+        description = messages.descriptions.UPDATE_CLUSTER
         expect(ClusterArg)
         execute { event ->
             val cluster = event.args.component1() as Cluster
@@ -109,7 +110,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("RenameCluster") {
-        description = "Change the name of an existing cluster."
+        description = messages.descriptions.RENAME_CLUSTER
         expect(ClusterArg, WordArg("New Name"))
         execute {
             val cluster = it.args.component1() as Cluster
@@ -124,7 +125,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("Deploy") {
-        description = "Deploy a cluster into a target channel."
+        description = messages.descriptions.DEPLOY
         expect(arg(ClusterArg),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
                 arg(BooleanArg("shouldTrack"), optional = true, default = false))
@@ -148,7 +149,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("AddToCluster") {
-        description = "Add an embed into a cluster."
+        description = messages.descriptions.ADD_TO_CLUSTER
         expect(ClusterArg, MultipleArg(EmbedArg))
         execute {
             val cluster = it.args.component1() as Cluster
@@ -166,7 +167,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("InsertIntoCluster") {
-        description = "Insert an embed into a cluster at an index."
+        description = messages.descriptions.INSERT_INTO_CLUSTER
         expect(ClusterArg, IntegerArg("Index"), EmbedArg)
         execute {
             val cluster = it.args.component1() as Cluster
@@ -183,7 +184,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("RemoveFromCluster") {
-        description = "Remove embeds from their current cluster."
+        description = messages.descriptions.REMOVE_FROM_CLUSTER
         expect(MultipleArg(EmbedArg))
         execute {
             val embeds = it.args.component1() as List<Embed>

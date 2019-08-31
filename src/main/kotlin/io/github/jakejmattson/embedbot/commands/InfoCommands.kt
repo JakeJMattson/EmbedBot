@@ -3,13 +3,14 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 
 @CommandSet("Information")
 fun infoCommands() = commands {
     command("Info") {
-        description = "Get extended info for the target embed."
+        description = messages.descriptions.INFO
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embed = it.args.component1() as Embed?
@@ -35,7 +36,7 @@ fun infoCommands() = commands {
     }
 
     command("ListEmbeds") {
-        description = "List all embeds created in this guild."
+        description = messages.descriptions.LIST_EMBEDS
         execute { event ->
             event.respondEmbed {
                 val guild = event.guild!!
@@ -59,7 +60,7 @@ fun infoCommands() = commands {
     }
 
     command("Limits") {
-        description = "Display the discord embed limits."
+        description = messages.descriptions.LIMITS
         execute {
             it.respondEmbed {
                 title = "Discord Limits"

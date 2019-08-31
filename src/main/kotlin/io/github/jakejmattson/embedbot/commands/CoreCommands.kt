@@ -4,6 +4,7 @@ import com.google.gson.JsonSyntaxException
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
@@ -12,7 +13,7 @@ import net.dv8tion.jda.api.entities.TextChannel
 @CommandSet("Core")
 fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
-        description = "Send the currently loaded embed."
+        description = messages.descriptions.SEND
         requiresLoadedEmbed = true
         expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
             arg(BooleanArg("shouldTrack"), optional = true, default = false))
@@ -35,7 +36,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Create") {
-        description = "Create a new embed with this name."
+        description = messages.descriptions.CREATE
         expect(WordArg("Embed Name"))
         execute {
             val embedName = it.args.component1() as String
@@ -49,7 +50,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Duplicate") {
-        description = "Create a new embed from an existing embed."
+        description = messages.descriptions.DUPLICATE
         expect(arg(WordArg("Embed Name")), arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embedName = it.args.component1() as String
@@ -67,7 +68,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Delete") {
-        description = "Delete the embed with this name."
+        description = messages.descriptions.DELETE
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embed = it.args.component1() as Embed?
@@ -80,7 +81,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Load") {
-        description = "Load the embed with this name into memory."
+        description = messages.descriptions.LOAD
         expect(EmbedArg)
         execute {
             val embed = it.args.component1() as Embed
@@ -90,7 +91,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Import") {
-        description = "Import a JSON String as an embed."
+        description = messages.descriptions.IMPORT
         expect(WordArg("Embed Name"), SentenceArg("JSON"))
         execute {
             val name = it.args.component1() as String
@@ -115,7 +116,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     }
 
     command("Export") {
-        description = "Export the currently loaded embed to JSON."
+        description = messages.descriptions.EXPORT
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embed = it.args.component1() as Embed?

@@ -2,6 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.WordArg
@@ -14,7 +15,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     requiredPermissionLevel = Permission.BOT_OWNER
 
     command("SetPrefix") {
-        description = "Set the prefix required for the bot to register a command."
+        description = messages.descriptions.SET_PREFIX
         expect(WordArg("Prefix"))
         execute {
             val prefix = it.args.component1() as String
@@ -27,7 +28,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("ResetBot") {
-        description = "Delete all embeds in all guilds. Delete all guild configurations."
+        description = messages.descriptions.RESET_BOT
         expect(arg(WordArg("Bot Owner ID"), optional = true, default = ""))
         execute {
             val idEntry = it.args.component1() as String
@@ -60,7 +61,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("Leave") {
-        description = "Leave this guild and delete all associated information."
+        description = messages.descriptions.LEAVE
         execute {
             val guild = it.guild!!
             val guildConfiguration = configuration.getGuildConfig(guild.id)

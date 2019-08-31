@@ -2,6 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.EmbedService
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
@@ -12,7 +13,7 @@ import net.dv8tion.jda.api.entities.*
 @CommandSet("Copy")
 fun copyCommands(embedService: EmbedService) = commands {
     command("CopyTarget") {
-        description = "Copy an embed by its message ID."
+        description = messages.descriptions.COPY_TARGET
         expect(arg(WordArg("Embed Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
                 arg(WordArg("Message ID")))
@@ -42,7 +43,7 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("CopyPrevious") {
-        description = "Copy the previous embed in the target channel."
+        description = messages.descriptions.COPY_PREVIOUS
         expect(arg(WordArg("Embed Name")),
                 arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
         execute { event ->
@@ -69,7 +70,7 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("UpdateOriginal") {
-        description = "Update the original embed this content was copied from."
+        description = messages.descriptions.UPDATE_ORIGINAL
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
@@ -87,7 +88,7 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("UpdateTarget") {
-        description = "Replace the target message embed with the loaded embed."
+        description = messages.descriptions.UPDATE_TARGET
         requiresLoadedEmbed = true
         expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
                 arg(WordArg("Message ID")))

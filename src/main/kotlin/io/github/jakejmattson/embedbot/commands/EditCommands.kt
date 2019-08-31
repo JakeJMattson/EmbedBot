@@ -3,18 +3,17 @@ package io.github.jakejmattson.embedbot.commands
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
 import net.dv8tion.jda.api.entities.User
 import java.time.LocalDateTime
 
-private const val commandDescriptionFormat = "Set the %s for the currently loaded embed."
-
 @CommandSet("Edit")
 fun editCommands() = commands {
     command("SetAuthor") {
-        description = commandDescriptionFormat.format("author")
+        description = messages.descriptions.SET_AUTHOR
         requiresLoadedEmbed = true
         expect(UserArg)
         execute {
@@ -27,7 +26,7 @@ fun editCommands() = commands {
     }
 
     command("SetColor") {
-        description = commandDescriptionFormat.format("color")
+        description = messages.descriptions.SET_COLOR
         requiresLoadedEmbed = true
         expect(HexColorArg)
         execute {
@@ -40,7 +39,7 @@ fun editCommands() = commands {
     }
 
     command("SetDescription") {
-        description = commandDescriptionFormat.format("description")
+        description = messages.descriptions.SET_DESCRIPTION
         requiresLoadedEmbed = true
         expect(SentenceArg)
         execute {
@@ -56,7 +55,7 @@ fun editCommands() = commands {
     }
 
     command("SetFooter") {
-        description = commandDescriptionFormat.format("footer")
+        description = messages.descriptions.SET_FOOTER
         requiresLoadedEmbed = true
         expect(UrlArg("Icon URL"), SentenceArg("Text"))
         execute {
@@ -73,7 +72,7 @@ fun editCommands() = commands {
     }
 
     command("SetImage") {
-        description = commandDescriptionFormat.format("image")
+        description = messages.descriptions.SET_IMAGE
         requiresLoadedEmbed = true
         expect(UrlArg)
         execute {
@@ -86,7 +85,7 @@ fun editCommands() = commands {
     }
 
     command("SetThumbnail") {
-        description = commandDescriptionFormat.format("thumbnail")
+        description = messages.descriptions.SET_THUMBNAIL
         requiresLoadedEmbed = true
         expect(UrlArg)
         execute {
@@ -99,7 +98,7 @@ fun editCommands() = commands {
     }
 
     command("SetTimestamp") {
-        description = commandDescriptionFormat.format("timestamp")
+        description = messages.descriptions.SET_TIMESTAMP
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
@@ -110,7 +109,7 @@ fun editCommands() = commands {
     }
 
     command("SetTitle") {
-        description = commandDescriptionFormat.format("title")
+        description = messages.descriptions.SET_TITLE
         requiresLoadedEmbed = true
         expect(SentenceArg)
         execute {
@@ -126,7 +125,7 @@ fun editCommands() = commands {
     }
 
     command("Clear") {
-        description = "Clear a target field from the loaded embed."
+        description = messages.descriptions.CLEAR
         requiresLoadedEmbed = true
         expect(arg(WordArg("Clear Target"), optional = true, default = ""))
         execute {
@@ -157,7 +156,7 @@ fun editCommands() = commands {
     }
 
     command("Rename") {
-        description = "Change the name of an existing embed."
+        description = messages.descriptions.RENAME
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }), arg(WordArg("New Name")))
         execute {
             val targetEmbed = it.args.component1() as Embed?

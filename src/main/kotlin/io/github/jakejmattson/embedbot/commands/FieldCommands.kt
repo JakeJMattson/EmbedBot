@@ -2,6 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.*
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
@@ -9,7 +10,7 @@ import me.aberrantfox.kjdautils.internal.arguments.*
 @CommandSet("Field")
 fun fieldCommands() = commands {
     command("AddField") {
-        description = "Add a field in the following format: title|body|inline"
+        description = messages.descriptions.ADD_FIELD
         requiresLoadedEmbed = true
         expect(FieldArg)
         execute {
@@ -25,7 +26,7 @@ fun fieldCommands() = commands {
     }
 
     command("AddBlankField") {
-        description = "Add a blank field to the loaded embed."
+        description = messages.descriptions.ADD_BLANK_FIELD
         requiresLoadedEmbed = true
         expect(arg(BooleanArg("isInline"), optional = true, default = false))
         execute {
@@ -41,7 +42,7 @@ fun fieldCommands() = commands {
     }
 
     command("InsertField") {
-        description = "Insert a field at an index to the loaded embed."
+        description = messages.descriptions.INSERT_FIELD
         requiresLoadedEmbed = true
         expect(FieldIndexArg("Index"), FieldArg)
         execute {
@@ -58,7 +59,7 @@ fun fieldCommands() = commands {
     }
 
     command("RemoveField") {
-        description = "Remove a field from the loaded embed by its index."
+        description = messages.descriptions.REMOVE_FIELD
         requiresLoadedEmbed = true
         expect(FieldIndexArg)
         execute {
@@ -71,7 +72,7 @@ fun fieldCommands() = commands {
     }
 
     command("EditField") {
-        description = "Edit a field at a given index with the given data."
+        description = messages.descriptions.EDIT_FIELD
         requiresLoadedEmbed = true
         expect(FieldIndexArg, FieldArg)
         execute {
@@ -85,7 +86,7 @@ fun fieldCommands() = commands {
     }
 
     command("EditFieldTitle") {
-        description = "Get a field by its index and edit its title value."
+        description = messages.descriptions.EDIT_FIELD_TITLE
         requiresLoadedEmbed = true
         expect(FieldIndexArg, SentenceArg)
         execute {
@@ -102,7 +103,7 @@ fun fieldCommands() = commands {
     }
 
     command("EditFieldText") {
-        description = "Get a field by its index and edit its text value."
+        description = messages.descriptions.EDIT_FIELD_TEXT
         requiresLoadedEmbed = true
         expect(FieldIndexArg, SentenceArg)
         execute {
@@ -119,7 +120,7 @@ fun fieldCommands() = commands {
     }
 
     command("EditFieldInline") {
-        description = "Get a field by its index and edit its inline value."
+        description = messages.descriptions.EDIT_FIELD_INLINE
         requiresLoadedEmbed = true
         expect(FieldIndexArg, BooleanArg)
         execute {

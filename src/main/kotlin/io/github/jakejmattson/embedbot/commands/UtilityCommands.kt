@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.jda.toMember
@@ -11,21 +12,21 @@ private val startTime = Date()
 @CommandSet("Utility")
 fun utilityCommands(infoService: InfoService, permissionsService: PermissionsService) = commands {
     command("Ping") {
-        description = "Display the network ping of the bot."
+        description = messages.descriptions.PING
         execute {
             it.respond("Ping: ${it.discord.jda.gatewayPing}ms\n")
         }
     }
 
     command("BotInfo") {
-        description = "Display the bot information."
+        description = messages.descriptions.BOT_INFO
         execute {
             it.respond(infoService.botInfo(it.guild!!))
         }
     }
 
     command("Uptime") {
-        description = "Displays how long the bot has been running."
+        description = messages.descriptions.UPTIME
         execute {
             val seconds = (Date().time - startTime.time) / 1000
 
@@ -42,7 +43,7 @@ fun utilityCommands(infoService: InfoService, permissionsService: PermissionsSer
     }
 
     command("ListCommands") {
-        description = "List all available commands."
+        description = messages.descriptions.LIST_COMMANDS
         execute { event ->
             val member = event.author.toMember(event.guild!!)!!
 

@@ -2,6 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.*
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.RoleArg
@@ -16,7 +17,7 @@ fun guildConfigurationCommands(configuration: Configuration,
     requiredPermissionLevel = Permission.GUILD_OWNER
 
     command("SetRequiredRole") {
-        description = "Set the role required to use this bot."
+        description = messages.descriptions.SET_REQUIRED_ROLE
         expect(RoleArg)
         execute {
             val requiredRole = it.args.component1() as Role
@@ -31,7 +32,7 @@ fun guildConfigurationCommands(configuration: Configuration,
     }
 
     command("DeleteAll") {
-        description = "Delete all embeds and clusters in this guild."
+        description = messages.descriptions.DELETE_ALL
         execute {
             val guild = it.guild!!
             val removed = embedService.removeAllFromGuild(guild)
@@ -41,7 +42,7 @@ fun guildConfigurationCommands(configuration: Configuration,
     }
 
     command("Setup") {
-        description = "Set up this bot for use."
+        description = messages.descriptions.SETUP
         expect(RoleArg("Required Role"))
         execute {
             val requiredRole = it.args.component1() as Role
