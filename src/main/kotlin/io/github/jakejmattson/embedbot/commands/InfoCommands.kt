@@ -14,7 +14,7 @@ fun infoCommands() = commands {
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embed = it.args.component1() as Embed?
-                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
             
             val guild = it.guild!!
 

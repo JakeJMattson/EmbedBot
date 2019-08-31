@@ -24,14 +24,14 @@ fun copyCommands(embedService: EmbedService) = commands {
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists.")
+                return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
             val message = tryRetrieveSnowflake(it.discord.jda) {
                 channel.retrieveMessageById(messageId.trimToID()).complete()
             } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel.")
 
             val messageEmbed = message.getEmbed()
-                ?: return@execute it.respond("This message does not contain an embed.")
+                ?: return@execute it.respond(messages.errors.NO_EMBED_IN_MESSAGE)
 
             val builder = messageEmbed.toEmbedBuilder()
             val embed = Embed(name, builder, CopyLocation(channel.id, messageId))
@@ -53,7 +53,7 @@ fun copyCommands(embedService: EmbedService) = commands {
             val limit = 50
 
             if (guild.hasEmbedWithName(name))
-                return@execute event.respond("An embed with this name already exists.")
+                return@execute event.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
             val previousMessages = channel.getHistoryBefore(event.message.id, limit).complete().retrievedHistory
 
@@ -76,7 +76,7 @@ fun copyCommands(embedService: EmbedService) = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             val original = embed.copyLocation
-                ?: return@execute it.respond("This embed was not copied from another message.")
+                ?: return@execute it.respond(messages.errors.NOT_COPIED)
 
             val updateResponse = embed.update(it.discord.jda, original.channelId, original.messageId)
 

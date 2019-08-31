@@ -1,9 +1,13 @@
 package io.github.jakejmattson.embedbot.locale
 
+import io.github.jakejmattson.embedbot.dataclasses.withMessage
+import io.github.jakejmattson.embedbot.extensions.getEmbed
+
 val messages = Messages()
 
 class Messages(
-    val descriptions: Descriptions = Descriptions()
+    val descriptions: Descriptions = Descriptions(),
+    val errors: Errors = Errors()
 )
 
 class Descriptions(
@@ -75,4 +79,35 @@ class Descriptions(
     val LIST_COMMANDS: String = "List all available commands.",
     val PING: String = "Display the network ping of the bot.",
     val UPTIME: String = "Displays how long the bot has been running."
+)
+
+class Errors(
+    //General
+    val MISSING_GUILD: String = "Must be invoked inside a guild.",
+
+    //Commands
+    val EMBED_ALREADY_EXISTS: String = "An embed with this name already exists.",
+    val CLUSTER_ALREADY_EXISTS: String = "A cluster with this name already exists.",
+    val NO_SUCH_CLUSTER: String = "No such cluster with this name.",
+    val NOT_COPIED: String = "This embed was not copied from another message.",
+    val MISSING_OPTIONAL_EMBED: String = "Please load an embed or specify one explicitly.",
+    val GUILD_NOT_SETUP: String = "This guild is not set up for use. Please use the `setup` command.",
+    val GUILD_ALREADY_SETUP: String = "This guild is already setup for use.",
+
+    //Validation Service
+    val EMPTY_PREFIX: String = "The configured prefix is empty.",
+    val EMPTY_BOT_OWNER: String = "The botOwner field is empty.",
+    val INVALID_USER: String = "Cannot resolve the botOwner ID to a user.",
+
+    //Preconditions
+    val MISSING_CLEARANCE: String = "Missing clearance to use this command.",
+    val MISSING_EMBED: String = "No embed loaded!",
+
+    //Embed Update
+    val NO_CHANNEL: String = "Target channel does not exist.",
+    val NO_MESSAGE: String = "Target message does not exist.",
+    val NOT_AUTHOR: String = "Target message is not from this bot.",
+    val EMPTY_EMBED: String = "Cannot build an empty embed.",
+    val NO_EMBED_IN_MESSAGE: String = "Target message has no embed.",
+    val UP_TO_DATE: String = "This message is up to date."
 )

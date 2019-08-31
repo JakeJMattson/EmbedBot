@@ -22,7 +22,7 @@ fun guildConfigurationCommands(configuration: Configuration,
         execute {
             val requiredRole = it.args.component1() as Role
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
-                ?: return@execute it.respond("This guild is not set up for use. Please use the `setup` command.")
+                ?: return@execute it.respond(messages.errors.GUILD_NOT_SETUP)
 
             guildConfiguration.requiredRole = requiredRole.name
             persistenceService.save(configuration)
@@ -49,7 +49,7 @@ fun guildConfigurationCommands(configuration: Configuration,
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
 
             if (guildConfiguration != null)
-                return@execute it.respond("This guild is already setup for use.")
+                return@execute it.respond(messages.errors.GUILD_ALREADY_SETUP)
 
             configuration.guildConfigurations.add(GuildConfiguration(it.guild!!.id, requiredRole.name))
             persistenceService.save(configuration)

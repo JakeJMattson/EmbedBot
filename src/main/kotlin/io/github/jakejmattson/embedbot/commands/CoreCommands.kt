@@ -23,7 +23,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
-                return@execute it.respond("This embed is empty.")
+                return@execute it.respond(messages.errors.EMPTY_EMBED)
 
             channel.sendMessage(embed.build()).queue { message ->
                 if (shouldTrack)
@@ -43,7 +43,7 @@ fun coreCommands(embedService: EmbedService) = commands {
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
             if (!wasCreated)
-                return@execute it.respond("An embed with this name already exists.")
+                return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
             it.reactSuccess()
         }
@@ -55,13 +55,13 @@ fun coreCommands(embedService: EmbedService) = commands {
         execute {
             val embedName = it.args.component1() as String
             val existingEmbed = it.args.component2() as Embed?
-                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             val embed = createEmbedFromJson(embedName, existingEmbed.toJson())
             val wasCreated = embedService.addEmbed(it.guild!!, embed)
 
             if (!wasCreated)
-                it.respond("An embed with this name already exists.")
+                it.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
             it.reactSuccess()
         }
@@ -72,7 +72,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embed = it.args.component1() as Embed?
-                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             it.guild!!.removeEmbed(embed)
 
@@ -99,14 +99,14 @@ fun coreCommands(embedService: EmbedService) = commands {
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond("An embed with this name already exists.")
+                return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
             try {
                 val embed = createEmbedFromJson(name, json)
                 val wasAdded = embedService.addEmbed(guild, embed)
 
                 if (!wasAdded)
-                    it.respond("An embed with this name already exists")
+                    it.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
                 it.reactSuccess()
             } catch (e: JsonSyntaxException) {
@@ -120,7 +120,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
         execute {
             val embed = it.args.component1() as Embed?
-                ?: return@execute it.respond("Please load an embed or specify one explicitly.")
+                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             val json = embed.toJson()
 

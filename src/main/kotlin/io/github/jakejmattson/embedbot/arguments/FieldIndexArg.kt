@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.arguments
 
 import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
+import io.github.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
@@ -10,7 +11,7 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
     override val examples = arrayListOf("0")
     override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent): ArgumentResult {
-        val guild = event.guild ?: return ArgumentResult.Error("Must be invoked in a guild!")
+        val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
 
         val embed = guild.getLoadedEmbed()
             ?: return ArgumentResult.Error("No embed loaded!")

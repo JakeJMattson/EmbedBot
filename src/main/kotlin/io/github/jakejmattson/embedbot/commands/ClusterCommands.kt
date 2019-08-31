@@ -19,7 +19,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val embeds = it.args.component2() as List<Embed>
             val guild = it.guild!!
             val cluster = embedService.createCluster(guild, clusterName)
-                ?: return@execute it.respond("A cluster with this name already exists.")
+                ?: return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
 
             embeds.forEach { embed ->
                 cluster.addEmbed(guild, embed)
@@ -37,7 +37,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
             if (!wasDeleted)
-                it.respond("No such cluster with this name.")
+                it.respond(messages.errors.NO_SUCH_CLUSTER)
 
             it.reactSuccess()
         }
@@ -68,7 +68,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val wasSuccessful = embedService.createClusterFromEmbeds(event.guild!!, Cluster(clusterName, embeds))
 
             if (!wasSuccessful)
-                event.respond("A cluster with that name already exists.")
+                event.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
 
             event.respond("Cloned ${embeds.size} embeds into $clusterName")
         }
@@ -87,7 +87,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 val location = embed.copyLocation
 
                 if (location == null) {
-                    failures.add("This embed was not copied from another message.")
+                    failures.add(messages.errors.NOT_COPIED)
                     return@sumBy 0
                 }
 
@@ -117,7 +117,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val newName = it.args.component2() as String
 
             if (it.guild!!.hasClusterWithName(newName))
-                return@execute it.respond("An embed with this name already exists.")
+                return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
             
             cluster.name = newName
             it.reactSuccess()

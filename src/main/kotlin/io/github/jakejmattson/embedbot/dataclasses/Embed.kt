@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.dataclasses
 
 import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import net.dv8tion.jda.api.*
@@ -75,22 +76,22 @@ data class Embed(var name: String,
 
     fun update(jda: JDA, channelId: String, messageId: String): OperationResult {
         val channel = jda.getTextChannelById(channelId)
-            ?: return false withMessage "Target channel `$channelId` does not exist."
+            ?: return false withMessage messages.errors.NO_CHANNEL
 
         val message = tryRetrieveSnowflake(jda) {
             channel.retrieveMessageById(messageId).complete()
-        } as Message? ?: return false withMessage "Target message does not exist."
+        } as Message? ?: return false withMessage messages.errors.NO_MESSAGE
 
         if (message.author != jda.selfUser)
-            return false withMessage "Target message is not from this bot."
+            return false withMessage messages.errors.NOT_AUTHOR
 
         if (isEmpty)
-            return false withMessage "Cannot build an empty embed."
+            return false withMessage messages.errors.EMPTY_EMBED
 
         val currentEmbed = message.getEmbed()
-            ?: return false withMessage "Target message has no embed."
+            ?: return false withMessage messages.errors.NO_EMBED_IN_MESSAGE
         if (currentEmbed == builder.build())
-            return false withMessage "This message is up to date."
+            return false withMessage messages.errors.UP_TO_DATE
 
         message.editMessage(build()).queue()
 
