@@ -9,6 +9,9 @@ class Messages(
 )
 
 class Descriptions(
+    //General
+    val BOT: String = "A bot for creating and managing embeds.",
+
     //Bot Configuration
     val LEAVE: String = "Leave this guild and delete all associated information.",
     val RESET_BOT: String = "Delete all embeds in all guilds. Delete all guild configurations.",
@@ -81,12 +84,15 @@ class Descriptions(
 
 class Errors(
     //General
+    val NO_ARGS: String = "No program arguments provided. Expected bot token.",
     val MISSING_GUILD: String = "Must be invoked inside a guild.",
     val EMBED_ALREADY_EXISTS: String = "An embed with this name already exists.",
     val CLUSTER_ALREADY_EXISTS: String = "A cluster with this name already exists.",
 
     //Commands
     val MISSING_RESET_CONFIRMATION: String = "Please re-run this command and pass in the bot owner ID to confirm.",
+    val INVALID_CLUSTER_SIZE: String = "Cluster size should be 1 or greater.",
+    val INVALID_MESSAGE_ID: String = "Could not find a message with that ID in the target channel.",
     val INVALID_OWNER_ID: String = "Invalid bot owner ID.",
     val NO_SUCH_CLUSTER: String = "No such cluster with this name.",
     val NOT_COPIED: String = "This embed was not copied from another message.",

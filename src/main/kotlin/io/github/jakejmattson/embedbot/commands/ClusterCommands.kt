@@ -54,7 +54,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val amount = event.args.component3() as Int
 
             if (amount <= 0)
-                return@execute event.respond("Cluster size should be 1 or greater.")
+                return@execute event.respond(messages.errors.INVALID_CLUSTER_SIZE)
 
             val messagesWithEmbeds = channel.iterableHistory.complete().filter { it.getEmbed() != null }.take(amount)
                as ArrayList

@@ -28,7 +28,7 @@ fun copyCommands(embedService: EmbedService) = commands {
 
             val message = tryRetrieveSnowflake(it.discord.jda) {
                 channel.retrieveMessageById(messageId.trimToID()).complete()
-            } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel.")
+            } as Message? ?: return@execute it.respond(messages.errors.INVALID_MESSAGE_ID)
 
             val messageEmbed = message.getEmbed()
                 ?: return@execute it.respond(messages.errors.NO_EMBED_IN_MESSAGE)

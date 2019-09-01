@@ -30,7 +30,7 @@ class InfoService(private val configuration: Configuration) {
 
         color = Color(0x00bfff)
         thumbnail = self.effectiveAvatarUrl
-        addField(self.fullName(), "A bot for creating and managing embeds.")
+        addField(self.fullName(), messages.descriptions.BOT)
         addInlineField("Required role", requiredRole)
         addInlineField("Prefix", configuration.prefix)
         addInlineField("Author", "[${project.author}](${messages.links.DISCORD_ACCOUNT})")

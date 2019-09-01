@@ -6,7 +6,7 @@ import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.discord.Discord
 
 @Service
-class ValidationService(private val configuration: Configuration, private val discord: Discord) {
+class ValidationService(private val configuration: Configuration, discord: Discord) {
     private val jda = discord.jda
 
     init {
