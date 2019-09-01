@@ -14,10 +14,10 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
 
         val embed = guild.getLoadedEmbed()
-            ?: return ArgumentResult.Error("No embed loaded!")
+            ?: return ArgumentResult.Error(messages.errors.MISSING_EMBED)
 
         if (embed.fieldCount == 0)
-            return ArgumentResult.Error("This embed has no fields.")
+            return ArgumentResult.Error(messages.errors.NO_FIELDS)
 
         val index = arg.toIntOrNull()
             ?: return ArgumentResult.Error("Expected an integer, got $arg")

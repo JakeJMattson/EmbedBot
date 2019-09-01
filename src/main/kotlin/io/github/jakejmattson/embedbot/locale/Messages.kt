@@ -1,13 +1,11 @@
 package io.github.jakejmattson.embedbot.locale
 
-import io.github.jakejmattson.embedbot.dataclasses.withMessage
-import io.github.jakejmattson.embedbot.extensions.getEmbed
-
 val messages = Messages()
 
 class Messages(
     val descriptions: Descriptions = Descriptions(),
-    val errors: Errors = Errors()
+    val errors: Errors = Errors(),
+    val links: Links = Links()
 )
 
 class Descriptions(
@@ -84,10 +82,12 @@ class Descriptions(
 class Errors(
     //General
     val MISSING_GUILD: String = "Must be invoked inside a guild.",
-
-    //Commands
     val EMBED_ALREADY_EXISTS: String = "An embed with this name already exists.",
     val CLUSTER_ALREADY_EXISTS: String = "A cluster with this name already exists.",
+
+    //Commands
+    val MISSING_RESET_CONFIRMATION: String = "Please re-run this command and pass in the bot owner ID to confirm.",
+    val INVALID_OWNER_ID: String = "Invalid bot owner ID.",
     val NO_SUCH_CLUSTER: String = "No such cluster with this name.",
     val NOT_COPIED: String = "This embed was not copied from another message.",
     val MISSING_OPTIONAL_EMBED: String = "Please load an embed or specify one explicitly.",
@@ -102,6 +102,7 @@ class Errors(
     //Preconditions
     val MISSING_CLEARANCE: String = "Missing clearance to use this command.",
     val MISSING_EMBED: String = "No embed loaded!",
+    val NO_FIELDS: String = "This embed has no fields.",
 
     //Embed Update
     val NO_CHANNEL: String = "Target channel does not exist.",
@@ -110,4 +111,9 @@ class Errors(
     val EMPTY_EMBED: String = "Cannot build an empty embed.",
     val NO_EMBED_IN_MESSAGE: String = "Target message has no embed.",
     val UP_TO_DATE: String = "This message is up to date."
+)
+
+class Links(
+    val DISCORD_EMBED_DOCS: String = "https://discordapp.com/developers/docs/resources/channel#embed-limits-limits",
+    val DISCORD_ACCOUNT: String = "https://discordapp.com/users/254786431656919051/"
 )

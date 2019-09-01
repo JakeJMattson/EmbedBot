@@ -37,11 +37,10 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
             val guildConfigs = configuration.guildConfigurations
 
             if (idEntry.isEmpty())
-                return@execute it.respond("Please re-run this command and pass in the bot owner ID to confirm. " +
-                    "This deletes all embeds and all clusters in all guilds, and clears all guild configurations.")
+                return@execute it.respond(messages.errors.MISSING_RESET_CONFIRMATION)
 
             if (idEntry != ownerId)
-                return@execute it.respond("Invalid bot owner ID.")
+                return@execute it.respond(messages.errors.INVALID_OWNER_ID)
 
             val removedEmbeds =
                 guildConfigs.sumBy { guildConfiguration ->

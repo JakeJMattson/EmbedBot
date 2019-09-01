@@ -2,6 +2,7 @@ package io.github.jakejmattson.embedbot.services
 
 import com.google.gson.Gson
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
+import io.github.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.extensions.jda.fullName
@@ -32,7 +33,7 @@ class InfoService(private val configuration: Configuration) {
         addField(self.fullName(), "A bot for creating and managing embeds.")
         addInlineField("Required role", requiredRole)
         addInlineField("Prefix", configuration.prefix)
-        addInlineField("Author", "[${project.author}](https://discordapp.com/users/254786431656919051/)")
+        addInlineField("Author", "[${project.author}](${messages.links.DISCORD_ACCOUNT})")
         addInlineField("Version", project.version)
         addInlineField("Source", project.repository)
     }

@@ -15,7 +15,7 @@ open class FieldArg(override val name: String = "Field Data", private val delimi
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
         val data = args.joinToString(" ").split(delimiter)
 
-        guild.getLoadedEmbed() ?: return ArgumentResult.Error("No embed loaded!")
+        guild.getLoadedEmbed() ?: return ArgumentResult.Error(messages.errors.MISSING_EMBED)
 
         if (data.size !in 2..3)
             return ArgumentResult.Error("Invalid field data. Expected 2-3 items split by \"$delimiter\". Received ${data.size}")

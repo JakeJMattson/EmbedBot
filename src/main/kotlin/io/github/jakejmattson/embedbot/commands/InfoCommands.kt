@@ -73,7 +73,7 @@ fun infoCommands() = commands {
                 addInlineField("Field Value", "$FIELD_VALUE_LIMIT characters")
                 addInlineField("Footer", "$FOOTER_LIMIT characters")
                 addInlineField("Author", "$AUTHOR_LIMIT characters")
-                addInlineField("","[Discord Docs](https://discordapp.com/developers/docs/resources/channel#embed-limits-limits)")
+                addInlineField("","[Discord Docs](${messages.links.DISCORD_EMBED_DOCS})")
             }
         }
     }
