@@ -39,7 +39,7 @@ class Descriptions(
 
     //Field
     val ADD_BLANK_FIELD: String = "Add a blank field to the loaded embed.",
-    val ADD_FIELD: String = "Add a field in the following format: title|body",
+    val ADD_FIELD: String = "Add a field in the following format: title|body|inline",
     val EDIT_FIELD: String = "Edit a field at a given index with the given data.",
     val EDIT_FIELD_INLINE: String = "Get a field by its index and edit its inline value.",
     val EDIT_FIELD_TEXT: String = "Get a field by its index and edit its text value.",
@@ -120,6 +120,7 @@ class Errors(
 )
 
 class Links(
+    //Discord
     val DISCORD_EMBED_DOCS: String = "https://discordapp.com/developers/docs/resources/channel#embed-limits-limits",
     val DISCORD_ACCOUNT: String = "https://discordapp.com/users/254786431656919051/"
 )
