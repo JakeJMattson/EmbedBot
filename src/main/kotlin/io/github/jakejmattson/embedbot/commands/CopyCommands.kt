@@ -42,33 +42,6 @@ fun copyCommands(embedService: EmbedService) = commands {
         }
     }
 
-    command("CopyPrevious") {
-        description = messages.descriptions.COPY_PREVIOUS
-        expect(arg(WordArg("Embed Name")),
-                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }))
-        execute { event ->
-            val name = event.args.component1() as String
-            val channel = event.args.component2() as TextChannel
-            val guild = event.guild!!
-            val limit = 50
-
-            if (guild.hasEmbedWithName(name))
-                return@execute event.respond(messages.errors.EMBED_ALREADY_EXISTS)
-
-            val previousMessages = channel.getHistoryBefore(event.message.id, limit).complete().retrievedHistory
-
-            val previousEmbedMessage = previousMessages.firstOrNull { it.getEmbed() != null }
-                ?: return@execute event.respond("No embeds found in the previous $limit messages.")
-
-            val builder = previousEmbedMessage.getEmbed()!!.toEmbedBuilder()
-            val previousEmbed = Embed(name, builder, CopyLocation(channel.id, previousEmbedMessage.id))
-
-            embedService.addEmbed(guild, previousEmbed)
-
-            event.reactSuccess()
-        }
-    }
-
     command("UpdateOriginal") {
         description = messages.descriptions.UPDATE_ORIGINAL
         requiresLoadedEmbed = true

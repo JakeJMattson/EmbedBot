@@ -33,7 +33,6 @@
 ## Copy
 | Commands       | Arguments                         | Description                                             |
 | -------------- | --------------------------------- | ------------------------------------------------------- |
-| CopyPrevious   | Embed Name, (Channel)             | Copy the previous embed in the target channel.          |
 | CopyTarget     | Embed Name, (Channel), Message ID | Copy an embed by its message ID.                        |
 | UpdateOriginal | <none>                            | Update the original embed this content was copied from. |
 | UpdateTarget   | (Channel), Message ID             | Replace the target message embed with the loaded embed. |

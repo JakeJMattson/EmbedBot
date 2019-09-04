@@ -32,7 +32,6 @@ class Descriptions(
     val SEND: String = "Send the currently loaded embed.",
 
     //Copy
-    val COPY_PREVIOUS: String = "Copy the previous embed in the target channel.",
     val COPY_TARGET: String = "Copy an embed by its message ID.",
     val UPDATE_ORIGINAL: String = "Update the original embed this content was copied from.",
     val UPDATE_TARGET: String = "Replace the target message embed with the loaded embed.",
