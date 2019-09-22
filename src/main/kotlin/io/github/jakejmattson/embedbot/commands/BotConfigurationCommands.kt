@@ -1,7 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
-import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*

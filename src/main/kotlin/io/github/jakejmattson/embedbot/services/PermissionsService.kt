@@ -1,8 +1,12 @@
 package io.github.jakejmattson.embedbot.services
 
 import io.github.jakejmattson.embedbot.dataclasses.Configuration
+import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.aberrantfox.kjdautils.api.annotation.Service
-import net.dv8tion.jda.api.entities.Member
+import me.aberrantfox.kjdautils.api.dsl.Command
+import me.aberrantfox.kjdautils.discord.Discord
+import me.aberrantfox.kjdautils.extensions.jda.toMember
+import net.dv8tion.jda.api.entities.*
 
 enum class Permission {
     BOT_OWNER,
@@ -14,7 +18,20 @@ enum class Permission {
 val DEFAULT_REQUIRED_PERMISSION = Permission.STAFF
 
 @Service
-class PermissionsService(private val configuration: Configuration) {
+class PermissionsService(private val configuration: Configuration, discord: Discord) {
+    init {
+        discord.configuration.visibilityPredicate = { command: Command, user: User, _: MessageChannel, guild: Guild? ->
+            if (guild != null) {
+                val member = user.toMember(guild)!!
+                val permission = command.requiredPermissionLevel
+
+                hasClearance(member, permission)
+            }
+            else {
+                false
+            }
+        }
+    }
 
     fun hasClearance(member: Member, requiredPermissionLevel: Permission) = member.getPermissionLevel().ordinal <= requiredPermissionLevel.ordinal
 

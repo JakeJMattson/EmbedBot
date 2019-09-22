@@ -84,11 +84,10 @@
 | ListEmbeds | <none>    | List all embeds created in this guild.  |
 
 ## Utility
-| Commands     | Arguments | Description                                 |
-| ------------ | --------- | ------------------------------------------- |
-| BotInfo      | <none>    | Display the bot information.                |
-| ListCommands | <none>    | List all available commands.                |
-| Ping         | <none>    | Display the network ping of the bot.        |
-| Uptime       | <none>    | Displays how long the bot has been running. |
-| help         | (Word)    | Display a help menu                         |
+| Commands | Arguments | Description                                 |
+| -------- | --------- | ------------------------------------------- |
+| BotInfo  | <none>    | Display the bot information.                |
+| Help     | (Command) | Display a help menu.                        |
+| Ping     | <none>    | Display the network ping of the bot.        |
+| Uptime   | <none>    | Displays how long the bot has been running. |
 
