@@ -13,17 +13,13 @@ typealias Field = MessageEmbed.Field
 
 val gson = GsonBuilder().setPrettyPrinting().create()!!
 
-private lateinit var embedMap: HashMap<String, GuildEmbeds>
+private val embedMap = loadEmbeds()
 private val embedFile = File("config/embeds.json")
 
 fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf(), arrayListOf()) }
 
 @Service
 class EmbedService {
-    init {
-        embedMap = loadEmbeds()
-    }
-
     fun createEmbed(guild: Guild, name: String): Boolean {
         val embeds = guild.getGuildEmbeds()
 
