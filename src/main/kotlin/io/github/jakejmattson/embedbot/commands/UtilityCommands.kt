@@ -4,6 +4,7 @@ import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.extensions.stdlib.toMinimalTimeString
 import java.util.Date
 
 private val startTime = Date()
