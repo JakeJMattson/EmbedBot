@@ -76,7 +76,6 @@ class Descriptions(
 
     //Utility
     val BOT_INFO: String = "Display the bot information.",
-    val LIST_COMMANDS: String = "List all available commands.",
     val PING: String = "Display the network ping of the bot.",
     val UPTIME: String = "Displays how long the bot has been running."
 )

@@ -9,8 +9,7 @@ import me.aberrantfox.kjdautils.internal.command.*
 fun produceHasLoadedEmbedPrecondition() = precondition { event: CommandEvent ->
     val command = event.container.commands[event.commandStruct.commandName] ?: return@precondition Pass
 
-    val guild = event.guild
-        ?: return@precondition Fail(messages.errors.MISSING_GUILD)
+    val guild = event.guild ?: return@precondition Fail(messages.errors.MISSING_GUILD)
 
     if (command.requiresLoadedEmbed && !guild.hasLoadedEmbed())
         return@precondition Fail(messages.errors.MISSING_EMBED)

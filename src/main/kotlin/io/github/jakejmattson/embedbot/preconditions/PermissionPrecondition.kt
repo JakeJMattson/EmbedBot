@@ -11,7 +11,7 @@ import me.aberrantfox.kjdautils.internal.command.*
 fun produceHasPermissionPrecondition(permissionsService: PermissionsService) = precondition { event: CommandEvent ->
     val command = event.container.commands[event.commandStruct.commandName]
     val requiredPermissionLevel = command?.requiredPermissionLevel ?: DEFAULT_REQUIRED_PERMISSION
-    val guild = event.guild ?: return@precondition Fail(messages.errors.MISSING_GUILD)
+    val guild = event.guild!!
     val member = event.author.toMember(guild)!!
 
     if (!permissionsService.hasClearance(member, requiredPermissionLevel))

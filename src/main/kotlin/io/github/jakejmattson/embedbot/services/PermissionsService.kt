@@ -20,16 +20,13 @@ val DEFAULT_REQUIRED_PERMISSION = Permission.STAFF
 @Service
 class PermissionsService(private val configuration: Configuration, discord: Discord) {
     init {
-        discord.configuration.visibilityPredicate = { command: Command, user: User, _: MessageChannel, guild: Guild? ->
-            if (guild != null) {
-                val member = user.toMember(guild)!!
-                val permission = command.requiredPermissionLevel
+        discord.configuration.visibilityPredicate = predicate@{ command: Command, user: User, _: MessageChannel, guild: Guild? ->
+            guild ?: return@predicate false
 
-                hasClearance(member, permission)
-            }
-            else {
-                false
-            }
+            val member = user.toMember(guild)!!
+            val permission = command.requiredPermissionLevel
+
+            hasClearance(member, permission)
         }
     }
 
