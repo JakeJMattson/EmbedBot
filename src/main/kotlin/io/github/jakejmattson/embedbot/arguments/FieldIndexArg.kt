@@ -5,12 +5,12 @@ import io.github.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.dsl.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
-open class FieldIndexArg(override val name: String = "Field Index") : ArgumentType {
+open class FieldIndexArg(override val name: String = "Field Index"): ArgumentType<Int>() {
     companion object : FieldIndexArg()
 
     override val examples = arrayListOf("0")
     override val consumptionType = ConsumptionType.Single
-    override fun convert(arg: String, args: List<String>, event: CommandEvent): ArgumentResult {
+    override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Int> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
 
         val embed = guild.getLoadedEmbed()
@@ -25,6 +25,6 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
         if (index !in 0 until embed.fieldCount)
             return ArgumentResult.Error("Invalid index. Expected range: 0-${embed.fieldCount - 1}")
 
-        return ArgumentResult.Single(index)
+        return ArgumentResult.Success(index)
     }
 }

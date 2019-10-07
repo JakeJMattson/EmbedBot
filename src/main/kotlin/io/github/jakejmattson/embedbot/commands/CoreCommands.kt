@@ -15,11 +15,10 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Send") {
         description = messages.descriptions.SEND
         requiresLoadedEmbed = true
-        expect(arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
-            arg(BooleanArg("shouldTrack"), optional = true, default = false))
-        execute {
-            val channel = it.args.component1() as TextChannel
-            val shouldTrack = it.args.component2() as Boolean
+        execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
+        BooleanArg("shouldTrack").makeOptional(false)) {
+            val channel = it.args.component1()
+            val shouldTrack = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
@@ -37,9 +36,8 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Create") {
         description = messages.descriptions.CREATE
-        expect(WordArg("Embed Name"))
-        execute {
-            val embedName = it.args.component1() as String
+        execute(WordArg("Embed Name")) {
+            val embedName = it.args.component1()
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
             if (!wasCreated)
@@ -51,10 +49,9 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Duplicate") {
         description = messages.descriptions.DUPLICATE
-        expect(arg(WordArg("Embed Name")), arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
-        execute {
-            val embedName = it.args.component1() as String
-            val existingEmbed = it.args.component2() as Embed?
+        execute(WordArg("Embed Name"), EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
+            val embedName = it.args.component1()
+            val existingEmbed = it.args.component2()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             val embed = createEmbedFromJson(embedName, existingEmbed.toJson())
@@ -69,9 +66,9 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Delete") {
         description = messages.descriptions.DELETE
-        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
-        execute {
-            val embed = it.args.component1() as Embed?
+
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
+            val embed = it.args.component1()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             it.guild!!.removeEmbed(embed)
@@ -82,9 +79,8 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Load") {
         description = messages.descriptions.LOAD
-        expect(EmbedArg)
-        execute {
-            val embed = it.args.component1() as Embed
+        execute(EmbedArg) {
+            val embed = it.args.component1()
             it.guild!!.loadEmbed(embed)
             it.reactSuccess()
         }
@@ -92,10 +88,9 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Import") {
         description = messages.descriptions.IMPORT
-        expect(WordArg("Embed Name"), SentenceArg("JSON"))
-        execute {
-            val name = it.args.component1() as String
-            val json = it.args.component2() as String
+        execute(WordArg("Embed Name"), SentenceArg("JSON")) {
+            val name = it.args.component1()
+            val json = it.args.component2()
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
@@ -117,9 +112,8 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Export") {
         description = messages.descriptions.EXPORT
-        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
-        execute {
-            val embed = it.args.component1() as Embed?
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
+            val embed = it.args.component1()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             val json = embed.toJson()

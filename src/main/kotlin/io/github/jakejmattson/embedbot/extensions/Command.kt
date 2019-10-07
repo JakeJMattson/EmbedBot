@@ -5,14 +5,14 @@ import me.aberrantfox.kjdautils.api.dsl.*
 import java.awt.Color
 import java.util.WeakHashMap
 
-fun CommandEvent.respondEmbed(init: EmbedDSLHandle.() -> Unit) {
+fun CommandEvent<*>.respondEmbed(init: EmbedDSLHandle.() -> Unit) {
     val embed = EmbedDSLHandle()
     embed.color = Color(0x00bfff)
     embed.init()
     respond(embed.build())
 }
 
-fun CommandEvent.reactSuccess() = message.addReaction("✅").queue()
+fun CommandEvent<*>.reactSuccess() = message.addReaction("✅").queue()
 
 private object CommandPropertyStore {
     val requiresLoaded = WeakHashMap<Command, Boolean>()

@@ -13,9 +13,8 @@ import net.dv8tion.jda.api.entities.TextChannel
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
         description = messages.descriptions.CREATE_CLUSTER
-        expect(arg(WordArg("Cluster Name")), arg(MultipleArg(EmbedArg), optional = true, default = listOf<Embed>()))
-        execute {
-            val clusterName = it.args.component1() as String
+        execute(WordArg("Cluster Name"), MultipleArg(EmbedArg).makeOptional(listOf<Embed>())) {
+            val clusterName = it.args.component1()
             val embeds = it.args.component2() as List<Embed>
             val guild = it.guild!!
             val cluster = embedService.createCluster(guild, clusterName)
@@ -31,9 +30,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("DeleteCluster") {
         description = messages.descriptions.DELETE_CLUSTER
-        expect(ClusterArg)
-        execute {
-            val cluster = it.args.component1() as Cluster
+        execute(ClusterArg) {
+            val cluster = it.args.component1()
             val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
             if (!wasDeleted)
@@ -45,13 +43,12 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("CloneCluster") {
         description = messages.descriptions.CLONE_CLUSTER
-        expect(arg(WordArg("Cluster Name")),
-                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
-                arg(IntegerArg("Amount")))
-        execute { event ->
-            val clusterName = event.args.component1() as String
-            val channel = event.args.component2() as TextChannel
-            val amount = event.args.component3() as Int
+        execute(WordArg("Cluster Name"),
+                TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
+                IntegerArg("Amount")) { event ->
+            val clusterName = event.args.component1()
+            val channel = event.args.component2()
+            val amount = event.args.component3()
 
             if (amount <= 0)
                 return@execute event.respond(messages.errors.INVALID_CLUSTER_SIZE)
@@ -76,9 +73,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("UpdateCluster") {
         description = messages.descriptions.UPDATE_CLUSTER
-        expect(ClusterArg)
-        execute { event ->
-            val cluster = event.args.component1() as Cluster
+        execute(ClusterArg) { event ->
+            val cluster = event.args.component1()
             val failures = ArrayList<String>()
             val size = cluster.size
 
@@ -111,10 +107,9 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("RenameCluster") {
         description = messages.descriptions.RENAME_CLUSTER
-        expect(ClusterArg, WordArg("New Name"))
-        execute {
-            val cluster = it.args.component1() as Cluster
-            val newName = it.args.component2() as String
+        execute(ClusterArg, WordArg("New Name")) {
+            val cluster = it.args.component1()
+            val newName = it.args.component2()
 
             if (it.guild!!.hasClusterWithName(newName))
                 return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
@@ -126,13 +121,12 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("Deploy") {
         description = messages.descriptions.DEPLOY
-        expect(arg(ClusterArg),
-                arg(TextChannelArg("Channel"), optional = true, default = { it.channel }),
-                arg(BooleanArg("shouldTrack"), optional = true, default = false))
-        execute {
-            val cluster = it.args.component1() as Cluster
-            val channel = it.args.component2() as TextChannel
-            val shouldTrack = it.args.component3() as Boolean
+        execute (ClusterArg,
+                TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
+                BooleanArg("shouldTrack").makeOptional(false)) {
+            val cluster = it.args.component1()
+            val channel = it.args.component2()
+            val shouldTrack = it.args.component3()
 
             cluster.embeds.forEach { embed ->
                 if (!embed.isEmpty) {
@@ -150,9 +144,8 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("AddToCluster") {
         description = messages.descriptions.ADD_TO_CLUSTER
-        expect(ClusterArg, MultipleArg(EmbedArg))
-        execute {
-            val cluster = it.args.component1() as Cluster
+        execute(ClusterArg, MultipleArg(EmbedArg)) {
+            val cluster = it.args.component1()
             val embeds = it.args.component2() as List<Embed>
             val guild = it.guild!!
             val additions = arrayListOf<String>()
@@ -168,11 +161,10 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("InsertIntoCluster") {
         description = messages.descriptions.INSERT_INTO_CLUSTER
-        expect(ClusterArg, IntegerArg("Index"), EmbedArg)
-        execute {
-            val cluster = it.args.component1() as Cluster
-            val index = it.args.component2() as Int
-            val embed = it.args.component3() as Embed
+        execute(ClusterArg, IntegerArg("Index"), EmbedArg) {
+            val cluster = it.args.component1()
+            val index = it.args.component2()
+            val embed = it.args.component3()
 
             if (index !in 0..cluster.size)
                 return@execute it.respond("Invalid Index. Expected range: 0-${cluster.size}")
@@ -185,8 +177,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("RemoveFromCluster") {
         description = messages.descriptions.REMOVE_FROM_CLUSTER
-        expect(MultipleArg(EmbedArg))
-        execute {
+        execute(MultipleArg(EmbedArg)) {
             val embeds = it.args.component1() as List<Embed>
             val removals = arrayListOf<String>()
 

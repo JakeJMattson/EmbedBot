@@ -1,7 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
-import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
@@ -11,9 +10,8 @@ import me.aberrantfox.kjdautils.api.dsl.*
 fun infoCommands() = commands {
     command("Info") {
         description = messages.descriptions.INFO
-        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }))
-        execute {
-            val embed = it.args.component1() as Embed?
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }){
+            val embed = it.args.component1()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
             
             val guild = it.guild!!

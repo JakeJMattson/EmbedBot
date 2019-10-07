@@ -1,13 +1,11 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
-import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.*
-import net.dv8tion.jda.api.entities.User
 import java.time.LocalDateTime
 
 @CommandSet("Edit")
@@ -15,9 +13,8 @@ fun editCommands() = commands {
     command("SetAuthor") {
         description = messages.descriptions.SET_AUTHOR
         requiresLoadedEmbed = true
-        expect(UserArg)
-        execute {
-            val user = it.args.component1() as User
+        execute(UserArg) {
+            val user = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setAuthor(user.name, user.effectiveAvatarUrl)
@@ -28,9 +25,8 @@ fun editCommands() = commands {
     command("SetColor") {
         description = messages.descriptions.SET_COLOR
         requiresLoadedEmbed = true
-        expect(HexColorArg)
-        execute {
-            val color = it.args.component1() as Int
+        execute(HexColorArg) {
+            val color = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setColor(color)
@@ -41,9 +37,8 @@ fun editCommands() = commands {
     command("SetDescription") {
         description = messages.descriptions.SET_DESCRIPTION
         requiresLoadedEmbed = true
-        expect(SentenceArg)
-        execute {
-            val description = it.args.component1() as String
+        execute(SentenceArg) {
+            val description = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (description.length > DESCRIPTION_LIMIT)
@@ -57,10 +52,9 @@ fun editCommands() = commands {
     command("SetFooter") {
         description = messages.descriptions.SET_FOOTER
         requiresLoadedEmbed = true
-        expect(UrlArg("Icon URL"), SentenceArg("Text"))
-        execute {
-            val url = it.args.component1() as String
-            val text = it.args.component2() as String
+        execute(UrlArg("Icon URL"), SentenceArg("Text")) {
+            val url = it.args.component1()
+            val text = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (text.length > FOOTER_LIMIT)
@@ -74,9 +68,8 @@ fun editCommands() = commands {
     command("SetImage") {
         description = messages.descriptions.SET_IMAGE
         requiresLoadedEmbed = true
-        expect(UrlArg)
-        execute {
-            val url = it.args.component1() as String
+        execute(UrlArg) {
+            val (url) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setImage(url)
@@ -87,9 +80,8 @@ fun editCommands() = commands {
     command("SetThumbnail") {
         description = messages.descriptions.SET_THUMBNAIL
         requiresLoadedEmbed = true
-        expect(UrlArg)
-        execute {
-            val url = it.args.component1() as String
+        execute(UrlArg) {
+            val url = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setThumbnail(url)
@@ -111,9 +103,8 @@ fun editCommands() = commands {
     command("SetTitle") {
         description = messages.descriptions.SET_TITLE
         requiresLoadedEmbed = true
-        expect(SentenceArg)
-        execute {
-            val title = it.args.component1() as String
+        execute(SentenceArg) {
+            val title = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (title.length > TITLE_LIMIT)
@@ -127,9 +118,8 @@ fun editCommands() = commands {
     command("Clear") {
         description = messages.descriptions.CLEAR
         requiresLoadedEmbed = true
-        expect(arg(WordArg("Clear Target"), optional = true, default = ""))
-        execute {
-            val field = (it.args.component1() as String).toLowerCase()
+        execute(WordArg("Clear Target").makeOptional("")) {
+            val field = (it.args.component1()).toLowerCase()
             val embed = it.guild!!.getLoadedEmbed()!!
             val options = "Options:\nAuthor, Color, Description, Footer, Image, Thumbnail, Timestamp, Title \nAll, Fields, Non-Fields"
 
@@ -157,12 +147,11 @@ fun editCommands() = commands {
 
     command("Rename") {
         description = messages.descriptions.RENAME
-        expect(arg(EmbedArg, optional = true, default = { it.guild!!.getLoadedEmbed() }), arg(WordArg("New Name")))
-        execute {
-            val targetEmbed = it.args.component1() as Embed?
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, WordArg("New Name")){
+            val targetEmbed = it.args.component1()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
-            val newName = it.args.component2() as String
+            val newName = it.args.component2()
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(newName))

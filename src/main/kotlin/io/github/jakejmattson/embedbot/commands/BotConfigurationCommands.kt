@@ -16,9 +16,8 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("SetPrefix") {
         description = messages.descriptions.SET_PREFIX
-        expect(WordArg("Prefix"))
-        execute {
-            val prefix = it.args.component1() as String
+        execute(WordArg("Prefix")) {
+            val prefix = it.args.component1()
 
             prefixService.setPrefix(prefix)
             persistenceService.save(configuration)
@@ -29,9 +28,8 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("ResetBot") {
         description = messages.descriptions.RESET_BOT
-        expect(arg(WordArg("Bot Owner ID"), optional = true, default = ""))
-        execute {
-            val idEntry = it.args.component1() as String
+        execute(WordArg("Bot Owner ID").makeOptional("")){
+            val idEntry = it.args.component1()
             val ownerId = configuration.botOwner
             val jda = it.discord.jda
             val guildConfigs = configuration.guildConfigurations

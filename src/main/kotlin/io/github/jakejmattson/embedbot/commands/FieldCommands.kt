@@ -12,9 +12,8 @@ fun fieldCommands() = commands {
     command("AddField") {
         description = messages.descriptions.ADD_FIELD
         requiresLoadedEmbed = true
-        expect(FieldArg)
-        execute {
-            val field = it.args.component1() as Field
+        execute(FieldArg) {
+            val field = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.fieldCount == FIELD_LIMIT)
@@ -28,9 +27,8 @@ fun fieldCommands() = commands {
     command("AddBlankField") {
         description = messages.descriptions.ADD_BLANK_FIELD
         requiresLoadedEmbed = true
-        expect(arg(BooleanArg("isInline"), optional = true, default = false))
-        execute {
-            val isInline = it.args.component1() as Boolean
+        execute(BooleanArg("isInline").makeOptional(false)) {
+            val isInline = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.fieldCount == FIELD_LIMIT)
@@ -44,10 +42,9 @@ fun fieldCommands() = commands {
     command("InsertField") {
         description = messages.descriptions.INSERT_FIELD
         requiresLoadedEmbed = true
-        expect(FieldIndexArg("Index"), FieldArg)
-        execute {
-            val index = it.args.component1() as Int
-            val field = it.args.component2() as Field
+        execute(FieldIndexArg("Index"), FieldArg) {
+            val index = it.args.component1()
+            val field = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.fieldCount == FIELD_LIMIT)
@@ -61,9 +58,8 @@ fun fieldCommands() = commands {
     command("RemoveField") {
         description = messages.descriptions.REMOVE_FIELD
         requiresLoadedEmbed = true
-        expect(FieldIndexArg)
-        execute {
-            val index = it.args.component1() as Int
+        execute(FieldIndexArg) {
+            val index = it.args.component1()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.removeField(index)
@@ -74,10 +70,9 @@ fun fieldCommands() = commands {
     command("EditField") {
         description = messages.descriptions.EDIT_FIELD
         requiresLoadedEmbed = true
-        expect(FieldIndexArg, FieldArg)
-        execute {
-            val index = it.args.component1() as Int
-            val field = it.args.component2() as Field
+        execute(FieldIndexArg, FieldArg) {
+            val index = it.args.component1()
+            val field = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setField(index, field)
@@ -88,10 +83,9 @@ fun fieldCommands() = commands {
     command("EditFieldTitle") {
         description = messages.descriptions.EDIT_FIELD_TITLE
         requiresLoadedEmbed = true
-        expect(FieldIndexArg, SentenceArg)
-        execute {
-            val index = it.args.component1() as Int
-            val newTitle = it.args.component2() as String
+        execute(FieldIndexArg, SentenceArg) {
+            val index = it.args.component1()
+            val newTitle = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (newTitle.length > FIELD_NAME_LIMIT)
@@ -105,10 +99,9 @@ fun fieldCommands() = commands {
     command("EditFieldText") {
         description = messages.descriptions.EDIT_FIELD_TEXT
         requiresLoadedEmbed = true
-        expect(FieldIndexArg, SentenceArg)
-        execute {
-            val index = it.args.component1() as Int
-            val newText = it.args.component2() as String
+        execute(FieldIndexArg, SentenceArg) {
+            val index = it.args.component1()
+            val newText = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (newText.length > FIELD_VALUE_LIMIT)
@@ -122,10 +115,9 @@ fun fieldCommands() = commands {
     command("EditFieldInline") {
         description = messages.descriptions.EDIT_FIELD_INLINE
         requiresLoadedEmbed = true
-        expect(FieldIndexArg, BooleanArg)
-        execute {
-            val index = it.args.component1() as Int
-            val newInline = it.args.component2() as Boolean
+        execute(FieldIndexArg, BooleanArg) {
+            val index = it.args.component1()
+            val newInline = it.args.component2()
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldInline(index, newInline)

@@ -6,7 +6,7 @@ import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.command.*
 
 @Precondition
-fun produceHasLoadedEmbedPrecondition() = precondition { event: CommandEvent ->
+fun produceHasLoadedEmbedPrecondition() = precondition { event: CommandEvent<*> ->
     val command = event.container.commands[event.commandStruct.commandName] ?: return@precondition Pass
 
     val guild = event.guild ?: return@precondition Fail(messages.errors.MISSING_GUILD)

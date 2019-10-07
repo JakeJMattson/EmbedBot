@@ -7,7 +7,6 @@ import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.internal.arguments.RoleArg
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
-import net.dv8tion.jda.api.entities.Role
 
 @CommandSet("GuildConfiguration")
 fun guildConfigurationCommands(configuration: Configuration,
@@ -18,9 +17,8 @@ fun guildConfigurationCommands(configuration: Configuration,
 
     command("SetRequiredRole") {
         description = messages.descriptions.SET_REQUIRED_ROLE
-        expect(RoleArg)
-        execute {
-            val requiredRole = it.args.component1() as Role
+        execute(RoleArg) {
+            val requiredRole = it.args.component1()
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
                 ?: return@execute it.respond(messages.errors.GUILD_NOT_SETUP)
 
@@ -43,9 +41,8 @@ fun guildConfigurationCommands(configuration: Configuration,
 
     command("Setup") {
         description = messages.descriptions.SETUP
-        expect(RoleArg("Required Role"))
-        execute {
-            val requiredRole = it.args.component1() as Role
+        execute(RoleArg("Required Role")) {
+            val requiredRole = it.args.component1()
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
 
             if (guildConfiguration != null)
