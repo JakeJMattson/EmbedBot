@@ -13,9 +13,8 @@ import net.dv8tion.jda.api.entities.TextChannel
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
         description = messages.descriptions.CREATE_CLUSTER
-        execute(WordArg("Cluster Name"), MultipleArg(EmbedArg).makeOptional(listOf<Embed>())) {
-            val clusterName = it.args.component1()
-            val embeds = it.args.component2() as List<Embed>
+        execute(WordArg("Cluster Name"), MultipleArg(EmbedArg).makeOptional(listOf())) {
+            val (clusterName, embeds) = it.args
             val guild = it.guild!!
             val cluster = embedService.createCluster(guild, clusterName)
                 ?: return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
@@ -140,8 +139,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("AddToCluster") {
         description = messages.descriptions.ADD_TO_CLUSTER
         execute(ClusterArg, MultipleArg(EmbedArg)) {
-            val cluster = it.args.component1()
-            val embeds = it.args.component2() as List<Embed>
+            val (cluster, embeds) = it.args
             val guild = it.guild!!
             val additions = arrayListOf<String>()
 
@@ -171,7 +169,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("RemoveFromCluster") {
         description = messages.descriptions.REMOVE_FROM_CLUSTER
         execute(MultipleArg(EmbedArg)) {
-            val embeds = it.args.component1() as List<Embed>
+            val embeds = it.args.component1()
             val removals = arrayListOf<String>()
 
             embeds.forEach { embed ->
