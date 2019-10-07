@@ -53,8 +53,7 @@ fun editCommands() = commands {
         description = messages.descriptions.SET_FOOTER
         requiresLoadedEmbed = true
         execute(UrlArg("Icon URL"), SentenceArg("Text")) {
-            val url = it.args.component1()
-            val text = it.args.component2()
+            val (url, text) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (text.length > FOOTER_LIMIT)

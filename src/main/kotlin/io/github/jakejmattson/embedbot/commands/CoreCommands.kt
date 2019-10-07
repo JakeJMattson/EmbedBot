@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import com.google.gson.JsonSyntaxException
 import io.github.jakejmattson.embedbot.arguments.EmbedArg
-import io.github.jakejmattson.embedbot.dataclasses.*
+import io.github.jakejmattson.embedbot.dataclasses.CopyLocation
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
@@ -17,8 +17,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         requiresLoadedEmbed = true
         execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
         BooleanArg("shouldTrack").makeOptional(false)) {
-            val channel = it.args.component1()
-            val shouldTrack = it.args.component2()
+            val (channel, shouldTrack) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
@@ -89,8 +88,7 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Import") {
         description = messages.descriptions.IMPORT
         execute(WordArg("Embed Name"), SentenceArg("JSON")) {
-            val name = it.args.component1()
-            val json = it.args.component2()
+            val (name, json) = it.args
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))

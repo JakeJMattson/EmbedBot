@@ -43,8 +43,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.INSERT_FIELD
         requiresLoadedEmbed = true
         execute(FieldIndexArg("Index"), FieldArg) {
-            val index = it.args.component1()
-            val field = it.args.component2()
+            val (index, field) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.fieldCount == FIELD_LIMIT)
@@ -71,8 +70,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.EDIT_FIELD
         requiresLoadedEmbed = true
         execute(FieldIndexArg, FieldArg) {
-            val index = it.args.component1()
-            val field = it.args.component2()
+            val (index, field) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setField(index, field)
@@ -84,8 +82,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.EDIT_FIELD_TITLE
         requiresLoadedEmbed = true
         execute(FieldIndexArg, SentenceArg) {
-            val index = it.args.component1()
-            val newTitle = it.args.component2()
+            val (index, newTitle) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (newTitle.length > FIELD_NAME_LIMIT)
@@ -100,8 +97,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.EDIT_FIELD_TEXT
         requiresLoadedEmbed = true
         execute(FieldIndexArg, SentenceArg) {
-            val index = it.args.component1()
-            val newText = it.args.component2()
+            val (index, newText) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (newText.length > FIELD_VALUE_LIMIT)
@@ -116,8 +112,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.EDIT_FIELD_INLINE
         requiresLoadedEmbed = true
         execute(FieldIndexArg, BooleanArg) {
-            val index = it.args.component1()
-            val newInline = it.args.component2()
+            val (index, newInline) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setFieldInline(index, newInline)

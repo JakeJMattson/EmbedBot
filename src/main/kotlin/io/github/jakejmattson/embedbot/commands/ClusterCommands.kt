@@ -46,9 +46,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
         execute(WordArg("Cluster Name"),
                 TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
                 IntegerArg("Amount")) { event ->
-            val clusterName = event.args.component1()
-            val channel = event.args.component2()
-            val amount = event.args.component3()
+            val (clusterName, channel, amount) = event.args
 
             if (amount <= 0)
                 return@execute event.respond(messages.errors.INVALID_CLUSTER_SIZE)
@@ -108,8 +106,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("RenameCluster") {
         description = messages.descriptions.RENAME_CLUSTER
         execute(ClusterArg, WordArg("New Name")) {
-            val cluster = it.args.component1()
-            val newName = it.args.component2()
+            val (cluster, newName) = it.args
 
             if (it.guild!!.hasClusterWithName(newName))
                 return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
@@ -124,9 +121,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
         execute (ClusterArg,
                 TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
                 BooleanArg("shouldTrack").makeOptional(false)) {
-            val cluster = it.args.component1()
-            val channel = it.args.component2()
-            val shouldTrack = it.args.component3()
+            val (cluster, channel, shouldTrack) = it.args
 
             cluster.embeds.forEach { embed ->
                 if (!embed.isEmpty) {
@@ -162,9 +157,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("InsertIntoCluster") {
         description = messages.descriptions.INSERT_INTO_CLUSTER
         execute(ClusterArg, IntegerArg("Index"), EmbedArg) {
-            val cluster = it.args.component1()
-            val index = it.args.component2()
-            val embed = it.args.component3()
+            val (cluster, index, embed) = it.args
 
             if (index !in 0..cluster.size)
                 return@execute it.respond("Invalid Index. Expected range: 0-${cluster.size}")

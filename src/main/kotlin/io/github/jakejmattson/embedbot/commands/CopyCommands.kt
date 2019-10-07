@@ -17,9 +17,8 @@ fun copyCommands(embedService: EmbedService) = commands {
         execute(WordArg("Embed Name"),
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
             WordArg("Message ID")) {
-            val name = it.args.component1()
-            val channel = it.args.component2()
-            val messageId = it.args.component3()
+
+            val (name, channel, messageId) = it.args
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
@@ -62,13 +61,9 @@ fun copyCommands(embedService: EmbedService) = commands {
     command("UpdateTarget") {
         description = messages.descriptions.UPDATE_TARGET
         requiresLoadedEmbed = true
-        execute(TextChannelArg("Channel").makeNullableOptional { it.channel as TextChannel },
-            WordArg("Message ID")) {
-
-            val channel = it.args.component1() as TextChannel
-            val messageId = it.args.component2()
+        execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel }, WordArg("Message ID")) {
+            val (channel, messageId) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
-
             val updateResponse = embed.update(it.discord.jda, channel.id, messageId)
 
             if (!updateResponse.wasSuccessful)
