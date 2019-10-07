@@ -1,8 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.extensions.*
+import io.github.jakejmattson.embedbot.extensions.respondEmbed
 import io.github.jakejmattson.embedbot.locale.messages
-import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.*
 import me.aberrantfox.kjdautils.extensions.stdlib.toMinimalTimeString
 import java.util.Date
@@ -10,20 +9,13 @@ import java.util.Date
 private val startTime = Date()
 
 @CommandSet("Utility")
-fun utilityCommands(infoService: InfoService, permissionsService: PermissionsService) = commands {
+fun utilityCommands() = commands {
     command("Ping") {
         description = messages.descriptions.PING
         execute { event ->
             event.discord.jda.restPing.queue {
                 event.respond("Ping: ${it}ms\n")
             }
-        }
-    }
-
-    command("BotInfo") {
-        description = messages.descriptions.BOT_INFO
-        execute {
-            it.respond(infoService.botInfo(it.guild!!))
         }
     }
 

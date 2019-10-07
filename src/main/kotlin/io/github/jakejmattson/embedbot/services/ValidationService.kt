@@ -9,14 +9,7 @@ import me.aberrantfox.kjdautils.discord.Discord
 class ValidationService(private val configuration: Configuration, discord: Discord) {
     private val jda = discord.jda
 
-    init {
-        with(validateConfiguration()) {
-            require(wasSuccessful) { message }
-            println(message)
-        }
-    }
-
-    private fun validateConfiguration(): OperationResult {
+    fun validateConfiguration(): OperationResult {
         if (configuration.prefix.isEmpty())
             return false withMessage messages.errors.EMPTY_PREFIX
 
