@@ -1,7 +1,8 @@
 package io.github.jakejmattson.embedbot.extensions
 
 import io.github.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.api.dsl.EmbedDSLHandle
+import me.aberrantfox.kjdautils.api.dsl.command.*
 import java.awt.Color
 import java.util.WeakHashMap
 

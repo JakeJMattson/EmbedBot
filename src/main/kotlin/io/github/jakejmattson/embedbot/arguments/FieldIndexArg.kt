@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.arguments
 
 import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import io.github.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.CommandEvent
+import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
 open class FieldIndexArg(override val name: String = "Field Index"): ArgumentType<Int>() {

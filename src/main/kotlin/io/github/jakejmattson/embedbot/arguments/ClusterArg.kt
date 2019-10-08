@@ -3,7 +3,7 @@ package io.github.jakejmattson.embedbot.arguments
 import io.github.jakejmattson.embedbot.dataclasses.Cluster
 import io.github.jakejmattson.embedbot.extensions.getClusterByName
 import io.github.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.CommandEvent
+import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
 open class ClusterArg(override val name: String = "Cluster"): ArgumentType<Cluster>() {

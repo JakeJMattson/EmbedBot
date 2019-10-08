@@ -4,7 +4,7 @@ import io.github.jakejmattson.embedbot.arguments.EmbedArg
 import io.github.jakejmattson.embedbot.extensions.*
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.api.dsl.command.*
 import me.aberrantfox.kjdautils.internal.arguments.*
 import java.time.LocalDateTime
 

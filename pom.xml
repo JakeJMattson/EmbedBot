@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.gitlab.Aberrantfox</groupId>
             <artifactId>KUtils</artifactId>
-            <version>c3d80d63f2</version>
+            <version>d1766bcf57</version>
         </dependency>
     </dependencies>
 

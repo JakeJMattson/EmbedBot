@@ -3,7 +3,7 @@ package io.github.jakejmattson.embedbot.arguments
 import io.github.jakejmattson.embedbot.dataclasses.Embed
 import io.github.jakejmattson.embedbot.extensions.getEmbedByName
 import io.github.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.CommandEvent
+import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
 open class EmbedArg(override val name: String = "Embed"): ArgumentType<Embed>() {

@@ -2,7 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.extensions.respondEmbed
 import io.github.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.api.dsl.command.*
 import me.aberrantfox.kjdautils.extensions.stdlib.toMinimalTimeString
 import java.util.Date
 

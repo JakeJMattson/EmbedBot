@@ -3,7 +3,7 @@ package io.github.jakejmattson.embedbot.arguments
 import io.github.jakejmattson.embedbot.extensions.getLoadedEmbed
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.CommandEvent
+import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
 open class FieldArg(override val name: String = "Field Data", private val delimiter: String = "|"): ArgumentType<Field>() {
