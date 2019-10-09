@@ -5,13 +5,5 @@ import me.aberrantfox.kjdautils.api.startBot
 
 fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: throw IllegalArgumentException(messages.errors.NO_ARGS)
-
-    startBot(token) {
-        configure {
-            globalPath = "io.github.jakejmattson.embedbot"
-            reactToCommands = false
-            documentationSortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
-                "Cluster", "Edit", "Information", "Utility")
-        }
-    }
+    startBot(token) { }
 }

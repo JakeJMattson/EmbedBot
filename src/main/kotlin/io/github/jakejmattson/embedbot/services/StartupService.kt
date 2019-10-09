@@ -5,7 +5,8 @@ import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import io.github.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.annotation.Service
-import me.aberrantfox.kjdautils.api.dsl.*
+import me.aberrantfox.kjdautils.api.dsl.command.Command
+import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.discord.Discord
 import me.aberrantfox.kjdautils.extensions.jda.*
 import net.dv8tion.jda.api.entities.*
@@ -15,11 +16,11 @@ import java.awt.Color
 class StartupService(configuration: Configuration,
                      discord: Discord,
                      validationService: ValidationService,
-                     prefixService: PrefixService,
                      permissionsService: PermissionsService) {
     private data class Properties(val version: String, val author: String, val repository: String)
     private val propFile = Properties::class.java.getResource("/properties.json").readText()
     private val project = Gson().fromJson(propFile, Properties::class.java)
+    private val configure = discord.configuration
 
     init {
         with(validationService.validateConfiguration()) {
@@ -27,9 +28,12 @@ class StartupService(configuration: Configuration,
             println(message)
         }
 
-        prefixService.setPrefix(configuration.prefix)
+        configure.prefix = configuration.prefix
+        configure.reactToCommands = false
+        configure.documentationSortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
+            "Cluster", "Edit", "Information", "Utility")
 
-        discord.configuration.mentionEmbed = {
+        configure.mentionEmbed = {
             val guild = it.guild
 
             embed {
@@ -47,7 +51,7 @@ class StartupService(configuration: Configuration,
             }
         }
 
-        discord.configuration.visibilityPredicate = predicate@{ command: Command, user: User, _: MessageChannel, guild: Guild? ->
+        configure.visibilityPredicate = predicate@{ command: Command, user: User, _: MessageChannel, guild: Guild? ->
             guild ?: return@predicate false
 
             val member = user.toMember(guild)!!
