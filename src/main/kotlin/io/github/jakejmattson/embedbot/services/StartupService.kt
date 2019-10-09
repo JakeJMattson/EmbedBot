@@ -20,7 +20,6 @@ class StartupService(configuration: Configuration,
     private data class Properties(val version: String, val author: String, val repository: String)
     private val propFile = Properties::class.java.getResource("/properties.json").readText()
     private val project = Gson().fromJson(propFile, Properties::class.java)
-    private val configure = discord.configuration
 
     init {
         with(validationService.validateConfiguration()) {
@@ -28,36 +27,36 @@ class StartupService(configuration: Configuration,
             println(message)
         }
 
-        configure.prefix = configuration.prefix
-        configure.reactToCommands = false
-        configure.documentationSortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
-            "Cluster", "Edit", "Information", "Utility")
+        with(discord.configuration) {
+            prefix = configuration.prefix
+            reactToCommands = false
+            documentationSortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
+                "Cluster", "Edit", "Information", "Utility")
 
-        configure.mentionEmbed = {
-            val guild = it.guild
+            mentionEmbed = {
+                embed {
+                    val self = it.guild.jda.selfUser
+                    val requiredRole = configuration.getGuildConfig(it.guild.id)?.requiredRole ?: "<Not Configured>"
 
-            embed {
-                val self = guild.jda.selfUser
-                val requiredRole = configuration.getGuildConfig(guild.id)?.requiredRole ?: "<Not Configured>"
-
-                color = Color(0x00bfff)
-                thumbnail = self.effectiveAvatarUrl
-                addField(self.fullName(), messages.descriptions.BOT)
-                addInlineField("Required role", requiredRole)
-                addInlineField("Prefix", configuration.prefix)
-                addInlineField("Author", "[${project.author}](${messages.links.DISCORD_ACCOUNT})")
-                addInlineField("Version", project.version)
-                addInlineField("Source", project.repository)
+                    color = Color(0x00bfff)
+                    thumbnail = self.effectiveAvatarUrl
+                    addField(self.fullName(), messages.descriptions.BOT)
+                    addInlineField("Required role", requiredRole)
+                    addInlineField("Prefix", configuration.prefix)
+                    addInlineField("Author", "[${project.author}](${messages.links.DISCORD_ACCOUNT})")
+                    addInlineField("Version", project.version)
+                    addInlineField("Source", project.repository)
+                }
             }
-        }
 
-        configure.visibilityPredicate = predicate@{ command: Command, user: User, _: MessageChannel, guild: Guild? ->
-            guild ?: return@predicate false
+            visibilityPredicate = predicate@{ command: Command, user: User, _: MessageChannel, guild: Guild? ->
+                guild ?: return@predicate false
 
-            val member = user.toMember(guild)!!
-            val permission = command.requiredPermissionLevel
+                val member = user.toMember(guild)!!
+                val permission = command.requiredPermissionLevel
 
-            permissionsService.hasClearance(member, permission)
+                permissionsService.hasClearance(member, permission)
+            }
         }
     }
 }
