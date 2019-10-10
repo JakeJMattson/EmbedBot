@@ -1,9 +1,9 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.extensions.respondEmbed
 import io.github.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.dsl.command.*
 import me.aberrantfox.kjdautils.extensions.stdlib.toMinimalTimeString
+import java.awt.Color
 import java.util.Date
 
 private val startTime = Date()
@@ -24,9 +24,10 @@ fun utilityCommands() = commands {
         execute {
             val seconds = (Date().time - startTime.time) / 1000
 
-            it.respondEmbed {
+            it.respond {
                 title = "I have been running since"
                 description = startTime.toString()
+                color = Color(0x00bfff)
 
                 field {
                     name = "That's been"
