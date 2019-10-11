@@ -44,15 +44,15 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("CloneCluster") {
         description = messages.descriptions.CLONE_CLUSTER
         execute(WordArg("Cluster Name"),
-                TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
-                IntegerArg("Amount")) { event ->
+            TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
+            IntegerArg("Amount")) { event ->
             val (clusterName, channel, amount) = event.args
 
             if (amount <= 0)
                 return@execute event.respond(messages.errors.INVALID_CLUSTER_SIZE)
 
             val messagesWithEmbeds = channel.iterableHistory.complete().filter { it.getEmbed() != null }.take(amount)
-               as ArrayList
+                as ArrayList
 
             messagesWithEmbeds.reverse()
 
@@ -87,7 +87,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
                 val updateResponse = embed.update(event.discord.jda, location.channelId, location.messageId)
 
-                with (updateResponse) {
+                with(updateResponse) {
                     if (!wasSuccessful)
                         failures.add("${embed.name} :: ${updateResponse.message}")
 
@@ -110,7 +110,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
             if (it.guild!!.hasClusterWithName(newName))
                 return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
-            
+
             cluster.name = newName
             it.reactSuccess()
         }
@@ -118,9 +118,9 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("Deploy") {
         description = messages.descriptions.DEPLOY
-        execute (ClusterArg,
-                TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
-                BooleanArg("shouldTrack").makeOptional(false)) {
+        execute(ClusterArg,
+            TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
+            BooleanArg("shouldTrack").makeOptional(false)) {
             val (cluster, channel, shouldTrack) = it.args
 
             cluster.embeds.forEach { embed ->

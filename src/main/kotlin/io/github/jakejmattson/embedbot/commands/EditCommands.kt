@@ -122,7 +122,7 @@ fun editCommands() = commands {
             val embed = it.guild!!.getLoadedEmbed()!!
             val options = "Options:\nAuthor, Color, Description, Footer, Image, Thumbnail, Timestamp, Title \nAll, Fields, Non-Fields"
 
-            with (embed) {
+            with(embed) {
                 when (field) {
                     "author" -> clearAuthor()
                     "color" -> clearColor()
@@ -146,7 +146,7 @@ fun editCommands() = commands {
 
     command("Rename") {
         description = messages.descriptions.RENAME
-        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, WordArg("New Name")){
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, WordArg("New Name")) {
             val targetEmbed = it.args.component1()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
@@ -160,8 +160,7 @@ fun editCommands() = commands {
                 val updatedEmbed = guild.getEmbedByName(targetEmbed.name)!!
                 updatedEmbed.name = newName
                 guild.loadEmbed(updatedEmbed)
-            }
-            else {
+            } else {
                 targetEmbed.name = newName
             }
 

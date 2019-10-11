@@ -18,6 +18,7 @@ class StartupService(configuration: Configuration,
                      validationService: ValidationService,
                      permissionsService: PermissionsService) {
     private data class Properties(val version: String, val author: String, val repository: String)
+
     private val propFile = Properties::class.java.getResource("/properties.json").readText()
     private val project = Gson().fromJson(propFile, Properties::class.java)
 

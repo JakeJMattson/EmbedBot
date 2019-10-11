@@ -16,7 +16,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = messages.descriptions.SEND
         requiresLoadedEmbed = true
         execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
-        BooleanArg("shouldTrack").makeOptional(false)) {
+            BooleanArg("shouldTrack").makeOptional(false)) {
             val (channel, shouldTrack) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
@@ -27,7 +27,7 @@ fun coreCommands(embedService: EmbedService) = commands {
                 if (shouldTrack)
                     embed.copyLocation = CopyLocation(channel.id, message.id)
             }
-            
+
             if (channel != it.channel)
                 it.reactSuccess()
         }

@@ -59,8 +59,7 @@ class EmbedService {
             clusters.add(newCluster)
             saveEmbeds()
             newCluster
-        }
-        else
+        } else
             null
 
     fun createClusterFromEmbeds(guild: Guild, cluster: Cluster): Boolean {

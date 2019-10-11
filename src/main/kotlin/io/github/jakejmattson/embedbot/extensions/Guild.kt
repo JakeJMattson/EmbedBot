@@ -26,6 +26,7 @@ fun Guild.getEmbedByName(name: String): Embed? {
 
     return null
 }
+
 fun Guild.hasEmbedWithName(name: String) = getEmbedByName(name) != null
 
 fun Guild.getClusterByName(name: String) = getClusters().firstOrNull { it.name.toLowerCase() == name.toLowerCase() }

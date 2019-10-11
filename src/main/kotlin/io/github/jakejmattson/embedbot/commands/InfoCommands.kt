@@ -11,7 +11,7 @@ import java.awt.Color
 fun infoCommands() = commands {
     command("Info") {
         description = messages.descriptions.INFO
-        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }){
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
             val embed = it.args.component1()
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
@@ -25,8 +25,7 @@ fun infoCommands() = commands {
                 if (!embed.isEmpty) {
                     addField("Field Count", "${embed.fieldCount}/$FIELD_LIMIT")
                     addField("Character Count", "${embed.charCount}/$CHAR_LIMIT")
-                }
-                else {
+                } else {
                     addField("Is Empty", embed.isEmpty.toString())
                 }
 
@@ -43,7 +42,7 @@ fun infoCommands() = commands {
                 val embeds = guild.getEmbeds()
                 val clusters = guild.getClusters()
                 val loadedEmbed = guild.getLoadedEmbed()
-                val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
+                val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() } ?: "<No embeds>"
 
                 color = Color(0x00bfff)
 
@@ -68,7 +67,7 @@ fun infoCommands() = commands {
                 title = "Discord Limits"
                 description = "Below are all the limits imposed onto embeds by Discord."
                 color = Color(0x00bfff)
-                
+
                 addInlineField("Total Character Limit", "$CHAR_LIMIT characters")
                 addInlineField("Total Field Limit", "$FIELD_LIMIT fields")
                 addInlineField("Title", "$TITLE_LIMIT characters")
@@ -77,7 +76,7 @@ fun infoCommands() = commands {
                 addInlineField("Field Value", "$FIELD_VALUE_LIMIT characters")
                 addInlineField("Footer", "$FOOTER_LIMIT characters")
                 addInlineField("Author", "$AUTHOR_LIMIT characters")
-                addInlineField("","[Discord Docs](${messages.links.DISCORD_EMBED_DOCS})")
+                addInlineField("", "[Discord Docs](${messages.links.DISCORD_EMBED_DOCS})")
             }
         }
     }

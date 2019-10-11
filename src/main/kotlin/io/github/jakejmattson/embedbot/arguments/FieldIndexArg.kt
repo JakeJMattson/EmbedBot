@@ -5,7 +5,7 @@ import io.github.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 
-open class FieldIndexArg(override val name: String = "Field Index"): ArgumentType<Int>() {
+open class FieldIndexArg(override val name: String = "Field Index") : ArgumentType<Int>() {
     companion object : FieldIndexArg()
 
     override val examples = arrayListOf("0")

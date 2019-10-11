@@ -28,7 +28,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("ResetBot") {
         description = messages.descriptions.RESET_BOT
-        execute(WordArg("Bot Owner ID").makeOptional("")){
+        execute(WordArg("Bot Owner ID").makeOptional("")) {
             val idEntry = it.args.component1()
             val ownerId = configuration.botOwner
             val jda = it.discord.jda
@@ -71,9 +71,9 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
             val removedEmbeds = embedService.removeAllFromGuild(guild)
             val removedClusters = guild.getGuildEmbeds().clusterList.size
             it.respond("Deleted all ($removedEmbeds) embeds." +
-                    "\nDeleted all ($removedClusters) clusters." +
-                    "\nDeleted guild configuration for `${guild.name}`." +
-                    "\nLeaving guild. Goodbye.")
+                "\nDeleted all ($removedClusters) clusters." +
+                "\nDeleted guild configuration for `${guild.name}`." +
+                "\nLeaving guild. Goodbye.")
 
             guild.leave().queue()
         }

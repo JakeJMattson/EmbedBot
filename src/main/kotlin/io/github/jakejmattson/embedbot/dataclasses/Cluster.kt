@@ -12,7 +12,7 @@ data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf(
     fun removeEmbed(embed: Embed) = embeds.remove(embed)
     fun build() = embeds.filter { !it.isEmpty }.map { it.build() }
 
-    override fun toString() = embeds.joinToString { it.name }.takeIf { it.isNotEmpty() }?: "<No embeds>"
+    override fun toString() = embeds.joinToString { it.name }.takeIf { it.isNotEmpty() } ?: "<No embeds>"
 
     fun addEmbed(guild: Guild, embed: Embed) {
         guild.removeEmbed(embed)
