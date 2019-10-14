@@ -13,7 +13,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.ADD_FIELD
         requiresLoadedEmbed = true
         execute(FieldArg) {
-            val field = it.args.component1()
+            val field = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.fieldCount == FIELD_LIMIT)
@@ -28,7 +28,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.ADD_BLANK_FIELD
         requiresLoadedEmbed = true
         execute(BooleanArg("isInline").makeOptional(false)) {
-            val isInline = it.args.component1()
+            val isInline = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.fieldCount == FIELD_LIMIT)
@@ -58,7 +58,7 @@ fun fieldCommands() = commands {
         description = messages.descriptions.REMOVE_FIELD
         requiresLoadedEmbed = true
         execute(FieldIndexArg) {
-            val index = it.args.component1()
+            val index = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.removeField(index)

@@ -12,7 +12,7 @@ fun infoCommands() = commands {
     command("Info") {
         description = messages.descriptions.INFO
         execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
-            val embed = it.args.component1()
+            val embed = it.args.first
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
             val guild = it.guild!!

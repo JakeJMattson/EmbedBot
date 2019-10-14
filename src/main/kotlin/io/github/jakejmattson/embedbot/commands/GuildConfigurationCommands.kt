@@ -18,7 +18,7 @@ fun guildConfigurationCommands(configuration: Configuration,
     command("SetRequiredRole") {
         description = messages.descriptions.SET_REQUIRED_ROLE
         execute(RoleArg) {
-            val requiredRole = it.args.component1()
+            val requiredRole = it.args.first
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
                 ?: return@execute it.respond(messages.errors.GUILD_NOT_SETUP)
 
@@ -42,7 +42,7 @@ fun guildConfigurationCommands(configuration: Configuration,
     command("Setup") {
         description = messages.descriptions.SETUP
         execute(RoleArg("Required Role")) {
-            val requiredRole = it.args.component1()
+            val requiredRole = it.args.first
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
 
             if (guildConfiguration != null)

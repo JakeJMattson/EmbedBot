@@ -31,7 +31,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("DeleteCluster") {
         description = messages.descriptions.DELETE_CLUSTER
         execute(ClusterArg) {
-            val cluster = it.args.component1()
+            val cluster = it.args.first
             val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
             if (!wasDeleted)
@@ -72,7 +72,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("UpdateCluster") {
         description = messages.descriptions.UPDATE_CLUSTER
         execute(ClusterArg) { event ->
-            val cluster = event.args.component1()
+            val cluster = event.args.first
             val failures = ArrayList<String>()
             val size = cluster.size
 
@@ -170,7 +170,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     command("RemoveFromCluster") {
         description = messages.descriptions.REMOVE_FROM_CLUSTER
         execute(MultipleArg(EmbedArg)) {
-            val embeds = it.args.component1()
+            val embeds = it.args.first
             val removals = arrayListOf<String>()
 
             embeds.forEach { embed ->

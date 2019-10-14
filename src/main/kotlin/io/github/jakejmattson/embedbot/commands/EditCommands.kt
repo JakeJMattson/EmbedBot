@@ -14,7 +14,7 @@ fun editCommands() = commands {
         description = messages.descriptions.SET_AUTHOR
         requiresLoadedEmbed = true
         execute(UserArg) {
-            val user = it.args.component1()
+            val user = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setAuthor(user.name, user.effectiveAvatarUrl)
@@ -26,7 +26,7 @@ fun editCommands() = commands {
         description = messages.descriptions.SET_COLOR
         requiresLoadedEmbed = true
         execute(HexColorArg) {
-            val color = it.args.component1()
+            val color = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setColor(color)
@@ -38,7 +38,7 @@ fun editCommands() = commands {
         description = messages.descriptions.SET_DESCRIPTION
         requiresLoadedEmbed = true
         execute(SentenceArg) {
-            val description = it.args.component1()
+            val description = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (description.length > DESCRIPTION_LIMIT)
@@ -80,7 +80,7 @@ fun editCommands() = commands {
         description = messages.descriptions.SET_THUMBNAIL
         requiresLoadedEmbed = true
         execute(UrlArg) {
-            val url = it.args.component1()
+            val url = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             embed.setThumbnail(url)
@@ -103,7 +103,7 @@ fun editCommands() = commands {
         description = messages.descriptions.SET_TITLE
         requiresLoadedEmbed = true
         execute(SentenceArg) {
-            val title = it.args.component1()
+            val title = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (title.length > TITLE_LIMIT)
@@ -118,7 +118,7 @@ fun editCommands() = commands {
         description = messages.descriptions.CLEAR
         requiresLoadedEmbed = true
         execute(WordArg("Clear Target").makeOptional("")) {
-            val field = (it.args.component1()).toLowerCase()
+            val field = it.args.first.toLowerCase()
             val embed = it.guild!!.getLoadedEmbed()!!
             val options = "Options:\nAuthor, Color, Description, Footer, Image, Thumbnail, Timestamp, Title \nAll, Fields, Non-Fields"
 
@@ -147,10 +147,10 @@ fun editCommands() = commands {
     command("Rename") {
         description = messages.descriptions.RENAME
         execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, WordArg("New Name")) {
-            val targetEmbed = it.args.component1()
+            val targetEmbed = it.args.first
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
-            val newName = it.args.component2()
+            val newName = it.args.second
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(newName))
