@@ -21,7 +21,7 @@
         <jvm.target>1.8</jvm.target>
         <kotlin.version>1.3.50</kotlin.version>
         <coroutines.version>1.3.1</coroutines.version>
-        <kutils.version>0.12.0</kutils.version>
+        <kutils.version>0.13.0</kutils.version>
         <assembly.plugin.version>3.1.1</assembly.plugin.version>
     </properties>
 
