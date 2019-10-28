@@ -28,4 +28,4 @@ var CommandsContainer.requiredPermissionLevel
 
 val Command.requiredPermissionLevel: Permission
     get() = CommandsContainerPropertyStore.permissions.toList()
-        .firstOrNull { it.first.commands.containsValue(this) }?.second ?: DEFAULT_REQUIRED_PERMISSION
+        .firstOrNull { this in it.first.commands }?.second ?: DEFAULT_REQUIRED_PERMISSION

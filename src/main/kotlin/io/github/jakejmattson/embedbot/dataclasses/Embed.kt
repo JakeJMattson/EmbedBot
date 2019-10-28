@@ -6,6 +6,7 @@ import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import net.dv8tion.jda.api.*
 import net.dv8tion.jda.api.entities.*
+import java.awt.Color
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
 
@@ -34,7 +35,7 @@ data class Embed(var name: String,
         get() = copyLocation?.toString() ?: "<Not copied>"
 
     fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl).save()
-    fun setColor(color: Int) = builder.setColor(color).save()
+    fun setColor(color: Color) = builder.setColor(color).save()
     fun setDescription(description: String) = builder.setDescription(description).save()
     fun setFooter(text: String, iconUrl: String) = builder.setFooter(text, iconUrl).save()
     fun setImage(url: String) = builder.setImage(url).save()

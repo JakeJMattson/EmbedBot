@@ -9,7 +9,7 @@ import me.aberrantfox.kjdautils.internal.command.*
 
 @Precondition
 fun produceHasPermissionPrecondition(permissionsService: PermissionsService) = precondition {
-    val command = it.container.commands[it.commandStruct.commandName]
+    val command = it.container[it.commandStruct.commandName]
     val requiredPermissionLevel = command?.requiredPermissionLevel ?: DEFAULT_REQUIRED_PERMISSION
     val guild = it.guild!!
     val member = it.author.toMember(guild)!!
