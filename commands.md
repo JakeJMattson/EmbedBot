@@ -38,16 +38,16 @@
 | UpdateTarget   | (Channel), Message ID             | Replace the target message embed with the loaded embed. |
 
 ## Field
-| Commands        | Arguments               | Description                                              |
-| --------------- | ----------------------- | -------------------------------------------------------- |
-| AddBlankField   | (isInline)              | Add a blank field to the loaded embed.                   |
-| AddField        | Field Data              | Add a field in the following format: title\|body\|inline |
-| EditField       | Field Index, Field Data | Edit a field at a given index with the given data.       |
-| EditFieldInline | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
-| EditFieldText   | Field Index, Text       | Get a field by its index and edit its text value.        |
-| EditFieldTitle  | Field Index, Text       | Get a field by its index and edit its title value.       |
-| InsertField     | Index, Field Data       | Insert a field at an index to the loaded embed.          |
-| RemoveField     | Field Index             | Remove a field from the loaded embed by its index.       |
+| Commands            | Arguments               | Description                                              |
+| ------------------- | ----------------------- | -------------------------------------------------------- |
+| AddBlankField       | (isInline)              | Add a blank field to the loaded embed.                   |
+| AddField            | Field Data              | Add a field in the following format: title\|body\|inline |
+| EditField, SetField | Field Index, Field Data | Edit a field at a given index with the given data.       |
+| EditFieldInline     | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
+| EditFieldText       | Field Index, Text       | Get a field by its index and edit its text value.        |
+| EditFieldTitle      | Field Index, Text       | Get a field by its index and edit its title value.       |
+| InsertField         | Index, Field Data       | Insert a field at an index to the loaded embed.          |
+| RemoveField         | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster
 | Commands          | Arguments                         | Description                                                  |

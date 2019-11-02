@@ -66,7 +66,7 @@ fun fieldCommands() = commands {
         }
     }
 
-    command("EditField") {
+    command("EditField", "SetField") {
         description = messages.descriptions.EDIT_FIELD
         requiresLoadedEmbed = true
         execute(FieldIndexArg, FieldArg) {
