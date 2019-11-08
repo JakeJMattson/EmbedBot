@@ -25,6 +25,9 @@ Create a bot account in the [developers](https://discordapp.com/developers/appli
 
 ## Build Guide
 
+<details>
+<summary>Manual Build</summary>
+	
 ### Prerequistes
 - [Download](https://github.com/JakeJMattson/EmbedBot/archive/master.zip) this repository to your machine.
 - Install [Java](https://www.oracle.com/technetwork/java/javase/downloads/index.html) JDK 8 or greater.
@@ -36,3 +39,5 @@ If you downloaded IntelliJ, building with Maven is supported out of the box. Ple
 
 ## Running
 If all went well, your bot instance should now be running! You can now run any of the [available commands](commands.md).
+
+</details>
