@@ -1,8 +1,6 @@
-# Setup Guide
+## Discord Setup
 
-## Installation Guide
-
-### Server Setup
+### Server
 If you don't already have one, create a Discord server for the bot to run on. 
 Follow the [official guide](https://support.discordapp.com/hc/en-us/articles/204849977-How-do-I-create-a-server-) if needed.
 
@@ -40,7 +38,7 @@ Once you have your prerequistes installed, Maven will be used to handle all of t
 If you downloaded IntelliJ, building with Maven is supported out of the box. Please read the [Maven import guide](https://www.jetbrains.com/help/idea/2018.3/maven-support.html#maven_import_project_start) if you're unfamiliar with this process.
 
 ## Running
-If all went well, your bot instance should now be running! You can now run any of the [available commands](commands.md).
+If all went well, your bot instance should now be running!
 
 </details>
 
@@ -106,3 +104,22 @@ The JAR will now read in your provided configuration values and start the bot. Y
    *note: The token is fake :)* 
 
 </details>
+
+## Usage Guide
+
+### Sanity Check
+Once you have your bot account online, you can verify that it's working by mentioning the bot on Discord `@EmbedBot`. Make sure it has permissions to read and write in the place where you want it to respond. It is recommended that you give it a role.
+
+### Hello World
+For this section, let's assume that you kept the default prefix (`=`).
+Run these steps to create your first embed:
+
+```
+==Create HelloWorld
+==SetTitle Hello World
+==Send
+```
+
+You should now see an embed with the text "Hello World"!
+Now you're free to explore and create whatever embeds you want.
+Run `==help` to see a full list of available commands.
