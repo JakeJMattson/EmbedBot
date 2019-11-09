@@ -25,10 +25,10 @@ Create a bot account in the [developers](https://discordapp.com/developers/appli
 
 ## Build Guide
 
-Choose one of the following setup options.
+Choose one of the following build options.
 
 <details>
-<summary>Manual</summary>
+<summary>From Source</summary>
 	
 ### Prerequistes
 - [Download](https://github.com/JakeJMattson/EmbedBot/archive/master.zip) this repository to your machine.
@@ -43,10 +43,33 @@ If you downloaded IntelliJ, building with Maven is supported out of the box. Ple
 If all went well, your bot instance should now be running! You can now run any of the [available commands](commands.md).
 
 </details>
-<details>
-<summary>Docker</summary>
 
-## Deploy Guide
+<details>
+<summary>With a JAR</summary>
+
+### Prerequistes
+- Install [Java](https://www.oracle.com/technetwork/java/javase/downloads/index.html) JDK 8 or greater.
+- Download one of the [releases](https://github.com/JakeJMattson/EmbedBot/releases/) (preferably the most recent one).
+
+### Environment
+- To run the JAR, you will need to be able to access Java from the command line/terminal. Run `java -version` and make sure your operating system can recognize the command.
+- Place the JAR somehwere in its own folder, as it will generate configuration files. It is recommended that you put it somewhere out of the way instead of in the desktop/downloads folder.
+- Make sure you have your bot token ready. This will be passed into the program in order to control your bot.
+
+### Running
+- Open the command prompt in the folder that the JAR is in.
+- Run the following command: `java -jar EmbedBot.jar <token>`
+	- `<token>` should be replaced with your Discord bot token
+	
+- The bot should respond that configuration files have been generated. This will be in the `config` folder within the folder you created for this project.
+- Open `config.json` with any text editor and fill out the fields.
+- Run the same command again: `java -jar EmbedBot.jar token`
+
+The JAR will now read in your provided configuration values and start the bot. Your bot account should now be online!
+
+</details>
+<details>
+<summary>With Docker</summary>
 
 ### Windows
 
