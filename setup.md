@@ -28,13 +28,13 @@ Choose one of the following build options.
 <details>
 <summary>From Source</summary>
 	
-### Prerequistes
+### Prerequisites
 - [Download](https://github.com/JakeJMattson/EmbedBot/archive/master.zip) this repository to your machine.
 - Install [Java](https://www.oracle.com/technetwork/java/javase/downloads/index.html) JDK 8 or greater.
 - Install [IntelliJ](https://www.jetbrains.com/idea/download/#section=windows) or another Maven compatible IDE.
 
 ### Building
-Once you have your prerequistes installed, Maven will be used to handle all of the other dependencies and build the project.
+Once you have your prerequisites installed, Maven will be used to handle all of the other dependencies and build the project.
 If you downloaded IntelliJ, building with Maven is supported out of the box. Please read the [Maven import guide](https://www.jetbrains.com/help/idea/2018.3/maven-support.html#maven_import_project_start) if you're unfamiliar with this process.
 
 ## Running
@@ -45,13 +45,13 @@ If all went well, your bot instance should now be running!
 <details>
 <summary>With a JAR</summary>
 
-### Prerequistes
+### Prerequisites
 - Install [Java](https://www.oracle.com/technetwork/java/javase/downloads/index.html) JDK 8 or greater.
 - Download one of the [releases](https://github.com/JakeJMattson/EmbedBot/releases/) (preferably the most recent one).
 
 ### Environment
 - To run the JAR, you will need to be able to access Java from the command line/terminal. Run `java -version` and make sure your operating system can recognize the command.
-- Place the JAR somehwere in its own folder, as it will generate configuration files. It is recommended that you put it somewhere out of the way instead of in the desktop/downloads folder.
+- Place the JAR somewhere in its own folder, as it will generate configuration files. It is recommended that you put it somewhere out of the way instead of in the desktop/downloads folder.
 - Make sure you have your bot token ready. This will be passed into the program in order to control your bot.
 
 ### Running
