@@ -41,15 +41,15 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
             commandMap.forEach { (command, args) ->
                 println("Command: ${command.names} - Args: $args")
 
-                val conversionResult = command.localInvoke(args, event)
-
                 val struct = CommandStruct(command.names.first(), args, !event.stealthInvocation)
                 val context = DiscordContext(event.stealthInvocation, event.discord, event.message, guild = event.guild)
                 val newEvent = CommandEvent<ArgumentContainer>(struct, container, context)
 
+                val conversionResult = command.localInvoke(args, newEvent)
+
                 when (conversionResult) {
                     is Result.Success -> command.invoke(conversionResult.results, newEvent)
-                    is Result.Error -> return@forEach event.respond("Error in ${command.names}: ${conversionResult.error}")
+                    is Result.Error -> return@execute event.respond("Error in ${command.names}: ${conversionResult.error}")
                 }
             }
         }

@@ -38,114 +38,46 @@ val Command.requiredPermissionLevel: Permission
 
 fun Command.localInvoke(args: List<String>, commandEvent: CommandEvent<*>) = convertArguments(args, expectedArgs, commandEvent)
 
-private data class ErrorReport(val header: String, val text: String)
-
 private fun convertArguments(args: List<String>, expected: ArgumentCollection<*>, event: CommandEvent<*>): Result {
     val remaining = args.toMutableList()
-    val convertedArgs = mutableListOf<Any?>()
-    var hasParsingFailed = false
-    val reports = mutableListOf<ErrorReport>()
+    val currentArg = remaining.firstOrNull() ?: ""
 
-    expected.arguments.forEach errorLoop@{ expectedArg ->
-        val currentArg = remaining.firstOrNull() ?: ""
-
-        val header = if (expectedArg.isOptional)
-            "(${expectedArg.name})"
-        else
-            "[${expectedArg.name}]"
-
-        if (hasParsingFailed) {
-            reports.add(ErrorReport(header, ""))
-            return@errorLoop
-        }
-
+    val convertedArgs = expected.arguments.map { expectedArg ->
         if (expectedArg.isOptional) {
             val default = expectedArg.defaultValue?.invoke(event)
 
-            val reportString = "<Default>" +
-                when (default) {
-                    is Number -> " $default"
-                    is Boolean -> " $default"
-                    is String -> " \"$default\""
-                    else -> ""
-                }
-
-            if (remaining.isEmpty()) {
-                reports.add(ErrorReport(header, reportString))
-                convertedArgs.add(default)
-                return@errorLoop
-            }
+            if (remaining.isEmpty())
+                return@map default
 
             val convertedOptional = expectedArg.convert(currentArg, remaining, event)
 
             when (convertedOptional) {
                 is ArgumentResult.Success -> {
-                    val consumed = convertedOptional.consumed
-
-                    val removedArgs = if (consumed.isEmpty()) {
-                        remaining.removeAt(0)
-                        currentArg
-                    }
-                    else {
-                        remaining.removeAll(consumed)
-                        consumed.joinToString(" ")
-                    }
-
-                    reports.add(ErrorReport(header, removedArgs))
-                    convertedArgs.add(convertedOptional.result)
+                    val consumed = convertedOptional.consumed.takeIf { it.isNotEmpty() } ?: listOf(currentArg)
+                    remaining.removeAll(consumed)
+                    convertedOptional.result
                 }
-                is ArgumentResult.Error -> {
-                    reports.add(ErrorReport(header, reportString))
-                    convertedArgs.add(default)
-                }
+                is ArgumentResult.Error -> default
             }
-        }
-        else {
-            if (remaining.isEmpty()) {
-                reports.add(ErrorReport(header, "<Missing>"))
-                hasParsingFailed = true
-                return@errorLoop
-            }
+        } else {
+            if (remaining.isEmpty())
+                return Result.Error("Missing argument")
 
             val result = expectedArg.convert(currentArg, remaining, event)
 
             when (result) {
                 is ArgumentResult.Success -> {
-                    val consumed = result.consumed
-
-                    val removedArgs = if (consumed.isEmpty()) {
-                        remaining.removeAt(0)
-                        currentArg
-                    }
-                    else {
-                        remaining.removeAll(consumed)
-                        consumed.joinToString(" ")
-                    }
-
-                    reports.add(ErrorReport(header, removedArgs))
-                    convertedArgs.add(result.result)
+                    val consumed = result.consumed.takeIf { it.isNotEmpty() } ?: listOf(currentArg)
+                    remaining.removeAll(consumed)
+                    result.result
                 }
-                is ArgumentResult.Error -> {
-                    reports.add(ErrorReport(header, result.error))
-                    hasParsingFailed = true
-                }
+                is ArgumentResult.Error -> return Result.Error(result.error)
             }
         }
     }
 
-    val longestHeader = reports.maxBy { it.header.length }?.header?.length ?: 0
-
-    val report = reports.joinToString("\n") { String.format("%-${longestHeader}s = %s", it.header, it.text) } +
-        if (remaining.isNotEmpty() && !hasParsingFailed) {
-            hasParsingFailed = true
-            "\nUnmatched Input: " + remaining.joinToString(" ")
-        }
-        else {
-            ""
-        }
-
-    if (hasParsingFailed)
-        return Result.Error("Failed to execute command!\n```$report```")
+    if (remaining.isNotEmpty())
+        Result.Error("Unmatched Input: " + remaining.joinToString(" "))
 
     return Result.Success(expected.bundle(convertedArgs as List<Any>))
 }
