@@ -90,3 +90,8 @@
 | Ping     | <none>    | Display the network ping of the bot.        |
 | Uptime   | <none>    | Displays how long the bot has been running. |
 
+## Advanced
+| Commands   | Arguments | Description                              |
+| ---------- | --------- | ---------------------------------------- |
+| ExecuteAll | Commands  | Execute a batch of commands in sequence. |
+
