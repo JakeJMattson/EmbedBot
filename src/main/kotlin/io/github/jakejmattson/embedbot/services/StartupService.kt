@@ -17,7 +17,7 @@ class StartupService(configuration: Configuration,
                      discord: Discord,
                      validationService: ValidationService,
                      permissionsService: PermissionsService) {
-    private data class Properties(val version: String, val author: String, val repository: String)
+    private data class Properties(val author: String, val version: String, val kutils: String, val repository: String)
 
     private val propFile = Properties::class.java.getResource("/properties.json").readText()
     private val project = Gson().fromJson(propFile, Properties::class.java)
@@ -31,7 +31,7 @@ class StartupService(configuration: Configuration,
         with(discord.configuration) {
             prefix = configuration.prefix
             reactToCommands = false
-            documentationSortOrder = arrayListOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
+            documentationSortOrder = listOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
                 "Cluster", "Edit", "Information", "Utility")
 
             mentionEmbed = {
@@ -44,9 +44,19 @@ class StartupService(configuration: Configuration,
                     addField(self.fullName(), messages.descriptions.BOT)
                     addInlineField("Required role", requiredRole)
                     addInlineField("Prefix", configuration.prefix)
-                    addInlineField("Author", "[${project.author}](${messages.links.DISCORD_ACCOUNT})")
-                    addInlineField("Version", project.version)
-                    addInlineField("Source", project.repository)
+
+                    with (project) {
+                        val kotlinVersion = KotlinVersion.CURRENT
+
+                        addField("Build Info", "```" +
+                            "Version: $version\n" +
+                            "KUtils: $kutils\n" +
+                            "Kotlin: $kotlinVersion" +
+                            "```")
+
+                        addInlineField("Author", "[${author}](${messages.links.DISCORD_ACCOUNT})")
+                        addInlineField("Source", repository)
+                    }
                 }
             }
 
