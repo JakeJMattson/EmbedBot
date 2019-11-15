@@ -14,6 +14,7 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
             val commandString = event.args.first
             val container = event.container
             val blocks = commandString.split("\n")
+            val unknownCommands = mutableListOf<String>()
 
             val commandMap = blocks.mapNotNull {
                 val split = it.split(" ")
@@ -23,7 +24,11 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
 
                 val commandName = split.first()
                 val command = container[commandName]
-                    ?: return@execute event.respond("Unknown command: $commandName")
+
+                if (command == null) {
+                    unknownCommands.add(commandName)
+                    return@mapNotNull null
+                }
 
                 val hasPermission = permissionsService.hasClearance(event.message.member!!, command.requiredPermissionLevel)
 
@@ -33,6 +38,15 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
                 val args = split.drop(1)
 
                 command to args
+            }
+
+            if (unknownCommands.isNotEmpty()) {
+                val response = when (unknownCommands.size) {
+                    1 -> "Unknown Command: ${unknownCommands.first()}"
+                    else -> "Unknown Commands: ${unknownCommands.joinToString()}"
+                }
+
+                return@execute event.respond(response)
             }
 
             if (commandMap.isEmpty())
