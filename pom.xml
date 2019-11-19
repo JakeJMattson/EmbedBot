@@ -18,11 +18,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Version Numbers -->
-        <jvm.target>1.8</jvm.target>
         <kotlin.version>1.3.60</kotlin.version>
-        <coroutines.version>1.3.1</coroutines.version>
         <kutils.version>0.13.0</kutils.version>
-        <assembly.plugin.version>3.1.1</assembly.plugin.version>
     </properties>
 
     <repositories>
@@ -42,11 +39,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-coroutines-core</artifactId>
-            <version>${coroutines.version}</version>
         </dependency>
 
         <!-- KUtils -->
@@ -83,7 +75,7 @@
                             <sourceDirs>
                                 <source>src/main/kotlin</source>
                             </sourceDirs>
-                            <jvmTarget>${jvm.target}</jvmTarget>
+                            <jvmTarget>1.8</jvmTarget>
                         </configuration>
                     </execution>
                 </executions>
@@ -91,7 +83,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>${assembly.plugin.version}</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
