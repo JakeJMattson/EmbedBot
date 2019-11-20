@@ -12,10 +12,9 @@ import me.aberrantfox.kjdautils.internal.di.PersistenceService
 fun botConfigurationCommands(configuration: Configuration, prefixService: PrefixService,
                              persistenceService: PersistenceService, embedService: EmbedService) = commands {
 
-    requiredPermissionLevel = Permission.BOT_OWNER
-
     command("SetPrefix") {
         description = messages.descriptions.SET_PREFIX
+        requiredPermissionLevel = Permission.BOT_OWNER
         execute(WordArg("Prefix")) {
             val prefix = it.args.first
 
@@ -28,6 +27,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("ResetBot") {
         description = messages.descriptions.RESET_BOT
+        requiredPermissionLevel = Permission.BOT_OWNER
         execute(WordArg("Bot Owner ID").makeOptional("")) {
             val idEntry = it.args.first
             val ownerId = configuration.botOwner
@@ -59,6 +59,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("Leave") {
         description = messages.descriptions.LEAVE
+        requiredPermissionLevel = Permission.BOT_OWNER
         execute {
             val guild = it.guild!!
             val guildConfiguration = configuration.getGuildConfig(guild.id)

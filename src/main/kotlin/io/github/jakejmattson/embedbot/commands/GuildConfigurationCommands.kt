@@ -13,10 +13,9 @@ fun guildConfigurationCommands(configuration: Configuration,
                                persistenceService: PersistenceService,
                                embedService: EmbedService) = commands {
 
-    requiredPermissionLevel = Permission.GUILD_OWNER
-
     command("SetRequiredRole") {
         description = messages.descriptions.SET_REQUIRED_ROLE
+        requiredPermissionLevel = Permission.GUILD_OWNER
         execute(RoleArg) {
             val requiredRole = it.args.first
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
@@ -31,6 +30,7 @@ fun guildConfigurationCommands(configuration: Configuration,
 
     command("DeleteAll") {
         description = messages.descriptions.DELETE_ALL
+        requiredPermissionLevel = Permission.GUILD_OWNER
         execute {
             val guild = it.guild!!
             val removed = embedService.removeAllFromGuild(guild)
@@ -41,6 +41,7 @@ fun guildConfigurationCommands(configuration: Configuration,
 
     command("Setup") {
         description = messages.descriptions.SETUP
+        requiredPermissionLevel = Permission.GUILD_OWNER
         execute(RoleArg("Required Role")) {
             val requiredRole = it.args.first
             val guildConfiguration = configuration.getGuildConfig(it.guild!!.id)
