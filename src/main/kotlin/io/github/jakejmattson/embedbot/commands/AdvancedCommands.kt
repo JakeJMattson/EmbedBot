@@ -11,15 +11,12 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
     command("ExecuteAll") {
         description = "Execute a batch of commands in sequence."
         execute(SentenceArg("Commands")) { event ->
-            val rawInvocations = event.args.first.split("\n")
+            val rawInvocations = event.args.first.split("\n").filter { it.isNotEmpty() }
             val unknownCommands = mutableListOf<String>()
             val missingPermissions = mutableListOf<String>()
 
             val commandMap = rawInvocations.mapNotNull {
                 val split = it.split(" ")
-
-                if (it.isEmpty())
-                    return@mapNotNull null
 
                 val commandName = split.first()
                 val command = event.container[commandName]
@@ -65,18 +62,22 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
             if (commandMap.isEmpty())
                 return@execute event.respond("No commands to execute!")
 
-            commandMap.forEach { (command, args) ->
-                val struct = CommandStruct(command.names.first(), args, !event.stealthInvocation)
-                val context = DiscordContext(event.stealthInvocation, event.discord, event.message, guild = event.guild)
-                val newEvent = CommandEvent<ArgumentContainer>(struct, event.container, context)
+            executeCommands(event, commandMap)
+        }
+    }
+}
 
-                val conversionResult = command.localInvoke(args, newEvent)
+private fun executeCommands(event: CommandEvent<*>, commandMap: List<Pair<Command, List<String>>>) {
+    commandMap.forEach { (command, args) ->
+        val struct = CommandStruct(command.names.first(), args, !event.stealthInvocation)
+        val context = DiscordContext(event.stealthInvocation, event.discord, event.message, guild = event.guild)
+        val newEvent = CommandEvent<ArgumentContainer>(struct, event.container, context)
 
-                when (conversionResult) {
-                    is Result.Success -> command.invoke(conversionResult.results, newEvent)
-                    is Result.Error -> return@execute event.respond("Error in ${command.names}: ${conversionResult.error}")
-                }
-            }
+        val conversionResult = command.localInvoke(args, newEvent)
+
+        when (conversionResult) {
+            is Result.Success -> command.invoke(conversionResult.results, newEvent)
+            is Result.Error -> return event.respond("Error in ${command.names}: ${conversionResult.error}")
         }
     }
 }
