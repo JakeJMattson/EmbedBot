@@ -11,19 +11,18 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
     command("ExecuteAll") {
         description = "Execute a batch of commands in sequence."
         execute(SentenceArg("Commands")) { event ->
-            val commandString = event.args.first
-            val container = event.container
-            val blocks = commandString.split("\n")
+            val rawInvocations = event.args.first.split("\n")
             val unknownCommands = mutableListOf<String>()
+            val missingPermissions = mutableListOf<String>()
 
-            val commandMap = blocks.mapNotNull {
+            val commandMap = rawInvocations.mapNotNull {
                 val split = it.split(" ")
 
                 if (it.isEmpty())
                     return@mapNotNull null
 
                 val commandName = split.first()
-                val command = container[commandName]
+                val command = event.container[commandName]
 
                 if (command == null) {
                     unknownCommands.add(commandName)
@@ -32,19 +31,33 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
 
                 val hasPermission = permissionsService.hasClearance(event.message.member!!, command.requiredPermissionLevel)
 
-                if (!hasPermission)
+                if (!hasPermission) {
+                    missingPermissions.add(commandName)
                     return@mapNotNull null
+                }
 
                 val args = split.drop(1)
 
                 command to args
             }
 
-            if (unknownCommands.isNotEmpty()) {
-                val response = when (unknownCommands.size) {
+            if (unknownCommands.isNotEmpty() || missingPermissions.isNotEmpty()) {
+                val unknownResponse = when (unknownCommands.size) {
+                    0 -> ""
                     1 -> "Unknown Command: ${unknownCommands.first()}"
                     else -> "Unknown Commands: ${unknownCommands.joinToString()}"
                 }
+
+                val permissionResponse = when (missingPermissions.size) {
+                    0 -> ""
+                    else -> "Missing Permissions: ${missingPermissions.joinToString()}"
+                }
+
+                val response =
+                    if (unknownResponse.isNotEmpty() && permissionResponse.isNotEmpty())
+                        unknownResponse + "\n" + permissionResponse
+                    else
+                        unknownResponse + permissionResponse
 
                 return@execute event.respond(response)
             }
@@ -53,11 +66,9 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
                 return@execute event.respond("No commands to execute!")
 
             commandMap.forEach { (command, args) ->
-                println("Command: ${command.names} - Args: $args")
-
                 val struct = CommandStruct(command.names.first(), args, !event.stealthInvocation)
                 val context = DiscordContext(event.stealthInvocation, event.discord, event.message, guild = event.guild)
-                val newEvent = CommandEvent<ArgumentContainer>(struct, container, context)
+                val newEvent = CommandEvent<ArgumentContainer>(struct, event.container, context)
 
                 val conversionResult = command.localInvoke(args, newEvent)
 
