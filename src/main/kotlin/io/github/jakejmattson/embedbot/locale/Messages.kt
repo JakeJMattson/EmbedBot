@@ -75,8 +75,7 @@ class Descriptions(
     val LIST_EMBEDS: String = "List all embeds created in this guild.",
 
     //Utility
-    val PING: String = "Display the network ping of the bot.",
-    val UPTIME: String = "Displays how long the bot has been running."
+    val STATUS: String = "Display network status and total uptime."
 )
 
 class Errors(

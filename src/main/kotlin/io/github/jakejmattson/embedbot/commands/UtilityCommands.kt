@@ -11,7 +11,7 @@ private val startTime = Date()
 @CommandSet("Utility")
 fun utilityCommands() = commands {
     command("Status", "Ping", "Uptime") {
-        description = messages.descriptions.UPTIME
+        description = messages.descriptions.STATUS
         execute { event ->
             val jda = event.discord.jda
 
