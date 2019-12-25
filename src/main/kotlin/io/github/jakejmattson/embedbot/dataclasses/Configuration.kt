@@ -5,6 +5,7 @@ import me.aberrantfox.kjdautils.api.annotation.Data
 @Data("config/config.json")
 data class Configuration(val botOwner: String = "insert-id",
                          var prefix: String = "=",
+                         val githubToken: String = "insert-token",
                          val guildConfigurations: MutableList<GuildConfiguration> = mutableListOf(GuildConfiguration())) {
     fun getGuildConfig(guildId: String) = guildConfigurations.firstOrNull { it.guildId == guildId }
 }

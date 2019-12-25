@@ -2,6 +2,7 @@ package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.getFileSystemLocation
 import io.github.jakejmattson.embedbot.locale.messages
+import io.github.jakejmattson.embedbot.services.GitHubService
 import me.aberrantfox.kjdautils.api.dsl.command.*
 import me.aberrantfox.kjdautils.extensions.stdlib.toMinimalTimeString
 import java.awt.Color
@@ -11,7 +12,7 @@ import kotlin.system.exitProcess
 private val startTime = Date()
 
 @CommandSet("Utility")
-fun utilityCommands() = commands {
+fun utilityCommands(gitHubService: GitHubService) = commands {
     command("Status", "Ping", "Uptime") {
         description = messages.descriptions.STATUS
         execute { event ->
@@ -41,10 +42,17 @@ fun utilityCommands() = commands {
 
             if (currentJar.extension != ".jar")
                 return@execute it.respond("Could not restart. The bot needs to be running from a JAR.")
-            
+
             it.respond("Restarting...")
             ProcessBuilder(arrayListOf("java", "-jar", currentJar.path)).start()
             exitProcess(0)
+        }
+    }
+
+    command("Update") {
+        description = "Update the bot to the latest version."
+        execute {
+            it.respond(gitHubService.update().message)
         }
     }
 }
