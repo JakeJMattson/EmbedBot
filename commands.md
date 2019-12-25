@@ -87,6 +87,7 @@
 | Commands             | Arguments | Description                              |
 | -------------------- | --------- | ---------------------------------------- |
 | Help                 | (Command) | Display a help menu.                     |
+| Restart              | <none>    | Restart the bot via the JAR file.        |
 | Status, Ping, Uptime | <none>    | Display network status and total uptime. |
 
 ## Advanced
