@@ -39,6 +39,9 @@ fun utilityCommands() = commands {
 
             val currentJar = getFileSystemLocation()
 
+            if (currentJar.extension != ".jar")
+                return@execute it.respond("Could not restart. The bot needs to be running from a JAR.")
+            
             it.respond("Restarting...")
             ProcessBuilder(arrayListOf("java", "-jar", currentJar.path)).start()
             exitProcess(0)
