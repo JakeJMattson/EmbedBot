@@ -12,16 +12,16 @@ import me.aberrantfox.kjdautils.extensions.jda.*
 import net.dv8tion.jda.api.entities.*
 import java.awt.Color
 
+data class Properties(val author: String, val version: String, val kutils: String, val repository: String)
+
+private val propFile = Properties::class.java.getResource("/properties.json").readText()
+val project = Gson().fromJson(propFile, Properties::class.java)
+
 @Service
 class StartupService(configuration: Configuration,
                      discord: Discord,
                      validationService: ValidationService,
                      permissionsService: PermissionsService) {
-    private data class Properties(val author: String, val version: String, val kutils: String, val repository: String)
-
-    private val propFile = Properties::class.java.getResource("/properties.json").readText()
-    private val project = Gson().fromJson(propFile, Properties::class.java)
-
     init {
         with(validationService.validateConfiguration()) {
             require(wasSuccessful) { message }

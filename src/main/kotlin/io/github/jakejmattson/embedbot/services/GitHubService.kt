@@ -15,21 +15,26 @@ class GitHubService(private val configuration: Configuration) {
         val repo = try {
             val github = GitHubBuilder().withOAuthToken(configuration.githubToken).build()
             github.getRepositoryById(repoId)
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             return false withMessage "Failed to connect to repo. Likely missing github access token in the config file."
         }
 
         val release = repo.latestRelease
 
-        val jar = release.assets.firstOrNull { it.name.endsWith("jar") } ?:
-            return false withMessage "Failed to locate JAR in release assets."
+        val jar = release.assets.firstOrNull { it.name.endsWith("jar") }
+            ?: return false withMessage "Failed to locate JAR in release assets."
 
-        println("Download: ${jar.browserDownloadUrl}")
+        val currentVersion = project.version.parseToVersion()
+        val newVersion = release.tagName.parseToVersion()
+
+        if (newVersion <= currentVersion)
+            return false withMessage "No updates available.\n```" +
+                "Current: $currentVersion\n" +
+                "Release: $newVersion```"
 
         downloadJar(jar.browserDownloadUrl, jar.name)
 
-        return true withMessage "Updating to ${release.tagName}"
+        return true withMessage "Update in progress...\n`$currentVersion -> $newVersion`"
     }
 
     private fun downloadJar(url: String, name: String) {
