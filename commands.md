@@ -10,7 +10,9 @@
 | --------- | -------------- | ----------------------------------------------------------------- |
 | Leave     | <none>         | Leave this guild and delete all associated information.           |
 | ResetBot  | (Bot Owner ID) | Delete all embeds in all guilds. Delete all guild configurations. |
+| Restart   | <none>         | Restart the bot via the JAR file.                                 |
 | SetPrefix | Prefix         | Set the prefix required for the bot to register a command.        |
+| Update    | <none>         | Update the bot to the latest version.                             |
 
 ## GuildConfiguration
 | Commands        | Arguments     | Description                                   |
@@ -87,9 +89,7 @@
 | Commands             | Arguments | Description                              |
 | -------------------- | --------- | ---------------------------------------- |
 | Help                 | (Command) | Display a help menu.                     |
-| Restart              | <none>    | Restart the bot via the JAR file.        |
 | Status, Ping, Uptime | <none>    | Display network status and total uptime. |
-| Update               | <none>    | Update the bot to the latest version.    |
 
 ## Advanced
 | Commands   | Arguments | Description                              |
