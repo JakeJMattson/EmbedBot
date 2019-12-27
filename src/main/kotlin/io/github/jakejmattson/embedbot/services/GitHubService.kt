@@ -3,7 +3,7 @@ package io.github.jakejmattson.embedbot.services
 import io.github.jakejmattson.embedbot.dataclasses.*
 import me.aberrantfox.kjdautils.api.annotation.Service
 import org.kohsuke.github.GitHubBuilder
-import java.io.FileOutputStream
+import java.io.*
 import java.net.URL
 import java.nio.channels.Channels
 
@@ -33,7 +33,7 @@ class GitHubService(private val configuration: Configuration) {
                 "Release: $newVersion```"
 
         val currentLocation = getFileSystemLocation()
-        val filePath = "${currentLocation.parent}/${jar.name}"
+        val filePath = "${currentLocation.parent}${File.separator}${jar.name}"
 
         try {
             downloadJar(jar.browserDownloadUrl, filePath)
@@ -41,7 +41,7 @@ class GitHubService(private val configuration: Configuration) {
             return false withMessage "Something went wrong while downloading the update. Aborting.\n```${e.message}```"
         }
 
-        return true withMessage "Download complete. Proceeding with update:\n`$currentVersion -> $newVersion`"
+        return true withMessage filePath
     }
 
     @Throws(Exception::class)

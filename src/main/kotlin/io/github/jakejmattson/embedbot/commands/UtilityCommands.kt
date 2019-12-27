@@ -52,7 +52,14 @@ fun utilityCommands(gitHubService: GitHubService) = commands {
         description = "Update the bot to the latest version."
         execute {
             it.respond("Update in progress...")
-            it.respond(gitHubService.update().message)
+
+            val updateResponse = gitHubService.update()
+
+            if (!updateResponse.wasSuccessful)
+                return@execute it.respond(updateResponse.message)
+
+            it.respond("Download complete. Proceeding with update.")
+            startJar(updateResponse.message)
         }
     }
 }
