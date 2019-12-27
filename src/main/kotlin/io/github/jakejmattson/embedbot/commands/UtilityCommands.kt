@@ -1,6 +1,7 @@
 package io.github.jakejmattson.embedbot.commands
 
 import io.github.jakejmattson.embedbot.dataclasses.getFileSystemLocation
+import io.github.jakejmattson.embedbot.discordToken
 import io.github.jakejmattson.embedbot.locale.messages
 import io.github.jakejmattson.embedbot.services.GitHubService
 import me.aberrantfox.kjdautils.api.dsl.command.*
@@ -35,9 +36,6 @@ fun utilityCommands(gitHubService: GitHubService) = commands {
     command("Restart") {
         description = "Restart the bot via the JAR file."
         execute {
-            //TODO Find the Java binary dynamically
-            //val javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java"
-
             val currentJar = getFileSystemLocation()
 
             if (currentJar.extension != ".jar")
@@ -65,6 +63,7 @@ fun utilityCommands(gitHubService: GitHubService) = commands {
 }
 
 private fun startJar(path: String) {
-    ProcessBuilder(arrayListOf("java", "-jar", path)).start()
+    val command = "java -jar $path $discordToken"
+    Runtime.getRuntime().exec(command)
     exitProcess(0)
 }
