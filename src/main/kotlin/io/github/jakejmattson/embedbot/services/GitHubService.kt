@@ -24,25 +24,31 @@ class GitHubService(private val configuration: Configuration) {
         val jar = release.assets.firstOrNull { it.name.endsWith("jar") }
             ?: return false withMessage "Failed to locate JAR in release assets."
 
-        val currentVersion = project.version.parseToVersion()
         val newVersion = release.tagName.parseToVersion()
+        val currentVersion = project.version.parseToVersion()
 
         if (newVersion <= currentVersion)
             return false withMessage "No updates available.\n```" +
                 "Current: $currentVersion\n" +
                 "Release: $newVersion```"
 
-        downloadJar(jar.browserDownloadUrl, jar.name)
+        val currentLocation = getFileSystemLocation()
+        val filePath = "${currentLocation.parent}/${jar.name}"
 
-        return true withMessage "Update in progress...\n`$currentVersion -> $newVersion`"
+        try {
+            downloadJar(jar.browserDownloadUrl, filePath)
+        } catch (e: Exception) {
+            return false withMessage "Something went wrong while downloading the update. Aborting.\n```${e.message}```"
+        }
+
+        return true withMessage "Download complete. Proceeding with update:\n`$currentVersion -> $newVersion`"
     }
 
-    private fun downloadJar(url: String, name: String) {
+    @Throws(Exception::class)
+    private fun downloadJar(url: String, filePath: String) {
         val readChannel = Channels.newChannel(URL(url).openStream())
-        val currentLocation = getFileSystemLocation()
-        val fileOS = FileOutputStream("${currentLocation.parent}/$name")
-        val writeChannel = fileOS.channel
+        val fileStream = FileOutputStream(filePath)
 
-        writeChannel.transferFrom(readChannel, 0, Long.MAX_VALUE)
+        fileStream.channel.transferFrom(readChannel, 0, Long.MAX_VALUE)
     }
 }

@@ -44,15 +44,20 @@ fun utilityCommands(gitHubService: GitHubService) = commands {
                 return@execute it.respond("Could not restart. The bot needs to be running from a JAR.")
 
             it.respond("Restarting...")
-            ProcessBuilder(arrayListOf("java", "-jar", currentJar.path)).start()
-            exitProcess(0)
+            startJar(currentJar.path)
         }
     }
 
     command("Update") {
         description = "Update the bot to the latest version."
         execute {
+            it.respond("Update in progress...")
             it.respond(gitHubService.update().message)
         }
     }
+}
+
+private fun startJar(path: String) {
+    ProcessBuilder(arrayListOf("java", "-jar", path)).start()
+    exitProcess(0)
 }
