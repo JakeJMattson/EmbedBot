@@ -16,6 +16,9 @@ class Descriptions(
     val LEAVE: String = "Leave this guild and delete all associated information.",
     val RESET_BOT: String = "Delete all embeds in all guilds. Delete all guild configurations.",
     val SET_PREFIX: String = "Set the prefix required for the bot to register a command.",
+    val KILL: String = "Kill the bot. It will remember this decision.",
+    val RESTART: String = "Restart the bot via the JAR file.",
+    val UPDATE: String = "Update the bot to the latest version.",
 
     //Guild Configuration
     val DELETE_ALL: String = "Delete all embeds and clusters in this guild.",

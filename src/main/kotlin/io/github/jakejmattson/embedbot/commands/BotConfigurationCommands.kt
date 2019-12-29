@@ -83,7 +83,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("Kill") {
-        description = "Kill the bot. It will remember this decision."
+        description = messages.descriptions.KILL
         execute {
             it.respond("Goodbye :(")
             exitProcess(0)
@@ -91,7 +91,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("Restart") {
-        description = "Restart the bot via the JAR file."
+        description = messages.descriptions.RESTART
         execute {
             val currentJar = getFileSystemLocation()
 
@@ -104,7 +104,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     }
 
     command("Update") {
-        description = "Update the bot to the latest version."
+        description = messages.descriptions.UPDATE
         execute {
             it.respond("Update in progress...")
 
