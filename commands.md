@@ -8,6 +8,7 @@
 ## BotConfiguration
 | Commands  | Arguments      | Description                                                       |
 | --------- | -------------- | ----------------------------------------------------------------- |
+| Kill      | <none>         | Kill the bot. It will remember this decision.                     |
 | Leave     | <none>         | Leave this guild and delete all associated information.           |
 | ResetBot  | (Bot Owner ID) | Delete all embeds in all guilds. Delete all guild configurations. |
 | Restart   | <none>         | Restart the bot via the JAR file.                                 |

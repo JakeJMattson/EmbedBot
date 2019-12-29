@@ -82,6 +82,14 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
         }
     }
 
+    command("Kill") {
+        description = "Kill the bot. It will remember this decision."
+        execute {
+            it.respond("Goodbye :(")
+            exitProcess(0)
+        }
+    }
+
     command("Restart") {
         description = "Restart the bot via the JAR file."
         execute {
