@@ -36,6 +36,7 @@ Choose one of the following build options.
 ### Building
 Once you have your prerequisites installed, Maven will be used to handle all of the other dependencies and build the project.
 If you downloaded IntelliJ, building with Maven is supported out of the box. Please read the [Maven import guide](https://www.jetbrains.com/help/idea/2018.3/maven-support.html#maven_import_project_start) if you're unfamiliar with this process.
+This will generate a configuration file to fill out. You can read more about those fields below. Once that's done, you can run it again.
 
 ## Running
 If all went well, your bot instance should now be running!
@@ -60,7 +61,7 @@ If all went well, your bot instance should now be running!
 	- `<token>` should be replaced with your Discord bot token
 	
 - The bot should respond that configuration files have been generated. This will be in the `config` folder within the folder you created for this project.
-- Open `config.json` with any text editor and fill out the fields.
+- Open `config.json` with any text editor and fill out the fields. You can read more about this below.
 - Run the same command again: `java -jar EmbedBot.jar token`
 
 The JAR will now read in your provided configuration values and start the bot. Your bot account should now be online!
@@ -104,6 +105,30 @@ The JAR will now read in your provided configuration values and start the bot. Y
    *note: The token is fake :)* 
 
 </details>
+
+## Configuration
+
+```json
+{
+  "botOwner": "This is your Discord ID",
+  "prefix": "This is the prefix that the bot will respond to",
+  "githubToken": "This is your GitHub access token used to fetch updates",
+  "guildConfigurations": [
+    {
+      "guildId": "This is the ID of the guild you're configuring",
+      "requiredRole": "This is the name of the role required to use the bot"
+    }
+  ]
+}
+```
+
+### GitHub Token
+
+In order to use the `update` command, you must provide a GitHub access token so that the bot can fetch the latest release.
+This functionality is optional. The bot will function normally if no token is provided, but it will be unable to update itself.
+Please follow the [official guide](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token) in order to create an access token.
+Note that this operation doesn't require any special permissions, as no information about your account is read or written.
+This access token will only be used to download the newest JAR file available.
 
 ## Usage Guide
 
