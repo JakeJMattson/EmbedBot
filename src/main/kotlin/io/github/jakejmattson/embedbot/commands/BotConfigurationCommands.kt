@@ -106,6 +106,11 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     command("Update") {
         description = messages.descriptions.UPDATE
         execute {
+            val currentJar = getFileSystemLocation()
+
+            if (currentJar.extension != ".jar")
+                return@execute it.respond("Unable to update. The bot needs to be running from a JAR.")
+
             it.respond("Update in progress...")
 
             val updateResponse = gitHubService.update()
