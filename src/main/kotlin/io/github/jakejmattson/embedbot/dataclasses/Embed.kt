@@ -15,6 +15,10 @@ private fun EmbedBuilder.save(): EmbedBuilder {
     return this
 }
 
+data class CopyLocation(val channelId: String, val messageId: String) {
+    override fun toString() = "Channel ID: $channelId\nMessage ID: $messageId"
+}
+
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
                  var copyLocation: CopyLocation? = null) {

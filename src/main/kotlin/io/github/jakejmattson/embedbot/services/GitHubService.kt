@@ -1,5 +1,6 @@
 package io.github.jakejmattson.embedbot.services
 
+import io.github.jakejmattson.embedbot.commands.getFileSystemLocation
 import io.github.jakejmattson.embedbot.dataclasses.*
 import me.aberrantfox.kjdautils.api.annotation.Service
 import org.kohsuke.github.GitHubBuilder

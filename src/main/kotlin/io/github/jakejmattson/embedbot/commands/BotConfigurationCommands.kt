@@ -1,6 +1,6 @@
 package io.github.jakejmattson.embedbot.commands
 
-import io.github.jakejmattson.embedbot.dataclasses.*
+import io.github.jakejmattson.embedbot.dataclasses.Configuration
 import io.github.jakejmattson.embedbot.discordToken
 import io.github.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import io.github.jakejmattson.embedbot.locale.messages
@@ -8,6 +8,7 @@ import io.github.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.command.*
 import me.aberrantfox.kjdautils.internal.arguments.WordArg
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
+import java.io.File
 import kotlin.system.exitProcess
 
 @CommandSet("BotConfiguration")
@@ -123,6 +124,10 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
         }
     }
 }
+
+private class Utility
+
+fun getFileSystemLocation() = File(Utility::class.java.protectionDomain.codeSource.location.toURI())
 
 private fun startJar(path: String) {
     val command = "java -jar $path $discordToken"

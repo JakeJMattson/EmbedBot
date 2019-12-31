@@ -5,6 +5,11 @@
 | ---------- | -------------------------- |
 | (Argument) | This argument is optional. |
 
+## Advanced
+| Commands   | Arguments | Description                              |
+| ---------- | --------- | ---------------------------------------- |
+| ExecuteAll | Commands  | Execute a batch of commands in sequence. |
+
 ## BotConfiguration
 | Commands  | Arguments      | Description                                                       |
 | --------- | -------------- | ----------------------------------------------------------------- |
@@ -14,43 +19,6 @@
 | Restart   | <none>         | Restart the bot via the JAR file.                                 |
 | SetPrefix | Prefix         | Set the prefix required for the bot to register a command.        |
 | Update    | <none>         | Update the bot to the latest version.                             |
-
-## GuildConfiguration
-| Commands        | Arguments     | Description                                   |
-| --------------- | ------------- | --------------------------------------------- |
-| DeleteAll       | <none>        | Delete all embeds and clusters in this guild. |
-| SetRequiredRole | Role          | Set the role required to use this bot.        |
-| Setup           | Required Role | Set up this bot for use.                      |
-
-## Core
-| Commands  | Arguments                | Description                                |
-| --------- | ------------------------ | ------------------------------------------ |
-| Create    | Embed Name               | Create a new embed with this name.         |
-| Delete    | (Embed)                  | Delete the embed with this name.           |
-| Duplicate | Embed Name, (Embed)      | Create a new embed from an existing embed. |
-| Export    | (Embed)                  | Export the currently loaded embed to JSON. |
-| Import    | Embed Name, JSON         | Import a JSON String as an embed.          |
-| Load      | Embed                    | Load the embed with this name into memory. |
-| Send      | (Channel), (shouldTrack) | Send the currently loaded embed.           |
-
-## Copy
-| Commands       | Arguments                         | Description                                             |
-| -------------- | --------------------------------- | ------------------------------------------------------- |
-| CopyTarget     | Embed Name, (Channel), Message ID | Copy an embed by its message ID.                        |
-| UpdateOriginal | <none>                            | Update the original embed this content was copied from. |
-| UpdateTarget   | (Channel), Message ID             | Replace the target message embed with the loaded embed. |
-
-## Field
-| Commands            | Arguments               | Description                                              |
-| ------------------- | ----------------------- | -------------------------------------------------------- |
-| AddBlankField       | (isInline)              | Add a blank field to the loaded embed.                   |
-| AddField            | Field Data              | Add a field in the following format: title\|body\|inline |
-| EditField, SetField | Field Index, Field Data | Edit a field at a given index with the given data.       |
-| EditFieldInline     | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
-| EditFieldText       | Field Index, Text       | Get a field by its index and edit its text value.        |
-| EditFieldTitle      | Field Index, Text       | Get a field by its index and edit its title value.       |
-| InsertField         | Index, Field Data       | Insert a field at an index to the loaded embed.          |
-| RemoveField         | Field Index             | Remove a field from the loaded embed by its index.       |
 
 ## Cluster
 | Commands          | Arguments                         | Description                                                  |
@@ -64,6 +32,24 @@
 | RemoveFromCluster | Embed...                          | Remove embeds from their current cluster.                    |
 | RenameCluster     | Cluster, New Name                 | Change the name of an existing cluster.                      |
 | UpdateCluster     | Cluster                           | Update the original embeds this cluster was copied from.     |
+
+## Copy
+| Commands       | Arguments                         | Description                                             |
+| -------------- | --------------------------------- | ------------------------------------------------------- |
+| CopyTarget     | Embed Name, (Channel), Message ID | Copy an embed by its message ID.                        |
+| UpdateOriginal | <none>                            | Update the original embed this content was copied from. |
+| UpdateTarget   | (Channel), Message ID             | Replace the target message embed with the loaded embed. |
+
+## Core
+| Commands  | Arguments                | Description                                |
+| --------- | ------------------------ | ------------------------------------------ |
+| Create    | Embed Name               | Create a new embed with this name.         |
+| Delete    | (Embed)                  | Delete the embed with this name.           |
+| Duplicate | Embed Name, (Embed)      | Create a new embed from an existing embed. |
+| Export    | (Embed)                  | Export the currently loaded embed to JSON. |
+| Import    | Embed Name, JSON         | Import a JSON String as an embed.          |
+| Load      | Embed                    | Load the embed with this name into memory. |
+| Send      | (Channel), (shouldTrack) | Send the currently loaded embed.           |
 
 ## Edit
 | Commands       | Arguments         | Description                                         |
@@ -79,6 +65,25 @@
 | SetTimestamp   | <none>            | Set the timestamp for the currently loaded embed.   |
 | SetTitle       | Text              | Set the title for the currently loaded embed.       |
 
+## Field
+| Commands            | Arguments               | Description                                              |
+| ------------------- | ----------------------- | -------------------------------------------------------- |
+| AddBlankField       | (isInline)              | Add a blank field to the loaded embed.                   |
+| AddField            | Field Data              | Add a field in the following format: title\|body\|inline |
+| EditField, SetField | Field Index, Field Data | Edit a field at a given index with the given data.       |
+| EditFieldInline     | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
+| EditFieldText       | Field Index, Text       | Get a field by its index and edit its text value.        |
+| EditFieldTitle      | Field Index, Text       | Get a field by its index and edit its title value.       |
+| InsertField         | Index, Field Data       | Insert a field at an index to the loaded embed.          |
+| RemoveField         | Field Index             | Remove a field from the loaded embed by its index.       |
+
+## GuildConfiguration
+| Commands        | Arguments     | Description                                   |
+| --------------- | ------------- | --------------------------------------------- |
+| DeleteAll       | <none>        | Delete all embeds and clusters in this guild. |
+| SetRequiredRole | Role          | Set the role required to use this bot.        |
+| Setup           | Required Role | Set up this bot for use.                      |
+
 ## Information
 | Commands   | Arguments | Description                             |
 | ---------- | --------- | --------------------------------------- |
@@ -91,9 +96,4 @@
 | -------------------- | --------- | ---------------------------------------- |
 | Help                 | (Command) | Display a help menu.                     |
 | Status, Ping, Uptime | <none>    | Display network status and total uptime. |
-
-## Advanced
-| Commands   | Arguments | Description                              |
-| ---------- | --------- | ---------------------------------------- |
-| ExecuteAll | Commands  | Execute a batch of commands in sequence. |
 

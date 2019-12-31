@@ -31,8 +31,6 @@ class StartupService(configuration: Configuration,
         with(discord.configuration) {
             prefix = configuration.prefix
             reactToCommands = false
-            documentationSortOrder = listOf("BotConfiguration", "GuildConfiguration", "Core", "Copy", "Field",
-                "Cluster", "Edit", "Information", "Utility")
 
             mentionEmbed = {
                 embed {
@@ -45,7 +43,7 @@ class StartupService(configuration: Configuration,
                     addInlineField("Required role", requiredRole)
                     addInlineField("Prefix", configuration.prefix)
 
-                    with (project) {
+                    with(project) {
                         val kotlinVersion = KotlinVersion.CURRENT
 
                         addField("Build Info", "```" +
