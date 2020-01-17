@@ -19,7 +19,7 @@
 
         <!-- Version Numbers -->
         <kotlin.version>1.3.61</kotlin.version>
-        <kutils.version>0.13.0</kutils.version>
+        <kutils.version>0.13.1</kutils.version>
         <github.version>1.101</github.version>
     </properties>
 
