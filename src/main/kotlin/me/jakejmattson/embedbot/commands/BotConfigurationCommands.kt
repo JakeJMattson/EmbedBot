@@ -1,13 +1,13 @@
 package me.jakejmattson.embedbot.commands
 
+import me.aberrantfox.kjdautils.api.dsl.command.*
+import me.aberrantfox.kjdautils.internal.arguments.WordArg
+import me.aberrantfox.kjdautils.internal.di.PersistenceService
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.discordToken
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.command.*
-import me.aberrantfox.kjdautils.internal.arguments.WordArg
-import me.aberrantfox.kjdautils.internal.di.PersistenceService
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -85,6 +85,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("Kill") {
         description = messages.descriptions.KILL
+        requiredPermissionLevel = Permission.BOT_OWNER
         execute {
             it.respond("Goodbye :(")
             exitProcess(0)
@@ -93,6 +94,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("Restart") {
         description = messages.descriptions.RESTART
+        requiredPermissionLevel = Permission.BOT_OWNER
         execute {
             val currentJar = getFileSystemLocation()
 
@@ -106,6 +108,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
     command("Update") {
         description = messages.descriptions.UPDATE
+        requiredPermissionLevel = Permission.BOT_OWNER
         execute {
             val currentJar = getFileSystemLocation()
 
