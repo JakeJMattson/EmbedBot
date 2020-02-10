@@ -1,6 +1,7 @@
 package me.jakejmattson.embedbot.commands
 
-import me.aberrantfox.kjdautils.api.dsl.command.*
+import me.aberrantfox.kjdautils.api.annotation.CommandSet
+import me.aberrantfox.kjdautils.api.dsl.command.commands
 import me.aberrantfox.kjdautils.internal.arguments.WordArg
 import me.aberrantfox.kjdautils.internal.di.PersistenceService
 import me.jakejmattson.embedbot.dataclasses.Configuration

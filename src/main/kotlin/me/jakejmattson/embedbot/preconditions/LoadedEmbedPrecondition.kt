@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.preconditions
 
+import me.aberrantfox.kjdautils.api.annotation.Precondition
+import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.*
-import me.aberrantfox.kjdautils.internal.command.*
 
 @Precondition
 fun produceHasLoadedEmbedPrecondition() = precondition {

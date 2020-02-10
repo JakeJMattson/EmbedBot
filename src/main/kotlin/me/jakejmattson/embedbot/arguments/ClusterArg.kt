@@ -1,10 +1,10 @@
 package me.jakejmattson.embedbot.arguments
 
+import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
+import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.dataclasses.Cluster
 import me.jakejmattson.embedbot.extensions.getClusterByName
 import me.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
-import me.aberrantfox.kjdautils.internal.command.*
 
 open class ClusterArg(override val name: String = "Cluster") : ArgumentType<Cluster>() {
     companion object : ClusterArg()

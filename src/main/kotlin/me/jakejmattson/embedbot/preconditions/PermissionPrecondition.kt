@@ -1,11 +1,11 @@
 package me.jakejmattson.embedbot.preconditions
 
+import me.aberrantfox.kjdautils.api.annotation.Precondition
+import me.aberrantfox.kjdautils.extensions.jda.toMember
+import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.*
-import me.aberrantfox.kjdautils.extensions.jda.toMember
-import me.aberrantfox.kjdautils.internal.command.*
 
 @Precondition
 fun produceHasPermissionPrecondition(permissionsService: PermissionsService) = precondition {

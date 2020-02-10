@@ -1,14 +1,14 @@
 package me.jakejmattson.embedbot.services
 
 import com.google.gson.Gson
-import me.jakejmattson.embedbot.dataclasses.Configuration
-import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
-import me.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.api.dsl.command.Command
 import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.discord.Discord
 import me.aberrantfox.kjdautils.extensions.jda.*
+import me.jakejmattson.embedbot.dataclasses.Configuration
+import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
+import me.jakejmattson.embedbot.locale.messages
 import net.dv8tion.jda.api.entities.*
 import java.awt.Color
 

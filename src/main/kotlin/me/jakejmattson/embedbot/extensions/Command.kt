@@ -1,8 +1,8 @@
 package me.jakejmattson.embedbot.extensions
 
-import me.jakejmattson.embedbot.services.*
 import me.aberrantfox.kjdautils.api.dsl.command.*
 import me.aberrantfox.kjdautils.internal.command.ArgumentResult
+import me.jakejmattson.embedbot.services.*
 import java.util.WeakHashMap
 
 sealed class Result {

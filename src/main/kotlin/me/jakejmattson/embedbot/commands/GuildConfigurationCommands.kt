@@ -1,12 +1,13 @@
 package me.jakejmattson.embedbot.commands
 
+import me.aberrantfox.kjdautils.api.annotation.CommandSet
+import me.aberrantfox.kjdautils.api.dsl.command.commands
+import me.aberrantfox.kjdautils.internal.arguments.RoleArg
+import me.aberrantfox.kjdautils.internal.di.PersistenceService
 import me.jakejmattson.embedbot.dataclasses.*
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.command.*
-import me.aberrantfox.kjdautils.internal.arguments.RoleArg
-import me.aberrantfox.kjdautils.internal.di.PersistenceService
 
 @CommandSet("GuildConfiguration")
 fun guildConfigurationCommands(configuration: Configuration,

@@ -1,8 +1,9 @@
 package me.jakejmattson.embedbot.commands
 
-import me.jakejmattson.embedbot.locale.messages
-import me.aberrantfox.kjdautils.api.dsl.command.*
+import me.aberrantfox.kjdautils.api.annotation.CommandSet
+import me.aberrantfox.kjdautils.api.dsl.command.commands
 import me.aberrantfox.kjdautils.extensions.stdlib.toMinimalTimeString
+import me.jakejmattson.embedbot.locale.messages
 import java.awt.Color
 import java.util.Date
 

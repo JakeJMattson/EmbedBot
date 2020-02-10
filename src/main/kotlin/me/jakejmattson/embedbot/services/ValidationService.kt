@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.services
 
-import me.jakejmattson.embedbot.dataclasses.*
-import me.jakejmattson.embedbot.locale.messages
 import me.aberrantfox.kjdautils.api.annotation.Service
 import me.aberrantfox.kjdautils.discord.Discord
+import me.jakejmattson.embedbot.dataclasses.*
+import me.jakejmattson.embedbot.locale.messages
 import net.dv8tion.jda.api.entities.MessageEmbed
 
 const val CHAR_LIMIT = MessageEmbed.EMBED_MAX_LENGTH_BOT

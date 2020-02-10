@@ -2,9 +2,9 @@ package me.jakejmattson.embedbot.services
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import me.aberrantfox.kjdautils.api.annotation.Service
 import me.jakejmattson.embedbot.dataclasses.*
 import me.jakejmattson.embedbot.extensions.*
-import me.aberrantfox.kjdautils.api.annotation.Service
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.*
 import java.io.File

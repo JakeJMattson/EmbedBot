@@ -1,10 +1,10 @@
 package me.jakejmattson.embedbot.arguments
 
+import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
+import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
-import me.aberrantfox.kjdautils.internal.command.*
 
 open class FieldArg(override val name: String = "Field Data", private val delimiter: String = "|") : ArgumentType<Field>() {
     companion object : FieldArg()

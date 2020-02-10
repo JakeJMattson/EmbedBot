@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.dataclasses
 
+import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import net.dv8tion.jda.api.*
 import net.dv8tion.jda.api.entities.*
 import java.awt.Color
