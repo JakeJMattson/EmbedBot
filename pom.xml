@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Version Numbers -->
-        <kotlin.version>1.3.61</kotlin.version>
+        <kotlin.version>1.3.70</kotlin.version>
         <kutils.version>0.14.0</kutils.version>
         <github.version>1.106</github.version>
     </properties>
