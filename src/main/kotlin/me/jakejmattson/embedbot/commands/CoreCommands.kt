@@ -2,7 +2,8 @@ package me.jakejmattson.embedbot.commands
 
 import com.google.gson.JsonSyntaxException
 import me.aberrantfox.kjdautils.api.annotation.CommandSet
-import me.aberrantfox.kjdautils.api.dsl.command.commands
+import me.aberrantfox.kjdautils.api.dsl.command.*
+import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.internal.arguments.*
 import me.jakejmattson.embedbot.arguments.EmbedArg
 import me.jakejmattson.embedbot.dataclasses.CopyLocation
@@ -90,22 +91,19 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = messages.descriptions.IMPORT
         execute(WordArg("Embed Name"), SentenceArg("JSON")) {
             val (name, json) = it.args
-            val guild = it.guild!!
+            it.importJson(name, json, embedService)
+        }
+    }
 
-            if (guild.hasEmbedWithName(name))
-                return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
+    command("ImportFile") {
+        description = ""
+        execute(WordArg("Embed Name"), FileArg("JSON")) {
+            val (name, jsonFile) = it.args
+            val json = jsonFile.readText()
 
-            try {
-                val embed = createEmbedFromJson(name, json)
-                val wasAdded = embedService.addEmbed(guild, embed)
+            it.importJson(name, json, embedService)
 
-                if (!wasAdded)
-                    it.respond(messages.errors.EMBED_ALREADY_EXISTS)
-
-                it.reactSuccess()
-            } catch (e: JsonSyntaxException) {
-                it.respond("Invalid JSON! ${e.message?.substringAfter("Exception: ")}")
-            }
+            jsonFile.delete()
         }
     }
 
@@ -122,5 +120,24 @@ fun coreCommands(embedService: EmbedService) = commands {
             else
                 it.respond("```json\n$json```")
         }
+    }
+}
+
+private fun CommandEvent<*>.importJson(name: String, json: String, embedService: EmbedService) {
+    val guild = guild!!
+
+    if (guild.hasEmbedWithName(name))
+        return respond(messages.errors.EMBED_ALREADY_EXISTS)
+
+    try {
+        val embed = createEmbedFromJson(name, json)
+        val wasAdded = embedService.addEmbed(guild, embed)
+
+        if (!wasAdded)
+            respond(messages.errors.EMBED_ALREADY_EXISTS)
+
+        reactSuccess()
+    } catch (e: JsonSyntaxException) {
+        respond("Invalid JSON! ${e.message?.substringAfter("Exception: ")}")
     }
 }
