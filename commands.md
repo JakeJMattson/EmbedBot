@@ -47,8 +47,8 @@
 | Delete     | (Embed)                  | Delete the embed with this name.           |
 | Duplicate  | Embed Name, (Embed)      | Create a new embed from an existing embed. |
 | Export     | (Embed)                  | Export the currently loaded embed to JSON. |
-| Import     | Embed Name, JSON         | Import a JSON String as an embed.          |
-| ImportFile | Embed Name, JSON         |                                            |
+| Import     | Embed Name, JSON String  | Import a JSON String as an embed.          |
+| ImportFile | Embed Name, JSON File    | Import a JSON File as an embed.            |
 | Load       | Embed                    | Load the embed with this name into memory. |
 | Send       | (Channel), (shouldTrack) | Send the currently loaded embed.           |
 

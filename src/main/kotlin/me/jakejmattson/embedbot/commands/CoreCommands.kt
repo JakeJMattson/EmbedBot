@@ -89,15 +89,15 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Import") {
         description = messages.descriptions.IMPORT
-        execute(WordArg("Embed Name"), SentenceArg("JSON")) {
+        execute(WordArg("Embed Name"), SentenceArg("JSON String")) {
             val (name, json) = it.args
             it.importJson(name, json, embedService)
         }
     }
 
     command("ImportFile") {
-        description = ""
-        execute(WordArg("Embed Name"), FileArg("JSON")) {
+        description = messages.descriptions.IMPORT_FILE
+        execute(WordArg("Embed Name"), FileArg("JSON File")) {
             val (name, jsonFile) = it.args
             val json = jsonFile.readText()
 

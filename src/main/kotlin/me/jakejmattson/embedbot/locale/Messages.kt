@@ -31,6 +31,7 @@ class Descriptions(
     val DUPLICATE: String = "Create a new embed from an existing embed.",
     val EXPORT: String = "Export the currently loaded embed to JSON.",
     val IMPORT: String = "Import a JSON String as an embed.",
+    val IMPORT_FILE: String = "Import a JSON File as an embed.",
     val LOAD: String = "Load the embed with this name into memory.",
     val SEND: String = "Send the currently loaded embed.",
 
