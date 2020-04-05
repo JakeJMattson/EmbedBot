@@ -44,7 +44,7 @@
 | Commands   | Arguments                | Description                                |
 | ---------- | ------------------------ | ------------------------------------------ |
 | Create     | Embed Name               | Create a new embed with this name.         |
-| Delete     | (Embed)                  | Delete the embed with this name.           |
+| Delete     | (Embed...)               | Delete the embed with this name.           |
 | Duplicate  | Embed Name, (Embed)      | Create a new embed from an existing embed. |
 | Export     | (Embed)                  | Export the currently loaded embed to JSON. |
 | Import     | Embed Name, JSON String  | Import a JSON String as an embed.          |

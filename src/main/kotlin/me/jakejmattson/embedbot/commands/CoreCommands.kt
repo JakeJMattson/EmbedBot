@@ -3,7 +3,6 @@ package me.jakejmattson.embedbot.commands
 import com.google.gson.JsonSyntaxException
 import me.aberrantfox.kjdautils.api.annotation.CommandSet
 import me.aberrantfox.kjdautils.api.dsl.command.*
-import me.aberrantfox.kjdautils.api.dsl.embed
 import me.aberrantfox.kjdautils.internal.arguments.*
 import me.jakejmattson.embedbot.arguments.EmbedArg
 import me.jakejmattson.embedbot.dataclasses.CopyLocation
@@ -68,13 +67,18 @@ fun coreCommands(embedService: EmbedService) = commands {
     command("Delete") {
         description = messages.descriptions.DELETE
 
-        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
-            val embed = it.args.first
-                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
+        execute(MultipleArg(EmbedArg).makeNullableOptional {
+            val loadedEmbed = it.guild!!.getLoadedEmbed() ?: return@makeNullableOptional null
+            listOf(loadedEmbed)
+        }) { event ->
+            val embeds = event.args.first
+                ?: return@execute event.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
-            it.guild!!.removeEmbed(embed)
+            embeds.forEach {
+                event.guild!!.removeEmbed(it)
+            }
 
-            it.reactSuccess()
+            event.reactSuccess()
         }
     }
 
