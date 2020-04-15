@@ -1,24 +1,27 @@
 <p align="center">
   <a href="https://kotlinlang.org/">
-    <img src="https://img.shields.io/badge/Kotlin-1.3.70-blue.svg" alt="Kotlin 1.3.70">
+    <img src="https://img.shields.io/badge/Kotlin-1.3.71-blue.svg?logo=Kotlin" alt="Kotlin 1.3.71">
   </a>
   <a href="https://gitlab.com/Aberrantfox/KUtils">
-    <img src="https://img.shields.io/badge/KUtils-0.14.0-blue.svg" alt="KUtils 0.14.0">
+    <img src="https://img.shields.io/badge/KUtils-0.14.0-blue.svg?logo=" alt="KUtils 0.14.0">
   </a>
   <a href="https://GitHub.com/JakeJMattson/EmbedBot/releases/">
-    <img src="https://img.shields.io/github/release/JakeJMattson/EmbedBot.svg" alt="Release">
+    <img src="https://img.shields.io/github/release/JakeJMattson/EmbedBot.svg?label=Release" alt="Release">
+  </a>
+  <a href="https://hub.docker.com/repository/docker/jakejmattson/embedbot/tags?page=1">
+    <img src="https://img.shields.io/docker/cloud/build/jakejmattson/embedbot.svg?label=Docker&logo=docker" alt="Docker">
   </a>
   <a href="LICENSE.md">
-    <img src="https://img.shields.io/github/license/JakeJMattson/EmbedBot.svg" alt="License">
+    <img src="https://img.shields.io/github/license/JakeJMattson/EmbedBot.svg?label=License" alt="License">
   </a>
 </p>
 
 <p align="center">
   <a href="https://discord.gg/REZVVjA">
-    <img src="https://img.shields.io/discord/453208597082406912?logo=discord" alt="chat on Discord">
+    <img src="https://img.shields.io/discord/453208597082406912?label=KUtils&logo=discord" alt="KUtils Discord">
   </a>
   <a href="https://discordapp.com/users/254786431656919051/">
-    <img src="https://img.shields.io/badge/Me-JakeyWakey%231569-lightgrey.svg" alt="Discord JakeyWakey#1569">
+    <img src="https://img.shields.io/badge/Personal-JakeyWakey%231569-%2300BFFF.svg?logo=discord" alt="Discord JakeyWakey#1569">
   </a>
 </p>
 
