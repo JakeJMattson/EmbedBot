@@ -1,6 +1,7 @@
 package me.jakejmattson.embedbot.services
 
 import me.aberrantfox.kjdautils.api.annotation.Service
+import me.jakejmattson.embedbot.Properties
 import me.jakejmattson.embedbot.commands.getFileSystemLocation
 import me.jakejmattson.embedbot.dataclasses.*
 import org.kohsuke.github.GitHubBuilder
@@ -11,7 +12,7 @@ import java.nio.channels.Channels
 private const val repoId = "177512683"
 
 @Service
-class GitHubService(private val configuration: Configuration) {
+class GitHubService(private val configuration: Configuration, private val project: Properties) {
     fun update(): OperationResult {
         val repo = try {
             val github = GitHubBuilder().withOAuthToken(configuration.githubToken).build()

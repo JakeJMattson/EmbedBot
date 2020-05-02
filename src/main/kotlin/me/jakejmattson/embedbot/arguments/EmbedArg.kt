@@ -3,13 +3,12 @@ package me.jakejmattson.embedbot.arguments
 import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
 import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.dataclasses.Embed
-import me.jakejmattson.embedbot.extensions.getEmbedByName
+import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 
 open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>() {
     companion object : EmbedArg()
 
-    override val examples = arrayListOf("")
     override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Embed> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
@@ -19,4 +18,7 @@ open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>()
 
         return ArgumentResult.Success(embed)
     }
+
+    override fun generateExamples(event: CommandEvent<*>) =
+        event.guild?.getEmbeds()?.map { it.name }?.toMutableList() ?: mutableListOf("<No Embeds>")
 }

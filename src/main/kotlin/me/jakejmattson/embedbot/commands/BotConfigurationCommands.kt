@@ -3,7 +3,7 @@ package me.jakejmattson.embedbot.commands
 import me.aberrantfox.kjdautils.api.annotation.CommandSet
 import me.aberrantfox.kjdautils.api.dsl.command.commands
 import me.aberrantfox.kjdautils.internal.arguments.WordArg
-import me.aberrantfox.kjdautils.internal.di.PersistenceService
+import me.aberrantfox.kjdautils.internal.services.PersistenceService
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.discordToken
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel

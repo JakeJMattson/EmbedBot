@@ -8,7 +8,6 @@ import me.jakejmattson.embedbot.locale.messages
 open class FieldIndexArg(override val name: String = "Field Index") : ArgumentType<Int>() {
     companion object : FieldIndexArg()
 
-    override val examples = arrayListOf("0")
     override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Int> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
@@ -26,5 +25,10 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
             return ArgumentResult.Error("Invalid index. Expected range: 0-${embed.fieldCount - 1}")
 
         return ArgumentResult.Success(index)
+    }
+
+    override fun generateExamples(event: CommandEvent<*>): MutableList<String> {
+        val maxIndex = event.guild?.getLoadedEmbed()?.fieldCount ?: 0
+        return mutableListOf((0..maxIndex).random().toString())
     }
 }
