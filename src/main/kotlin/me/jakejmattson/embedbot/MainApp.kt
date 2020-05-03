@@ -2,9 +2,7 @@ package me.jakejmattson.embedbot
 
 import com.google.gson.Gson
 import me.aberrantfox.kjdautils.api.*
-import me.aberrantfox.kjdautils.api.dsl.conversation
 import me.aberrantfox.kjdautils.extensions.jda.*
-import me.aberrantfox.kjdautils.internal.services.ConversationService
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
@@ -46,24 +44,23 @@ fun main(args: Array<String>) {
                 val self = it.guild.jda.selfUser
                 val requiredRole = configuration.getGuildConfig(it.guild.id)?.requiredRole ?: "<Not Configured>"
 
-                color = infoColor
+                author {
+                    discord.jda.retrieveUserById(254786431656919051).queue {
+                        iconUrl = it.effectiveAvatarUrl
+                        name = project.author
+                        url = messages.links.DISCORD_ACCOUNT
+                    }
+                }
+                
+                title = "${self.fullName()} (EmbedBot ${project.version})"
+                description = messages.descriptions.BOT
                 thumbnail = self.effectiveAvatarUrl
-                addField(self.fullName(), messages.descriptions.BOT)
+                color = infoColor
+
                 addInlineField("Required role", requiredRole)
                 addInlineField("Prefix", configuration.prefix)
-
-                with(project) {
-                    val kotlinVersion = KotlinVersion.CURRENT
-
-                    addField("Build Info", "```" +
-                        "Version: $version\n" +
-                        "KUtils: ${discord.properties.version}\n" +
-                        "Kotlin: $kotlinVersion" +
-                        "```")
-
-                    addInlineField("Author", "[${author}](${messages.links.DISCORD_ACCOUNT})")
-                    addInlineField("Source", repository)
-                }
+                addInlineField("Build Info", "`${discord.properties.version} - ${discord.properties.jdaVersion}`")
+                addInlineField("Source", project.repository)
             }
 
             visibilityPredicate {
