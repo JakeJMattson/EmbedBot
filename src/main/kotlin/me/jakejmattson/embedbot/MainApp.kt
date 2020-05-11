@@ -51,7 +51,7 @@ fun main(args: Array<String>) {
                         url = messages.links.DISCORD_ACCOUNT
                     }
                 }
-                
+
                 title = "${self.fullName()} (EmbedBot ${project.version})"
                 description = messages.descriptions.BOT
                 thumbnail = self.effectiveAvatarUrl

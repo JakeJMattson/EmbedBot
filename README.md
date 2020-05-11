@@ -3,7 +3,7 @@
     <img src="https://img.shields.io/badge/Kotlin-1.3.72-blue.svg?logo=Kotlin" alt="Kotlin 1.3.72">
   </a>
   <a href="https://gitlab.com/Aberrantfox/KUtils">
-    <img src="https://img.shields.io/badge/KUtils-0.15.0-blue.svg?logo=" alt="KUtils 0.15.0">
+    <img src="https://img.shields.io/badge/KUtils-0.15.1-blue.svg?logo=" alt="KUtils 0.15.1">
   </a>
   <a href="https://GitHub.com/JakeJMattson/EmbedBot/releases/">
     <img src="https://img.shields.io/github/release/JakeJMattson/EmbedBot.svg?label=Release" alt="Release">
