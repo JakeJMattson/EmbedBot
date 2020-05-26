@@ -9,7 +9,6 @@ import me.jakejmattson.embedbot.locale.messages
 open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>() {
     companion object : EmbedArg()
 
-    override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Embed> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
 

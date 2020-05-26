@@ -9,7 +9,7 @@ import me.jakejmattson.embedbot.services.*
 
 @Precondition
 fun produceHasPermissionPrecondition(permissionsService: PermissionsService) = precondition {
-    val command = it.container[it.commandStruct.commandName] ?: return@precondition Fail()
+    val command = it.command ?: return@precondition Fail()
     val requiredPermissionLevel = command.requiredPermissionLevel
     val guild = it.guild!!
     val member = it.author.toMember(guild)!!

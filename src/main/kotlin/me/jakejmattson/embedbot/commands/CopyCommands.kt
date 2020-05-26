@@ -16,9 +16,9 @@ import net.dv8tion.jda.api.entities.*
 fun copyCommands(embedService: EmbedService) = commands {
     command("CopyTarget") {
         description = messages.descriptions.COPY_TARGET
-        execute(WordArg("Embed Name"),
+        execute(AnyArg("Embed Name"),
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
-            WordArg("Message ID")) {
+            AnyArg("Message ID")) {
 
             val (name, channel, messageId) = it.args
             val guild = it.guild!!
@@ -63,7 +63,7 @@ fun copyCommands(embedService: EmbedService) = commands {
     command("UpdateTarget") {
         description = messages.descriptions.UPDATE_TARGET
         requiresLoadedEmbed = true
-        execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel }, WordArg("Message ID")) {
+        execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel }, AnyArg("Message ID")) {
             val (channel, messageId) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
             val updateResponse = embed.update(it.discord.jda, channel.id, messageId)

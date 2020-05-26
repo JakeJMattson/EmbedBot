@@ -9,7 +9,6 @@ import me.jakejmattson.embedbot.services.*
 open class FieldArg(override val name: String = "Field Data", private val delimiter: String = "|") : ArgumentType<Field>() {
     companion object : FieldArg()
 
-    override val consumptionType = ConsumptionType.Multiple
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Field> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
         val data = args.joinToString(" ").split(delimiter)
@@ -31,7 +30,7 @@ open class FieldArg(override val name: String = "Field Data", private val delimi
 
         val field = Field(name, value, inline)
 
-        return ArgumentResult.Success(field, args)
+        return ArgumentResult.Success(field, args.size)
     }
 
     override fun generateExamples(event: CommandEvent<*>) = mutableListOf("Title|Body")

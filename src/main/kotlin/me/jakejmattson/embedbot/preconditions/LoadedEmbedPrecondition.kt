@@ -7,7 +7,7 @@ import me.jakejmattson.embedbot.locale.messages
 
 @Precondition
 fun produceHasLoadedEmbedPrecondition() = precondition {
-    val command = it.container[it.commandStruct.commandName] ?: return@precondition Pass
+    val command = it.command ?: return@precondition Pass
 
     val guild = it.guild ?: return@precondition Fail(messages.errors.MISSING_GUILD)
 

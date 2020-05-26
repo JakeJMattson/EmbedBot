@@ -1,14 +1,9 @@
 package me.jakejmattson.embedbot.extensions
 
 import me.aberrantfox.kjdautils.api.dsl.command.*
-import me.aberrantfox.kjdautils.internal.command.ArgumentResult
+import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.services.*
 import java.util.WeakHashMap
-
-sealed class Result {
-    data class Success(val results: ArgumentContainer) : Result()
-    data class Error(val error: String) : Result()
-}
 
 fun CommandEvent<*>.reactSuccess() = message.addReaction("✅").queue()
 
@@ -29,48 +24,52 @@ var Command.requiredPermissionLevel: Permission
         CommandPropertyStore.permissions[this] = value
     }
 
-fun Command.localInvoke(args: List<String>, commandEvent: CommandEvent<*>) = convertArguments(args, expectedArgs, commandEvent)
+fun Command.localInvoke(args: List<String>, commandEvent: CommandEvent<*>) = convertArguments(args, arguments, commandEvent)
 
-private fun convertArguments(args: List<String>, expected: ArgumentCollection<*>, event: CommandEvent<*>): Result {
-    val remaining = args.toMutableList()
-    val currentArg = remaining.firstOrNull() ?: ""
+private fun convertOptional(arg: ArgumentType<*>, event: CommandEvent<*>) = arg.defaultValue?.invoke(event)
 
-    val convertedArgs = expected.arguments.map { expectedArg ->
-        if (expectedArg.isOptional) {
-            val default = expectedArg.defaultValue?.invoke(event)
+fun convertArguments(actual: List<String>, expected: List<ArgumentType<*>>, event: CommandEvent<*>): Result {
+    val remainingArgs = actual.toMutableList().filter { it.isNotBlank() }.toMutableList()
 
-            if (remaining.isEmpty())
-                return@map default
+    val converted = expected.map { expectedArg ->
+        if (remainingArgs.isEmpty()) {
+            if (expectedArg.isOptional)
+                convertOptional(expectedArg, event)
+            else {
+                val conversion = expectedArg.convert("", emptyList(), event)
+                    .takeIf { it is ArgumentResult.Success && it.consumed == 0 }
+                    ?: return Result.Error("Received less arguments than expected.")
 
-            val convertedOptional = expectedArg.convert(currentArg, remaining, event)
-
-            when (convertedOptional) {
-                is ArgumentResult.Success -> {
-                    val consumed = convertedOptional.consumed.takeIf { it.isNotEmpty() } ?: listOf(currentArg)
-                    remaining.removeAll(consumed)
-                    convertedOptional.result
-                }
-                is ArgumentResult.Error -> default
+                (conversion as ArgumentResult.Success).result
             }
-        } else {
-            if (remaining.isEmpty())
-                return Result.Error("Missing argument")
-
-            val result = expectedArg.convert(currentArg, remaining, event)
+        }
+        else {
+            val firstArg = remainingArgs.first()
+            val result = expectedArg.convert(firstArg, remainingArgs, event)
 
             when (result) {
                 is ArgumentResult.Success -> {
-                    val consumed = result.consumed.takeIf { it.isNotEmpty() } ?: listOf(currentArg)
-                    remaining.removeAll(consumed)
+                    if (result.consumed > remainingArgs.size) {
+                        if (!expectedArg.isOptional)
+                            return Result.Error("Received less arguments than expected.")
+                    }
+                    else
+                        remainingArgs.subList(0, result.consumed).toList().forEach { remainingArgs.remove(it) }
+
                     result.result
                 }
-                is ArgumentResult.Error -> return Result.Error(result.error)
+                is ArgumentResult.Error -> {
+                    if (expectedArg.isOptional)
+                        convertOptional(expectedArg, event)
+                    else
+                        return Result.Error(result.error)
+                }
             }
         }
     }
 
-    if (remaining.isNotEmpty())
-        Result.Error("Unmatched Input: " + remaining.joinToString(" "))
+    if (remainingArgs.isNotEmpty())
+        return Result.Error("Received more arguments than expected.")
 
-    return Result.Success(expected.bundle(convertedArgs as List<Any>))
+    return Result.Success(converted as List<Any>)
 }

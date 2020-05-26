@@ -2,7 +2,7 @@ package me.jakejmattson.embedbot.commands
 
 import me.aberrantfox.kjdautils.api.annotation.CommandSet
 import me.aberrantfox.kjdautils.api.dsl.command.commands
-import me.aberrantfox.kjdautils.internal.arguments.WordArg
+import me.aberrantfox.kjdautils.internal.arguments.*
 import me.aberrantfox.kjdautils.internal.services.PersistenceService
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.discordToken
@@ -19,7 +19,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     command("SetPrefix") {
         description = messages.descriptions.SET_PREFIX
         requiredPermissionLevel = Permission.BOT_OWNER
-        execute(WordArg("Prefix")) {
+        execute(AnyArg("Prefix")) {
             val prefix = it.args.first
 
             prefixService.setPrefix(prefix)
@@ -32,7 +32,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
     command("ResetBot") {
         description = messages.descriptions.RESET_BOT
         requiredPermissionLevel = Permission.BOT_OWNER
-        execute(WordArg("Bot Owner ID").makeOptional("")) {
+        execute(AnyArg("Bot Owner ID").makeOptional("")) {
             val idEntry = it.args.first
             val ownerId = configuration.botOwner
             val jda = it.discord.jda

@@ -8,6 +8,6 @@ import me.jakejmattson.embedbot.dataclasses.Configuration
 class PrefixService(private val configuration: Configuration, private val discord: Discord) {
     fun setPrefix(prefix: String) {
         configuration.prefix = prefix
-        discord.configuration.prefix = prefix
+        discord.configuration.prefix { prefix }
     }
 }

@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
                 println(message)
             }
 
-            prefix = configuration.prefix
+            prefix { configuration.prefix }
             commandReaction = null
 
             colors {
@@ -41,8 +41,8 @@ fun main(args: Array<String>) {
             }
 
             mentionEmbed {
-                val self = it.guild.jda.selfUser
-                val requiredRole = configuration.getGuildConfig(it.guild.id)?.requiredRole ?: "<Not Configured>"
+                val self = it.discord.jda.selfUser
+                val requiredRole = configuration.getGuildConfig(it.guild?.id ?: "")?.requiredRole ?: "<Not Configured>"
 
                 author {
                     discord.jda.retrieveUserById(254786431656919051).queue {
@@ -59,7 +59,7 @@ fun main(args: Array<String>) {
 
                 addInlineField("Required role", requiredRole)
                 addInlineField("Prefix", configuration.prefix)
-                addInlineField("Build Info", "`${discord.properties.version} - ${discord.properties.jdaVersion}`")
+                addInlineField("Build Info", "`${discord.properties.kutilsVersion} - ${discord.properties.jdaVersion}`")
                 addInlineField("Source", project.repository)
             }
 

@@ -36,7 +36,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Create") {
         description = messages.descriptions.CREATE
-        execute(WordArg("Embed Name")) {
+        execute(AnyArg("Embed Name")) {
             val embedName = it.args.first
             val wasCreated = embedService.createEmbed(it.guild!!, embedName)
 
@@ -49,7 +49,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Duplicate") {
         description = messages.descriptions.DUPLICATE
-        execute(WordArg("Embed Name"), EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
+        execute(AnyArg("Embed Name"), EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
             val embedName = it.args.first
             val existingEmbed = it.args.second
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
@@ -93,7 +93,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Import") {
         description = messages.descriptions.IMPORT
-        execute(WordArg("Embed Name"), SentenceArg("JSON String")) {
+        execute(AnyArg("Embed Name"), EveryArg("JSON String")) {
             val (name, json) = it.args
             it.importJson(name, json, embedService)
         }
@@ -101,7 +101,7 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("ImportFile") {
         description = messages.descriptions.IMPORT_FILE
-        execute(WordArg("Embed Name"), FileArg("JSON File")) {
+        execute(AnyArg("Embed Name"), FileArg("JSON File")) {
             val (name, jsonFile) = it.args
             val json = jsonFile.readText()
 

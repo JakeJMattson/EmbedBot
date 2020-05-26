@@ -2,8 +2,8 @@ package me.jakejmattson.embedbot.commands
 
 import me.aberrantfox.kjdautils.api.annotation.CommandSet
 import me.aberrantfox.kjdautils.api.dsl.command.*
-import me.aberrantfox.kjdautils.internal.arguments.SentenceArg
-import me.aberrantfox.kjdautils.internal.command.CommandStruct
+import me.aberrantfox.kjdautils.internal.arguments.*
+import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.services.PermissionsService
 
@@ -11,14 +11,13 @@ import me.jakejmattson.embedbot.services.PermissionsService
 fun advancedCommands(permissionsService: PermissionsService) = commands {
     command("ExecuteAll") {
         description = "Execute a batch of commands in sequence."
-        execute(SentenceArg("Commands")) { event ->
+        execute(EveryArg("Commands")) { event ->
             val rawInvocations = event.args.first.split("\n").filter { it.isNotEmpty() }
             val unknownCommands = mutableListOf<String>()
             val missingPermissions = mutableListOf<String>()
 
             val commandMap = rawInvocations.mapNotNull {
                 val split = it.split(" ")
-
                 val commandName = split.first()
                 val command = event.container[commandName]
 
@@ -34,9 +33,7 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
                     return@mapNotNull null
                 }
 
-                val args = split.drop(1)
-
-                command to args
+                command to split.drop(1)
             }
 
             if (unknownCommands.isNotEmpty() || missingPermissions.isNotEmpty()) {
@@ -70,15 +67,15 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
 
 private fun executeCommands(event: CommandEvent<*>, commandMap: List<Pair<Command, List<String>>>) {
     commandMap.forEach { (command, args) ->
-        val struct = CommandStruct(command.names.first(), args, !event.stealthInvocation)
-        val context = DiscordContext(event.stealthInvocation, event.discord, event.message, guild = event.guild)
-        val newEvent = CommandEvent<ArgumentContainer>(struct, event.container, context)
+        val struct = RawInputs("", command.names.first(), args, event.rawInputs.prefixCount)
+        val context = DiscordContext(event.discord, event.message)
+        val newEvent = CommandEvent<GenericContainer>(struct, event.container, context)
 
         val conversionResult = command.localInvoke(args, newEvent)
 
         when (conversionResult) {
-            is Result.Success -> command.invoke(conversionResult.results, newEvent)
-            is Result.Error -> return event.respond("Error in ${command.names}: ${conversionResult.error}")
+            is Result.Success -> TODO("Method requires GenericContainer")//command.invoke(conversionResult.results, newEvent)
+            is Result.Error -> event.respond("Error in ${command.names}: ${conversionResult.error}")
         }
     }
 }

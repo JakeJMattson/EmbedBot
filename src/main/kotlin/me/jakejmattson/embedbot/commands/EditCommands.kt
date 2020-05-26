@@ -38,7 +38,7 @@ fun editCommands() = commands {
     command("SetDescription") {
         description = messages.descriptions.SET_DESCRIPTION
         requiresLoadedEmbed = true
-        execute(SentenceArg) {
+        execute(EveryArg) {
             val description = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
@@ -53,7 +53,7 @@ fun editCommands() = commands {
     command("SetFooter") {
         description = messages.descriptions.SET_FOOTER
         requiresLoadedEmbed = true
-        execute(UrlArg("Icon URL"), SentenceArg("Text")) {
+        execute(UrlArg("Icon URL"), EveryArg("Text")) {
             val (url, text) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
@@ -103,7 +103,7 @@ fun editCommands() = commands {
     command("SetTitle") {
         description = messages.descriptions.SET_TITLE
         requiresLoadedEmbed = true
-        execute(SentenceArg) {
+        execute(EveryArg) {
             val title = it.args.first
             val embed = it.guild!!.getLoadedEmbed()!!
 
@@ -118,7 +118,7 @@ fun editCommands() = commands {
     command("Clear") {
         description = messages.descriptions.CLEAR
         requiresLoadedEmbed = true
-        execute(WordArg("Clear Target").makeOptional("")) {
+        execute(AnyArg("Clear Target").makeOptional("")) {
             val field = it.args.first.toLowerCase()
             val embed = it.guild!!.getLoadedEmbed()!!
             val options = "Options:\nAuthor, Color, Description, Footer, Image, Thumbnail, Timestamp, Title \nAll, Fields, Non-Fields"
@@ -147,7 +147,7 @@ fun editCommands() = commands {
 
     command("Rename") {
         description = messages.descriptions.RENAME
-        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, WordArg("New Name")) {
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, AnyArg("New Name")) {
             val targetEmbed = it.args.first
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 

@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.entities.TextChannel
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
         description = messages.descriptions.CREATE_CLUSTER
-        execute(WordArg("Cluster Name"), MultipleArg(EmbedArg).makeOptional(listOf())) {
+        execute(AnyArg("Cluster Name"), MultipleArg(EmbedArg).makeOptional(listOf())) {
             val (clusterName, embeds) = it.args
             val guild = it.guild!!
             val cluster = embedService.createCluster(guild, clusterName)
@@ -44,7 +44,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("CloneCluster") {
         description = messages.descriptions.CLONE_CLUSTER
-        execute(WordArg("Cluster Name"),
+        execute(AnyArg("Cluster Name"),
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
             IntegerArg("Amount")) { event ->
             val (clusterName, channel, amount) = event.args
@@ -106,7 +106,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
 
     command("RenameCluster") {
         description = messages.descriptions.RENAME_CLUSTER
-        execute(ClusterArg, WordArg("New Name")) {
+        execute(ClusterArg, AnyArg("New Name")) {
             val (cluster, newName) = it.args
 
             if (it.guild!!.hasClusterWithName(newName))

@@ -9,7 +9,6 @@ import me.jakejmattson.embedbot.locale.messages
 open class ClusterArg(override val name: String = "Cluster") : ArgumentType<Cluster>() {
     companion object : ClusterArg()
 
-    override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Cluster> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
 

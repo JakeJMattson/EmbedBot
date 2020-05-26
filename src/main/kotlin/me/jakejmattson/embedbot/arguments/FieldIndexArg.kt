@@ -8,7 +8,6 @@ import me.jakejmattson.embedbot.locale.messages
 open class FieldIndexArg(override val name: String = "Field Index") : ArgumentType<Int>() {
     companion object : FieldIndexArg()
 
-    override val consumptionType = ConsumptionType.Single
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Int> {
         val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
 

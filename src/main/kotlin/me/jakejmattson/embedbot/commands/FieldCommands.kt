@@ -82,7 +82,7 @@ fun fieldCommands() = commands {
     command("EditFieldTitle") {
         description = messages.descriptions.EDIT_FIELD_TITLE
         requiresLoadedEmbed = true
-        execute(FieldIndexArg, SentenceArg) {
+        execute(FieldIndexArg, EveryArg) {
             val (index, newTitle) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
@@ -97,7 +97,7 @@ fun fieldCommands() = commands {
     command("EditFieldText") {
         description = messages.descriptions.EDIT_FIELD_TEXT
         requiresLoadedEmbed = true
-        execute(FieldIndexArg, SentenceArg) {
+        execute(FieldIndexArg, EveryArg) {
             val (index, newText) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
