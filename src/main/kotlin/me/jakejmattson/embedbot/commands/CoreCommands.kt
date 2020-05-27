@@ -66,7 +66,6 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Delete") {
         description = messages.descriptions.DELETE
-
         execute(MultipleArg(EmbedArg).makeNullableOptional {
             val loadedEmbed = it.guild!!.getLoadedEmbed() ?: return@makeNullableOptional null
             listOf(loadedEmbed)
@@ -93,33 +92,24 @@ fun coreCommands(embedService: EmbedService) = commands {
 
     command("Import") {
         description = messages.descriptions.IMPORT
-        execute(AnyArg("Embed Name"), EveryArg("JSON String")) {
-            val (name, json) = it.args
-            it.importJson(name, json, embedService)
-        }
-    }
-
-    command("ImportFile") {
-        description = messages.descriptions.IMPORT_FILE
-        execute(AnyArg("Embed Name"), FileArg("JSON File")) {
-            val (name, jsonFile) = it.args
-            val json = jsonFile.readText()
+        execute(AnyArg("Embed Name"), FileArg("File") or EveryArg("String")) {
+            val (name, input) = it.args
+            val json = input.getData({ file -> file.readText().also { file.delete() } }, { it })
 
             it.importJson(name, json, embedService)
-
-            jsonFile.delete()
         }
     }
 
     command("Export") {
         description = messages.descriptions.EXPORT
-        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
+        execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, BooleanArg("preferFile").makeOptional(false)) {
             val embed = it.args.first
                 ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
 
+            val preferFile = it.args.second
             val json = embed.toJson()
 
-            if (json.length >= 1985)
+            if (preferFile || json.length >= 1985)
                 it.channel.sendFile(json.toByteArray(), "$${embed.name}.json").queue()
             else
                 it.respond("```json\n$json```")
