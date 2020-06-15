@@ -1,17 +1,19 @@
 package me.jakejmattson.embedbot.commands
 
-import me.aberrantfox.kjdautils.api.annotation.CommandSet
-import me.aberrantfox.kjdautils.api.dsl.command.*
-import me.aberrantfox.kjdautils.internal.arguments.*
-import me.aberrantfox.kjdautils.internal.command.*
-import me.jakejmattson.embedbot.extensions.*
+import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.services.PermissionsService
+import me.jakejmattson.kutils.api.annotations.CommandSet
+import me.jakejmattson.kutils.api.arguments.EveryArg
+import me.jakejmattson.kutils.api.dsl.command.commands
 
 @CommandSet("Advanced")
 fun advancedCommands(permissionsService: PermissionsService) = commands {
     command("ExecuteAll") {
         description = "Execute a batch of commands in sequence."
         execute(EveryArg("Commands")) { event ->
+            event.respond("Command currently disabled")
+            if (true) return@execute
+
             val rawInvocations = event.args.first.split("\n").filter { it.isNotEmpty() }
             val unknownCommands = mutableListOf<String>()
             val missingPermissions = mutableListOf<String>()
@@ -59,23 +61,6 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
 
             if (commandMap.isEmpty())
                 return@execute event.respond("No commands to execute!")
-
-            executeCommands(event, commandMap)
-        }
-    }
-}
-
-private fun executeCommands(event: CommandEvent<*>, commandMap: List<Pair<Command, List<String>>>) {
-    commandMap.forEach { (command, args) ->
-        val struct = RawInputs("", command.names.first(), args, event.rawInputs.prefixCount)
-        val context = DiscordContext(event.discord, event.message)
-        val newEvent = CommandEvent<GenericContainer>(struct, event.container, context)
-
-        val conversionResult = command.localInvoke(args, newEvent)
-
-        when (conversionResult) {
-            is Result.Success -> TODO("Method requires GenericContainer")//command.invoke(conversionResult.results, newEvent)
-            is Result.Error -> event.respond("Error in ${command.names}: ${conversionResult.error}")
         }
     }
 }

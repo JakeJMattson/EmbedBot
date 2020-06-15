@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.dataclasses
 
-import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
+import me.jakejmattson.kutils.api.extensions.jda.tryRetrieveSnowflake
 import net.dv8tion.jda.api.*
 import net.dv8tion.jda.api.entities.*
 import java.awt.Color
@@ -86,7 +86,7 @@ data class Embed(var name: String,
         val channel = jda.getTextChannelById(channelId)
             ?: return false withMessage messages.errors.NO_CHANNEL
 
-        val message = tryRetrieveSnowflake(jda) {
+        val message = jda.tryRetrieveSnowflake {
             channel.retrieveMessageById(messageId).complete()
         } as Message? ?: return false withMessage messages.errors.NO_MESSAGE
 

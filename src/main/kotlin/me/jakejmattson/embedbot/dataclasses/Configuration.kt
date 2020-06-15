@@ -1,6 +1,6 @@
 package me.jakejmattson.embedbot.dataclasses
 
-import me.aberrantfox.kjdautils.api.annotation.Data
+import me.jakejmattson.kutils.api.annotations.Data
 
 @Data("config/config.json")
 data class Configuration(val botOwner: String = "",

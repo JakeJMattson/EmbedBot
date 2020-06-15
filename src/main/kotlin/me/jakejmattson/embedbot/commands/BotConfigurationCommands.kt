@@ -1,14 +1,14 @@
 package me.jakejmattson.embedbot.commands
 
-import me.aberrantfox.kjdautils.api.annotation.CommandSet
-import me.aberrantfox.kjdautils.api.dsl.command.commands
-import me.aberrantfox.kjdautils.internal.arguments.*
-import me.aberrantfox.kjdautils.internal.services.PersistenceService
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.discordToken
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
+import me.jakejmattson.kutils.api.annotations.CommandSet
+import me.jakejmattson.kutils.api.arguments.AnyArg
+import me.jakejmattson.kutils.api.dsl.command.commands
+import me.jakejmattson.kutils.api.services.PersistenceService
 import java.io.File
 import kotlin.system.exitProcess
 

@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.services
 
-import me.aberrantfox.kjdautils.api.annotation.Service
 import me.jakejmattson.embedbot.Properties
 import me.jakejmattson.embedbot.commands.getFileSystemLocation
 import me.jakejmattson.embedbot.dataclasses.*
+import me.jakejmattson.kutils.api.annotations.Service
 import org.kohsuke.github.GitHubBuilder
 import java.io.*
 import java.net.URL

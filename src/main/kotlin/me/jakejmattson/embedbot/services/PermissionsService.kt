@@ -1,7 +1,7 @@
 package me.jakejmattson.embedbot.services
 
-import me.aberrantfox.kjdautils.api.annotation.Service
 import me.jakejmattson.embedbot.dataclasses.Configuration
+import me.jakejmattson.kutils.api.annotations.Service
 import net.dv8tion.jda.api.entities.Member
 
 enum class Permission {

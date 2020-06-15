@@ -1,15 +1,15 @@
 package me.jakejmattson.embedbot.commands
 
-import me.aberrantfox.kjdautils.api.annotation.CommandSet
-import me.aberrantfox.kjdautils.api.dsl.command.commands
-import me.aberrantfox.kjdautils.api.dsl.toEmbedBuilder
-import me.aberrantfox.kjdautils.extensions.stdlib.trimToID
-import me.aberrantfox.kjdautils.internal.arguments.*
-import me.aberrantfox.kjdautils.internal.command.tryRetrieveSnowflake
 import me.jakejmattson.embedbot.dataclasses.*
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.EmbedService
+import me.jakejmattson.kutils.api.annotations.CommandSet
+import me.jakejmattson.kutils.api.arguments.*
+import me.jakejmattson.kutils.api.dsl.command.commands
+import me.jakejmattson.kutils.api.dsl.embed.toEmbedBuilder
+import me.jakejmattson.kutils.api.extensions.jda.tryRetrieveSnowflake
+import me.jakejmattson.kutils.api.extensions.stdlib.trimToID
 import net.dv8tion.jda.api.entities.*
 
 @CommandSet("Copy")
@@ -26,7 +26,7 @@ fun copyCommands(embedService: EmbedService) = commands {
             if (guild.hasEmbedWithName(name))
                 return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
 
-            val message = tryRetrieveSnowflake(it.discord.jda) {
+            val message = it.discord.jda.tryRetrieveSnowflake {
                 channel.retrieveMessageById(messageId.trimToID()).complete()
             } as Message? ?: return@execute it.respond(messages.errors.INVALID_MESSAGE_ID)
 

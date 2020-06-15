@@ -1,12 +1,12 @@
 package me.jakejmattson.embedbot
 
 import com.google.gson.Gson
-import me.aberrantfox.kjdautils.api.*
-import me.aberrantfox.kjdautils.extensions.jda.*
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
+import me.jakejmattson.kutils.api.dsl.configuration.startBot
+import me.jakejmattson.kutils.api.extensions.jda.*
 import java.awt.Color
 
 lateinit var discordToken: String
@@ -24,9 +24,8 @@ fun main(args: Array<String>) {
         registerInjectionObjects(project)
 
         configure {
-            val configuration = discord.getInjectionObject<Configuration>()!!
-            val validationService = discord.getInjectionObject<ValidationService>()!!
-            val permissionsService = discord.getInjectionObject<PermissionsService>()!!
+            val (configuration, validationService, permissionsService)
+                = discord.getInjectionObjects(Configuration::class, ValidationService::class, PermissionsService::class)
 
             with(validationService.validateConfiguration()) {
                 require(wasSuccessful) { message }

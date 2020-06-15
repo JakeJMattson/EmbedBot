@@ -1,10 +1,10 @@
 package me.jakejmattson.embedbot.arguments
 
-import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
-import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.dataclasses.Embed
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
+import me.jakejmattson.kutils.api.dsl.arguments.*
+import me.jakejmattson.kutils.api.dsl.command.CommandEvent
 
 open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>() {
     companion object : EmbedArg()

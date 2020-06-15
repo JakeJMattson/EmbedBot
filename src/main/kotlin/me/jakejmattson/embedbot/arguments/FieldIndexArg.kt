@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.arguments
 
-import me.aberrantfox.kjdautils.api.dsl.command.CommandEvent
-import me.aberrantfox.kjdautils.internal.command.*
 import me.jakejmattson.embedbot.extensions.getLoadedEmbed
 import me.jakejmattson.embedbot.locale.messages
+import me.jakejmattson.kutils.api.dsl.arguments.*
+import me.jakejmattson.kutils.api.dsl.command.CommandEvent
 
 open class FieldIndexArg(override val name: String = "Field Index") : ArgumentType<Int>() {
     companion object : FieldIndexArg()
