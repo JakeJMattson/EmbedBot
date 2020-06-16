@@ -65,7 +65,9 @@ fun infoCommands() = commands {
         description = messages.descriptions.LIMITS
         execute {
             it.respond {
-                title = "Discord Limits"
+                title {
+                    text = "Discord Limits"
+                }
                 description = "Below are all the limits imposed onto embeds by Discord."
                 color = Color(0x00bfff)
 

@@ -20,7 +20,6 @@ fun main(args: Array<String>) {
     discordToken = args.firstOrNull() ?: throw IllegalArgumentException(messages.errors.NO_ARGS)
 
     startBot(discordToken) {
-
         registerInjectionObjects(project)
 
         configure {
@@ -51,7 +50,9 @@ fun main(args: Array<String>) {
                     }
                 }
 
-                title = "${self.fullName()} (EmbedBot ${project.version})"
+                title {
+                    text = "${self.fullName()} (EmbedBot ${project.version})"
+                }
                 description = messages.descriptions.BOT
                 thumbnail = self.effectiveAvatarUrl
                 color = infoColor

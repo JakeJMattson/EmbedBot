@@ -18,6 +18,5 @@ open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>()
         return ArgumentResult.Success(embed)
     }
 
-    override fun generateExamples(event: CommandEvent<*>) =
-        event.guild?.getEmbeds()?.map { it.name }?.toMutableList() ?: mutableListOf("<No Embeds>")
+    override fun generateExamples(event: CommandEvent<*>) = event.guild?.getEmbeds()?.map { it.name } ?: listOf("<No Embeds>")
 }

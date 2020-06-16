@@ -33,5 +33,5 @@ open class FieldArg(override val name: String = "Field Data", private val delimi
         return ArgumentResult.Success(field, args.size)
     }
 
-    override fun generateExamples(event: CommandEvent<*>) = mutableListOf("Title|Body")
+    override fun generateExamples(event: CommandEvent<*>) = listOf("Title|Body")
 }

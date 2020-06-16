@@ -26,8 +26,8 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
         return ArgumentResult.Success(index)
     }
 
-    override fun generateExamples(event: CommandEvent<*>): MutableList<String> {
+    override fun generateExamples(event: CommandEvent<*>): List<String> {
         val maxIndex = event.guild?.getLoadedEmbed()?.fieldCount ?: 0
-        return mutableListOf((0..maxIndex).random().toString())
+        return listOf((0..maxIndex).random().toString())
     }
 }

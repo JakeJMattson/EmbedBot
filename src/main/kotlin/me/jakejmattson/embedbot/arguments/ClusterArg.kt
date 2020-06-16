@@ -18,7 +18,5 @@ open class ClusterArg(override val name: String = "Cluster") : ArgumentType<Clus
         return ArgumentResult.Success(guildCluster)
     }
 
-    override fun generateExamples(event: CommandEvent<*>): MutableList<String> {
-        return event.guild?.getClusters()?.map { it.name }?.toMutableList() ?: mutableListOf("<No Clusters>")
-    }
+    override fun generateExamples(event: CommandEvent<*>) = event.guild?.getClusters()?.map { it.name } ?: listOf("<No Clusters>")
 }
