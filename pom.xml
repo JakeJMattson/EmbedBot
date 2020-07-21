@@ -37,13 +37,6 @@
             <artifactId>KUtils</artifactId>
             <version>${kutils.version}</version>
         </dependency>
-
-        <!-- GitHub -->
-        <dependency>
-            <groupId>org.kohsuke</groupId>
-            <artifactId>github-api</artifactId>
-            <version>${github.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

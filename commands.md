@@ -18,7 +18,6 @@
 | ResetBot  | (Bot Owner ID) | Delete all embeds in all guilds. Delete all guild configurations. |
 | Restart   | <none>         | Restart the bot via the JAR file.                                 |
 | SetPrefix | Prefix         | Set the prefix required for the bot to register a command.        |
-| Update    | <none>         | Update the bot to the latest version.                             |
 
 ## Cluster
 | Commands          | Arguments                         | Description                                                  |

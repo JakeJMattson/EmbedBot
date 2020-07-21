@@ -13,7 +13,7 @@ import java.io.File
 import kotlin.system.exitProcess
 
 @CommandSet("BotConfiguration")
-fun botConfigurationCommands(configuration: Configuration, prefixService: PrefixService, gitHubService: GitHubService,
+fun botConfigurationCommands(configuration: Configuration, prefixService: PrefixService,
                              persistenceService: PersistenceService, embedService: EmbedService) = commands {
 
     command("SetPrefix") {
@@ -104,27 +104,6 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
             it.respond("Restarting...")
             startJar(currentJar.path)
-        }
-    }
-
-    command("Update") {
-        description = messages.descriptions.UPDATE
-        requiredPermissionLevel = Permission.BOT_OWNER
-        execute {
-            val currentJar = getFileSystemLocation()
-
-            if (currentJar.extension != ".jar")
-                return@execute it.respond("Unable to update. The bot needs to be running from a JAR.")
-
-            it.respond("Update in progress...")
-
-            val updateResponse = gitHubService.update()
-
-            if (!updateResponse.wasSuccessful)
-                return@execute it.respond(updateResponse.message)
-
-            it.respond("Download complete. Proceeding with update.")
-            startJar(updateResponse.message)
         }
     }
 }
