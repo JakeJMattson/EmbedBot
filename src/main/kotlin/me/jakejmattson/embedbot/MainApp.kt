@@ -1,6 +1,5 @@
 package me.jakejmattson.embedbot
 
-import com.google.gson.Gson
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
@@ -11,17 +10,10 @@ import java.awt.Color
 
 lateinit var discordToken: String
 
-data class Properties(val author: String, val version: String, val repository: String)
-
-private val propFile = Properties::class.java.getResource("/properties.json").readText()
-private val project = Gson().fromJson(propFile, Properties::class.java)
-
 fun main(args: Array<String>) {
     discordToken = args.firstOrNull() ?: throw IllegalArgumentException(messages.errors.NO_ARGS)
 
     startBot(discordToken) {
-        registerInjectionObjects(project)
-
         configure {
             val (configuration, validationService, permissionsService)
                 = discord.getInjectionObjects(Configuration::class, ValidationService::class, PermissionsService::class)
@@ -43,24 +35,24 @@ fun main(args: Array<String>) {
                 val requiredRole = configuration.getGuildConfig(it.guild?.id ?: "")?.requiredRole ?: "<Not Configured>"
 
                 author {
-                    discord.jda.retrieveUserById(254786431656919051).queue {
+                    it.discord.jda.retrieveUserById(254786431656919051).queue {
                         iconUrl = it.effectiveAvatarUrl
-                        name = project.author
+                        name = it.fullName()
                         url = messages.links.DISCORD_ACCOUNT
                     }
                 }
 
                 title {
-                    text = "${self.fullName()} (EmbedBot ${project.version})"
+                    text = "${self.fullName()} (EmbedBot 2.0.1)"
                 }
-                description = messages.descriptions.BOT
+                description = messages.project.BOT
                 thumbnail = self.effectiveAvatarUrl
                 color = infoColor
 
                 addInlineField("Required role", requiredRole)
                 addInlineField("Prefix", configuration.prefix)
                 addInlineField("Build Info", "`${discord.properties.kutilsVersion} - ${discord.properties.jdaVersion}`")
-                addInlineField("Source", project.repository)
+                addInlineField("Source", messages.project.REPO)
             }
 
             visibilityPredicate {

@@ -1,4 +1,11 @@
-EmbedBot.iml
-.idea/
-target/
+# Configuration
 config/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+gradle.properties
