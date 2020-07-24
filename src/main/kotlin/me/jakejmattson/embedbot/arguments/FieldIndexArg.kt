@@ -9,21 +9,21 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
     companion object : FieldIndexArg()
 
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Int> {
-        val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
+        val guild = event.guild ?: return Error(messages.errors.MISSING_GUILD)
 
         val embed = guild.getLoadedEmbed()
-            ?: return ArgumentResult.Error(messages.errors.MISSING_EMBED)
+            ?: return Error(messages.errors.MISSING_EMBED)
 
         if (embed.fieldCount == 0)
-            return ArgumentResult.Error(messages.errors.NO_FIELDS)
+            return Error(messages.errors.NO_FIELDS)
 
         val index = arg.toIntOrNull()
-            ?: return ArgumentResult.Error("Expected an integer, got $arg")
+            ?: return Error("Expected an integer, got $arg")
 
         if (index !in 0 until embed.fieldCount)
-            return ArgumentResult.Error("Invalid index. Expected range: 0-${embed.fieldCount - 1}")
+            return Error("Invalid index. Expected range: 0-${embed.fieldCount - 1}")
 
-        return ArgumentResult.Success(index)
+        return Success(index)
     }
 
     override fun generateExamples(event: CommandEvent<*>): List<String> {

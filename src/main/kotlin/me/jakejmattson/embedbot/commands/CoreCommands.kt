@@ -94,7 +94,7 @@ fun coreCommands(embedService: EmbedService) = commands {
         description = messages.descriptions.IMPORT
         execute(AnyArg("Embed Name"), FileArg("File") or EveryArg("String")) {
             val (name, input) = it.args
-            val json = input.getData({ file -> file.readText().also { file.delete() } }, { it })
+            val json = input.map({ file -> file.readText().also { file.delete() } }, { it })
 
             it.importJson(name, json, embedService)
         }

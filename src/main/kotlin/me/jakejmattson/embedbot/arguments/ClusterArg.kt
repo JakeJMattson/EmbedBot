@@ -10,13 +10,14 @@ open class ClusterArg(override val name: String = "Cluster") : ArgumentType<Clus
     companion object : ClusterArg()
 
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Cluster> {
-        val guild = event.guild ?: return ArgumentResult.Error(messages.errors.MISSING_GUILD)
+        val guild = event.guild ?: return Error(messages.errors.MISSING_GUILD)
 
         val guildCluster = guild.getClusterByName(arg)
-            ?: return ArgumentResult.Error("No such cluster exists with the name: $arg")
+            ?: return Error("No such cluster exists with the name: $arg")
 
-        return ArgumentResult.Success(guildCluster)
+        return Success(guildCluster)
     }
 
-    override fun generateExamples(event: CommandEvent<*>) = event.guild?.getClusters()?.map { it.name } ?: listOf("<No Clusters>")
+    override fun generateExamples(event: CommandEvent<*>) = event.guild?.getClusters()?.map { it.name }
+        ?: listOf("<No Clusters>")
 }

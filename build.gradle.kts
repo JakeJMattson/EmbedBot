@@ -36,5 +36,5 @@ tasks {
 object Versions {
     const val BOT = "2.0.1"
     const val KOTLIN = "1.3.72"
-    const val KUTILS = "0.17.1"
+    const val KUTILS = "0.18.0"
 }

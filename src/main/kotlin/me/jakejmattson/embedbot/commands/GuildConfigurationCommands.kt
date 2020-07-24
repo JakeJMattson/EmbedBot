@@ -7,12 +7,9 @@ import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.kutils.api.annotations.CommandSet
 import me.jakejmattson.kutils.api.arguments.RoleArg
 import me.jakejmattson.kutils.api.dsl.command.commands
-import me.jakejmattson.kutils.api.services.PersistenceService
 
 @CommandSet("GuildConfiguration")
-fun guildConfigurationCommands(configuration: Configuration,
-                               persistenceService: PersistenceService,
-                               embedService: EmbedService) = commands {
+fun guildConfigurationCommands(configuration: Configuration, embedService: EmbedService) = commands {
 
     command("SetRequiredRole") {
         description = messages.descriptions.SET_REQUIRED_ROLE
@@ -23,7 +20,7 @@ fun guildConfigurationCommands(configuration: Configuration,
                 ?: return@execute it.respond(messages.errors.GUILD_NOT_SETUP)
 
             guildConfiguration.requiredRole = requiredRole.name
-            persistenceService.save(configuration)
+            configuration.save()
 
             it.respond("Required role set to: ${requiredRole.name}")
         }
@@ -51,7 +48,7 @@ fun guildConfigurationCommands(configuration: Configuration,
                 return@execute it.respond(messages.errors.GUILD_ALREADY_SETUP)
 
             configuration.guildConfigurations.add(GuildConfiguration(it.guild!!.id, requiredRole.name))
-            persistenceService.save(configuration)
+            configuration.save()
 
             it.respond("This guild is now setup for use!")
         }

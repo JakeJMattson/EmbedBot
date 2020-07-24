@@ -8,13 +8,12 @@ import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.kutils.api.annotations.CommandSet
 import me.jakejmattson.kutils.api.arguments.AnyArg
 import me.jakejmattson.kutils.api.dsl.command.commands
-import me.jakejmattson.kutils.api.services.PersistenceService
 import java.io.File
 import kotlin.system.exitProcess
 
 @CommandSet("BotConfiguration")
 fun botConfigurationCommands(configuration: Configuration, prefixService: PrefixService,
-                             persistenceService: PersistenceService, embedService: EmbedService) = commands {
+                             embedService: EmbedService) = commands {
 
     command("SetPrefix") {
         description = messages.descriptions.SET_PREFIX
@@ -23,7 +22,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
             val prefix = it.args.first
 
             prefixService.setPrefix(prefix)
-            persistenceService.save(configuration)
+            configuration.save()
 
             it.respond("Prefix set to: $prefix")
         }
@@ -55,7 +54,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
                 }
 
             guildConfigs.clear()
-            persistenceService.save(configuration)
+            configuration.save()
 
             it.respond("Deleted ${guildConfigs.size} guild configurations and $removedEmbeds embeds.")
         }
@@ -70,7 +69,7 @@ fun botConfigurationCommands(configuration: Configuration, prefixService: Prefix
 
             if (guildConfiguration != null) {
                 configuration.guildConfigurations.remove(guildConfiguration)
-                persistenceService.save(configuration)
+                configuration.save()
             }
 
             val removedEmbeds = embedService.removeAllFromGuild(guild)

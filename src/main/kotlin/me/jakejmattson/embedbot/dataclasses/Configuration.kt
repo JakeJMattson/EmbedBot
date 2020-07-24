@@ -1,11 +1,10 @@
 package me.jakejmattson.embedbot.dataclasses
 
-import me.jakejmattson.kutils.api.annotations.Data
+import me.jakejmattson.kutils.api.dsl.data.Data
 
-@Data("config/config.json")
 data class Configuration(val botOwner: String = "",
                          var prefix: String = "",
-                         val guildConfigurations: MutableList<GuildConfiguration> = mutableListOf(GuildConfiguration())) {
+                         val guildConfigurations: MutableList<GuildConfiguration> = mutableListOf(GuildConfiguration())) : Data("config/config.json") {
     fun getGuildConfig(guildId: String) = guildConfigurations.firstOrNull { it.guildId == guildId }
 }
 
