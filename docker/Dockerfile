@@ -1,10 +1,11 @@
-FROM maven:3.6.3-openjdk-15 AS build
-COPY pom.xml /pom.xml
-COPY src /src/
-RUN mvn clean package -f /pom.xml
+FROM gradle:6.5.1-jdk14 AS build
+COPY --chown=gradle:gradle . /embedbot
+WORKDIR /embedbot
+RUN gradle shadowJar --no-daemon
 
-FROM openjdk:15
+FROM openjdk:8-jre-slim
 ENV BOT_TOKEN=UNSET
 RUN mkdir /config/
-COPY --from=build /target/EmbedBot-jar-with-dependencies.jar /EmbedBot.jar
-CMD /usr/bin/java -jar /EmbedBot.jar $BOT_TOKEN
+COPY --from=build /embedbot/build/libs/*.jar /EmbedBot.jar
+
+ENTRYPOINT ["java", "-jar", "/EmbedBot.jar", "$BOT_TOKEN"]

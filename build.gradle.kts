@@ -5,11 +5,12 @@ version = Versions.BOT
 
 plugins {
     kotlin("jvm") version "1.3.72"
+    id("com.github.johnrengelman.shadow") version "6.0.0"
 }
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    jcenter()
 }
 
 dependencies {
@@ -30,6 +31,10 @@ tasks {
             "kotlin" to Versions.KOTLIN,
             "kutils" to Versions.KUTILS
         )
+    }
+
+    shadowJar {
+        archiveFileName.set("EmbedBot.jar")
     }
 }
 

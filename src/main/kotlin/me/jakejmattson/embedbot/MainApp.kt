@@ -23,10 +23,11 @@ fun main(args: Array<String>) {
                 println(message)
             }
 
+            commandReaction = null
+
             prefix {
                 configuration.prefix
             }
-            commandReaction = null
 
             colors {
                 infoColor = Color(0x00BFFF)
