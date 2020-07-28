@@ -11,13 +11,11 @@
 | ExecuteAll | Commands  | Execute a batch of commands in sequence. |
 
 ## BotConfiguration
-| Commands  | Arguments      | Description                                                       |
-| --------- | -------------- | ----------------------------------------------------------------- |
-| Kill      | <none>         | Kill the bot. It will remember this decision.                     |
-| Leave     | <none>         | Leave this guild and delete all associated information.           |
-| ResetBot  | (Bot Owner ID) | Delete all embeds in all guilds. Delete all guild configurations. |
-| Restart   | <none>         | Restart the bot via the JAR file.                                 |
-| SetPrefix | Prefix         | Set the prefix required for the bot to register a command.        |
+| Commands  | Arguments | Description                                                |
+| --------- | --------- | ---------------------------------------------------------- |
+| Kill      | <none>    | Kill the bot. It will remember this decision.              |
+| Leave     | (Guild)   | Leave this guild and delete all associated information.    |
+| SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
 
 ## Cluster
 | Commands          | Arguments                         | Description                                                  |
@@ -65,16 +63,16 @@
 | SetTitle       | Text              | Set the title for the currently loaded embed.       |
 
 ## Field
-| Commands            | Arguments               | Description                                              |
-| ------------------- | ----------------------- | -------------------------------------------------------- |
-| AddBlankField       | (isInline)              | Add a blank field to the loaded embed.                   |
-| AddField            | Field Data              | Add a field in the following format: title\|body\|inline |
-| EditField, SetField | Field Index, Field Data | Edit a field at a given index with the given data.       |
-| EditFieldInline     | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
-| EditFieldText       | Field Index, Text       | Get a field by its index and edit its text value.        |
-| EditFieldTitle      | Field Index, Text       | Get a field by its index and edit its title value.       |
-| InsertField         | Index, Field Data       | Insert a field at an index to the loaded embed.          |
-| RemoveField         | Field Index             | Remove a field from the loaded embed by its index.       |
+| Commands       | Arguments               | Description                                              |
+| -------------- | ----------------------- | -------------------------------------------------------- |
+| AddBlankField  | (isInline)              | Add a blank field to the loaded embed.                   |
+| AddField       | Field Data              | Add a field in the following format: title\|body\|inline |
+| InsertField    | Index, Field Data       | Insert a field at an index to the loaded embed.          |
+| RemoveField    | Field Index             | Remove a field from the loaded embed by its index.       |
+| SetField       | Field Index, Field Data | Edit a field at a given index with the given data.       |
+| SetFieldInline | Field Index, Boolean    | Get a field by its index and edit its inline value.      |
+| SetFieldText   | Field Index, Text       | Get a field by its index and edit its text value.        |
+| SetFieldTitle  | Field Index, Text       | Get a field by its index and edit its title value.       |
 
 ## GuildConfiguration
 | Commands        | Arguments     | Description                                   |
@@ -89,6 +87,12 @@
 | Info       | (Embed)   | Get extended info for the target embed. |
 | Limits     | <none>    | Display the discord embed limits.       |
 | ListEmbeds | <none>    | List all embeds created in this guild.  |
+
+## Meta
+| Commands    | Arguments                         | Description                    |
+| ----------- | --------------------------------- | ------------------------------ |
+| GuildReport | <none>                            | Get a complete list of guilds. |
+| Transfer    | (Embed), Target Guild, (New Name) | <No Description>               |
 
 ## Utility
 | Commands             | Arguments | Description                              |

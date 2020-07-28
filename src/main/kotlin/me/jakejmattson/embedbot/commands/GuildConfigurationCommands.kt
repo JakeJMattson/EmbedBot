@@ -10,7 +10,6 @@ import me.jakejmattson.kutils.api.dsl.command.commands
 
 @CommandSet("GuildConfiguration")
 fun guildConfigurationCommands(configuration: Configuration, embedService: EmbedService) = commands {
-
     command("SetRequiredRole") {
         description = messages.descriptions.SET_REQUIRED_ROLE
         requiredPermissionLevel = Permission.GUILD_OWNER

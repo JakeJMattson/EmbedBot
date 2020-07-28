@@ -12,8 +12,6 @@ fun advancedCommands(permissionsService: PermissionsService) = commands {
         description = "Execute a batch of commands in sequence."
         execute(EveryArg("Commands")) { event ->
             event.respond("Command currently disabled")
-            if (true) return@execute
-
             val rawInvocations = event.args.first.split("\n").filter { it.isNotEmpty() }
             val unknownCommands = mutableListOf<String>()
             val missingPermissions = mutableListOf<String>()

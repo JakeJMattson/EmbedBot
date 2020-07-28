@@ -16,7 +16,7 @@
       <img src="https://img.shields.io/badge/Personal-JakeyWakey%231569-%2300BFFF.svg?logo=discord" alt="Discord JakeyWakey#1569">
   </a><br>
   <a href="https://discord.gg/REZVVjA">
-      <img src="https://discordapp.com/api/guilds/453208597082406912/widget.png?style=banner2"/>
+      <img alt="KUtils Banner" src="https://discordapp.com/api/guilds/453208597082406912/widget.png?style=banner2"/>
   </a>
 </p>
 

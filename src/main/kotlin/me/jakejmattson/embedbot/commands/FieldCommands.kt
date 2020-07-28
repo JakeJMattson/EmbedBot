@@ -67,7 +67,7 @@ fun fieldCommands() = commands {
         }
     }
 
-    command("EditField", "SetField") {
+    command("SetField") {
         description = messages.descriptions.EDIT_FIELD
         requiresLoadedEmbed = true
         execute(FieldIndexArg, FieldArg) {
@@ -79,7 +79,7 @@ fun fieldCommands() = commands {
         }
     }
 
-    command("EditFieldTitle") {
+    command("SetFieldTitle") {
         description = messages.descriptions.EDIT_FIELD_TITLE
         requiresLoadedEmbed = true
         execute(FieldIndexArg, EveryArg) {
@@ -94,7 +94,7 @@ fun fieldCommands() = commands {
         }
     }
 
-    command("EditFieldText") {
+    command("SetFieldText") {
         description = messages.descriptions.EDIT_FIELD_TEXT
         requiresLoadedEmbed = true
         execute(FieldIndexArg, EveryArg) {
@@ -109,7 +109,7 @@ fun fieldCommands() = commands {
         }
     }
 
-    command("EditFieldInline") {
+    command("SetFieldInline") {
         description = messages.descriptions.EDIT_FIELD_INLINE
         requiresLoadedEmbed = true
         execute(FieldIndexArg, BooleanArg) {

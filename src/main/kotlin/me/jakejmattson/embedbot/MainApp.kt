@@ -8,12 +8,10 @@ import me.jakejmattson.kutils.api.dsl.bot
 import me.jakejmattson.kutils.api.extensions.jda.*
 import java.awt.Color
 
-lateinit var discordToken: String
-
 fun main(args: Array<String>) {
-    discordToken = args.firstOrNull() ?: throw IllegalArgumentException(messages.errors.NO_ARGS)
+    val token = args.firstOrNull() ?: throw IllegalArgumentException(messages.errors.NO_ARGS)
 
-    bot(discordToken) {
+    bot(token) {
         configure {
             val (configuration, validationService, permissionsService)
                 = it.getInjectionObjects(Configuration::class, ValidationService::class, PermissionsService::class)
