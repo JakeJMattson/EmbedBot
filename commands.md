@@ -11,11 +11,13 @@
 | ExecuteAll | Commands  | Execute a batch of commands in sequence. |
 
 ## BotConfiguration
-| Commands  | Arguments | Description                                                |
-| --------- | --------- | ---------------------------------------------------------- |
-| Kill      | <none>    | Kill the bot. It will remember this decision.              |
-| Leave     | (Guild)   | Leave this guild and delete all associated information.    |
-| SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
+| Commands    | Arguments                         | Description                                             |
+| ----------- | --------------------------------- | ------------------------------------------------------- |
+| Broadcast   | Text                              | Send a direct message to all guild owners.              |
+| GuildReport | <none>                            | Get a complete list of guilds.                          |
+| Kill        | <none>                            | Kill the bot. It will remember this decision.           |
+| Leave       | (Guild)                           | Leave this guild and delete all associated information. |
+| Transfer    | (Embed), Target Guild, (New Name) | Send an embed to another guild.                         |
 
 ## Cluster
 | Commands          | Arguments                         | Description                                                  |
@@ -75,11 +77,12 @@
 | SetFieldTitle  | Field Index, Text       | Get a field by its index and edit its title value.       |
 
 ## GuildConfiguration
-| Commands        | Arguments     | Description                                   |
-| --------------- | ------------- | --------------------------------------------- |
-| DeleteAll       | <none>        | Delete all embeds and clusters in this guild. |
-| SetRequiredRole | Role          | Set the role required to use this bot.        |
-| Setup           | Required Role | Set up this bot for use.                      |
+| Commands  | Arguments | Description                                                |
+| --------- | --------- | ---------------------------------------------------------- |
+| DeleteAll | <none>    | Delete all embeds and clusters in this guild.              |
+| SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
+| SetRole   | Role      | Set the role required to use this bot.                     |
+| Setup     | <none>    | Set up this bot for use.                                   |
 
 ## Information
 | Commands   | Arguments | Description                             |
@@ -87,13 +90,6 @@
 | Info       | (Embed)   | Get extended info for the target embed. |
 | Limits     | <none>    | Display the discord embed limits.       |
 | ListEmbeds | <none>    | List all embeds created in this guild.  |
-
-## Meta
-| Commands    | Arguments                         | Description                                |
-| ----------- | --------------------------------- | ------------------------------------------ |
-| Broadcast   | Text                              | Send a direct message to all guild owners. |
-| GuildReport | <none>                            | Get a complete list of guilds.             |
-| Transfer    | (Embed), Target Guild, (New Name) | Send an embed to another guild.            |
 
 ## Utility
 | Commands             | Arguments | Description                              |

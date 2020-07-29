@@ -27,11 +27,5 @@ class PermissionsService(private val configuration: Configuration) {
 
     private fun Member.isBotOwner() = user.id == configuration.botOwner
     private fun Member.isGuildOwner() = isOwner
-    private fun Member.isStaff(): Boolean {
-        val guildConfig = configuration.getGuildConfig(guild.id) ?: return false
-        val requiredRoleName = guildConfig.requiredRole
-        val requiredRole = guild.getRolesByName(requiredRoleName, true).firstOrNull() ?: return false
-
-        return requiredRole in roles
-    }
+    private fun Member.isStaff() = configuration.getGuildConfig(guild.id)?.getLiveRole(guild.jda) in roles
 }

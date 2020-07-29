@@ -33,7 +33,8 @@ fun main(args: Array<String>) {
                 val discord = it.discord
                 val properties = discord.properties
                 val self = discord.jda.selfUser
-                val requiredRole = configuration.getGuildConfig(it.guild?.id ?: "")?.requiredRole ?: "<Not Configured>"
+                val requiredRole = configuration.getGuildConfig(it.guild?.id ?: "")?.getLiveRole(discord.jda)?.name
+                    ?: "<Not configured>"
 
                 author {
                     discord.jda.retrieveUserById(254786431656919051).queue {
