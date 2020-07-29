@@ -17,10 +17,8 @@ class Project(
 class Descriptions(
     //Bot Configuration
     val LEAVE: String = "Leave this guild and delete all associated information.",
-    val RESET_BOT: String = "Delete all embeds in all guilds. Delete all guild configurations.",
     val SET_PREFIX: String = "Set the prefix required for the bot to register a command.",
     val KILL: String = "Kill the bot. It will remember this decision.",
-    val RESTART: String = "Restart the bot via the JAR file.",
 
     //Guild Configuration
     val DELETE_ALL: String = "Delete all embeds and clusters in this guild.",
@@ -91,20 +89,13 @@ class Errors(
     val CLUSTER_ALREADY_EXISTS: String = "A cluster with this name already exists.",
 
     //Commands
-    val MISSING_RESET_CONFIRMATION: String = "Please re-run this command and pass in the bot owner ID to confirm.",
     val INVALID_CLUSTER_SIZE: String = "Cluster size should be 1 or greater.",
     val INVALID_MESSAGE_ID: String = "Could not find a message with that ID in the target channel.",
-    val INVALID_OWNER_ID: String = "Invalid bot owner ID.",
     val NO_SUCH_CLUSTER: String = "No such cluster with this name.",
     val NOT_COPIED: String = "This embed was not copied from another message.",
     val MISSING_OPTIONAL_EMBED: String = "Please load an embed or specify one explicitly.",
     val GUILD_NOT_SETUP: String = "This guild is not set up for use. Please use the `setup` command.",
     val GUILD_ALREADY_SETUP: String = "This guild is already setup for use.",
-
-    //Validation Service
-    val EMPTY_PREFIX: String = "The configured prefix is empty.",
-    val EMPTY_BOT_OWNER: String = "The botOwner field is empty.",
-    val INVALID_USER: String = "Cannot resolve the botOwner ID to a user.",
 
     //Preconditions
     val MISSING_CLEARANCE: String = "Missing clearance to use this command.",

@@ -89,10 +89,11 @@
 | ListEmbeds | <none>    | List all embeds created in this guild.  |
 
 ## Meta
-| Commands    | Arguments                         | Description                    |
-| ----------- | --------------------------------- | ------------------------------ |
-| GuildReport | <none>                            | Get a complete list of guilds. |
-| Transfer    | (Embed), Target Guild, (New Name) | <No Description>               |
+| Commands    | Arguments                         | Description                                |
+| ----------- | --------------------------------- | ------------------------------------------ |
+| Broadcast   | Text                              | Send a direct message to all guild owners. |
+| GuildReport | <none>                            | Get a complete list of guilds.             |
+| Transfer    | (Embed), Target Guild, (New Name) | Send an embed to another guild.            |
 
 ## Utility
 | Commands             | Arguments | Description                              |

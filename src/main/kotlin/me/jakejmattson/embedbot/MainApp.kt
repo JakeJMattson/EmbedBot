@@ -3,7 +3,7 @@ package me.jakejmattson.embedbot
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.locale.messages
-import me.jakejmattson.embedbot.services.*
+import me.jakejmattson.embedbot.services.PermissionsService
 import me.jakejmattson.kutils.api.dsl.bot
 import me.jakejmattson.kutils.api.extensions.jda.*
 import java.awt.Color
@@ -13,18 +13,16 @@ fun main(args: Array<String>) {
 
     bot(token) {
         configure {
-            val (configuration, validationService, permissionsService)
-                = it.getInjectionObjects(Configuration::class, ValidationService::class, PermissionsService::class)
+            val (configuration, permissionsService)
+                = it.getInjectionObjects(Configuration::class, PermissionsService::class)
 
-            with(validationService.validateConfiguration()) {
-                require(wasSuccessful) { message }
-                println(message)
-            }
+            if (configuration.botOwner.isBlank())
+                throw IllegalStateException("Invalid configuration: missing botOwner")
 
             commandReaction = null
 
             prefix {
-                configuration.prefix
+                configuration.getGuildConfig(it.guild!!.id)?.prefix.takeUnless { it.isNullOrBlank() } ?: "="
             }
 
             colors {
@@ -51,7 +49,7 @@ fun main(args: Array<String>) {
                 color = infoColor
 
                 addInlineField("Required role", requiredRole)
-                addInlineField("Prefix", configuration.prefix)
+                addInlineField("Prefix", it.relevantPrefix)
                 addInlineField("Build Info", "`${properties.kutilsVersion} - ${properties.jdaVersion}`")
                 addInlineField("Source", messages.project.REPO)
             }

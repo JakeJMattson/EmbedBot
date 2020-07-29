@@ -10,16 +10,14 @@ import me.jakejmattson.kutils.api.dsl.command.commands
 import kotlin.system.exitProcess
 
 @CommandSet("BotConfiguration")
-fun botConfigurationCommands(configuration: Configuration, prefixService: PrefixService,
-                             embedService: EmbedService) = commands {
-
+fun botConfigurationCommands(configuration: Configuration, embedService: EmbedService) = commands {
     command("SetPrefix") {
         description = messages.descriptions.SET_PREFIX
         requiredPermissionLevel = Permission.BOT_OWNER
         execute(AnyArg("Prefix")) {
             val prefix = it.args.first
 
-            prefixService.setPrefix(prefix)
+            configuration.getGuildConfig(it.guild!!.id)?.prefix = prefix
             configuration.save()
 
             it.respond("Prefix set to: $prefix")

@@ -3,7 +3,7 @@ package me.jakejmattson.embedbot.commands
 import me.jakejmattson.embedbot.arguments.*
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
-import me.jakejmattson.embedbot.services.*
+import me.jakejmattson.embedbot.utils.*
 import me.jakejmattson.kutils.api.annotations.CommandSet
 import me.jakejmattson.kutils.api.arguments.*
 import me.jakejmattson.kutils.api.dsl.command.commands
