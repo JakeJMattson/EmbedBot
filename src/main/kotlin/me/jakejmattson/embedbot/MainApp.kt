@@ -16,13 +16,10 @@ fun main(args: Array<String>) {
             val (configuration, permissionsService)
                 = it.getInjectionObjects(Configuration::class, PermissionsService::class)
 
-            if (configuration.botOwner.isBlank())
-                throw IllegalStateException("Invalid configuration: missing botOwner")
-
             commandReaction = null
 
             prefix {
-                configuration.getGuildConfig(it.guild!!.id)?.prefix.takeUnless { it.isNullOrBlank() } ?: "="
+                configuration[it.guild!!.idLong]?.prefix.takeUnless { it.isNullOrBlank() } ?: "="
             }
 
             colors {
@@ -33,7 +30,7 @@ fun main(args: Array<String>) {
                 val discord = it.discord
                 val properties = discord.properties
                 val self = discord.jda.selfUser
-                val requiredRole = configuration.getGuildConfig(it.guild?.id ?: "")?.getLiveRole(discord.jda)?.name
+                val requiredRole = it.guild?.idLong?.let { configuration[it]?.getLiveRole(discord.jda)?.name }
                     ?: "<Not configured>"
 
                 author {

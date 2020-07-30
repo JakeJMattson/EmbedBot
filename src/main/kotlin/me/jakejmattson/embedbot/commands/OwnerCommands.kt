@@ -11,19 +11,16 @@ import me.jakejmattson.kutils.api.dsl.command.commands
 import me.jakejmattson.kutils.api.extensions.jda.sendPrivateMessage
 import kotlin.system.exitProcess
 
-@CommandSet("BotConfiguration")
+@CommandSet("Owner")
 fun botConfigurationCommands(configuration: Configuration, embedService: EmbedService) = commands {
     command("Leave") {
         description = messages.descriptions.LEAVE
         requiredPermissionLevel = Permission.BOT_OWNER
         execute(GuildArg.makeOptional { it.guild!! }) {
             val guild = it.args.first
-            val guildConfiguration = configuration.getGuildConfig(guild.id)
 
-            if (guildConfiguration != null) {
-                configuration.guildConfigurations.remove(guildConfiguration)
-                configuration.save()
-            }
+            configuration.guildConfigurations.remove(guild.idLong)
+            configuration.save()
 
             val removedEmbeds = embedService.removeAllFromGuild(guild)
             val removedClusters = guild.getGuildEmbeds().clusterList.size
