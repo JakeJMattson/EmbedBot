@@ -1,6 +1,5 @@
 package me.jakejmattson.embedbot.commands
 
-import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.kutils.api.annotations.CommandSet
 import me.jakejmattson.kutils.api.dsl.command.commands
 import me.jakejmattson.kutils.api.extensions.stdlib.toTimeString
@@ -12,7 +11,7 @@ private val startTime = Date()
 @CommandSet("Utility")
 fun utilityCommands() = commands {
     command("Status", "Ping", "Uptime") {
-        description = messages.descriptions.STATUS
+        description = "Display network status and total uptime."
         execute { event ->
             val jda = event.discord.jda
 

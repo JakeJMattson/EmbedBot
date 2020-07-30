@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.entities.*
 @CommandSet("Copy")
 fun copyCommands(embedService: EmbedService) = commands {
     command("CopyTarget") {
-        description = messages.descriptions.COPY_TARGET
+        description = "Copy an embed by its message ID."
         execute(AnyArg("Embed Name"),
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
             AnyArg("Message ID")) {
@@ -24,14 +24,14 @@ fun copyCommands(embedService: EmbedService) = commands {
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(name))
-                return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
+                return@execute it.respond(messages.EMBED_ALREADY_EXISTS)
 
             val message = it.discord.jda.tryRetrieveSnowflake {
                 channel.retrieveMessageById(messageId.trimToID()).complete()
-            } as Message? ?: return@execute it.respond(messages.errors.INVALID_MESSAGE_ID)
+            } as Message? ?: return@execute it.respond("Could not find a message with that ID in the target channel.")
 
             val messageEmbed = message.getEmbed()
-                ?: return@execute it.respond(messages.errors.NO_EMBED_IN_MESSAGE)
+                ?: return@execute it.respond("Target message has no embed.")
 
             val builder = messageEmbed.toEmbedBuilder()
             val embed = Embed(name, builder, CopyLocation(channel.id, messageId))
@@ -43,13 +43,13 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("UpdateOriginal") {
-        description = messages.descriptions.UPDATE_ORIGINAL
+        description = "Update the original embed this content was copied from."
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
 
             val original = embed.copyLocation
-                ?: return@execute it.respond(messages.errors.NOT_COPIED)
+                ?: return@execute it.respond(messages.NOT_COPIED)
 
             val updateResponse = embed.update(it.discord.jda, original.channelId, original.messageId)
 
@@ -61,7 +61,7 @@ fun copyCommands(embedService: EmbedService) = commands {
     }
 
     command("UpdateTarget") {
-        description = messages.descriptions.UPDATE_TARGET
+        description = "Replace the target message embed with the loaded embed."
         requiresLoadedEmbed = true
         execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel }, AnyArg("Message ID")) {
             val (channel, messageId) = it.args

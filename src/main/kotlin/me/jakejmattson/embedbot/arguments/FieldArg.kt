@@ -11,10 +11,10 @@ open class FieldArg(override val name: String = "Field Data", private val delimi
     companion object : FieldArg()
 
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Field> {
-        val guild = event.guild ?: return Error(messages.errors.MISSING_GUILD)
+        val guild = event.guild ?: return Error(messages.MISSING_GUILD)
         val data = args.joinToString(" ").split(delimiter)
 
-        guild.getLoadedEmbed() ?: return Error(messages.errors.MISSING_EMBED)
+        guild.getLoadedEmbed() ?: return Error(messages.MISSING_EMBED)
 
         if (data.size !in 2..3)
             return Error("Invalid field data. Expected 2-3 items split by \"$delimiter\". Received ${data.size}")

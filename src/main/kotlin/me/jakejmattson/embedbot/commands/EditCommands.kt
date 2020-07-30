@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 @CommandSet("Edit")
 fun editCommands() = commands {
     command("SetAuthor") {
-        description = messages.descriptions.SET_AUTHOR
+        description = "Set the author for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(UserArg) {
             val user = it.args.first
@@ -24,7 +24,7 @@ fun editCommands() = commands {
     }
 
     command("SetColor") {
-        description = messages.descriptions.SET_COLOR
+        description = "Set the color for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(HexColorArg) {
             val color = it.args.first
@@ -36,7 +36,7 @@ fun editCommands() = commands {
     }
 
     command("SetDescription") {
-        description = messages.descriptions.SET_DESCRIPTION
+        description = "Set the description for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(EveryArg) {
             val description = it.args.first
@@ -51,7 +51,7 @@ fun editCommands() = commands {
     }
 
     command("SetFooter") {
-        description = messages.descriptions.SET_FOOTER
+        description = "Set the footer for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(UrlArg("Icon URL"), EveryArg("Text")) {
             val (url, text) = it.args
@@ -66,7 +66,7 @@ fun editCommands() = commands {
     }
 
     command("SetImage") {
-        description = messages.descriptions.SET_IMAGE
+        description = "Set the image for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(UrlArg) {
             val (url) = it.args
@@ -78,7 +78,7 @@ fun editCommands() = commands {
     }
 
     command("SetThumbnail") {
-        description = messages.descriptions.SET_THUMBNAIL
+        description = "Set the thumbnail for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(UrlArg) {
             val url = it.args.first
@@ -90,7 +90,7 @@ fun editCommands() = commands {
     }
 
     command("SetTimestamp") {
-        description = messages.descriptions.SET_TIMESTAMP
+        description = "Set the timestamp for the currently loaded embed."
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
@@ -101,7 +101,7 @@ fun editCommands() = commands {
     }
 
     command("SetTitle") {
-        description = messages.descriptions.SET_TITLE
+        description = "Set the title for the currently loaded embed."
         requiresLoadedEmbed = true
         execute(EveryArg) {
             val title = it.args.first
@@ -116,7 +116,7 @@ fun editCommands() = commands {
     }
 
     command("Clear") {
-        description = messages.descriptions.CLEAR
+        description = "Clear a target field from the loaded embed."
         requiresLoadedEmbed = true
         execute(AnyArg("Clear Target").makeOptional("")) {
             val field = it.args.first.toLowerCase()
@@ -146,16 +146,16 @@ fun editCommands() = commands {
     }
 
     command("Rename") {
-        description = messages.descriptions.RENAME
+        description = "Change the name of an existing embed."
         execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }, AnyArg("New Name")) {
             val targetEmbed = it.args.first
-                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
+                ?: return@execute it.respond(messages.MISSING_OPTIONAL_EMBED)
 
             val newName = it.args.second
             val guild = it.guild!!
 
             if (guild.hasEmbedWithName(newName))
-                return@execute it.respond(messages.errors.EMBED_ALREADY_EXISTS)
+                return@execute it.respond(messages.EMBED_ALREADY_EXISTS)
 
             if (targetEmbed.isLoaded(guild)) {
                 val updatedEmbed = guild.getEmbedByName(targetEmbed.name)!!

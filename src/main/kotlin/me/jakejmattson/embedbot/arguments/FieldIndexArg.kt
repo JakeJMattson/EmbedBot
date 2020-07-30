@@ -9,13 +9,13 @@ open class FieldIndexArg(override val name: String = "Field Index") : ArgumentTy
     companion object : FieldIndexArg()
 
     override fun convert(arg: String, args: List<String>, event: CommandEvent<*>): ArgumentResult<Int> {
-        val guild = event.guild ?: return Error(messages.errors.MISSING_GUILD)
+        val guild = event.guild ?: return Error(messages.MISSING_GUILD)
 
         val embed = guild.getLoadedEmbed()
-            ?: return Error(messages.errors.MISSING_EMBED)
+            ?: return Error(messages.MISSING_EMBED)
 
         if (embed.fieldCount == 0)
-            return Error(messages.errors.NO_FIELDS)
+            return Error("This embed has no fields.")
 
         val index = arg.toIntOrNull()
             ?: return Error("Expected an integer, got $arg")

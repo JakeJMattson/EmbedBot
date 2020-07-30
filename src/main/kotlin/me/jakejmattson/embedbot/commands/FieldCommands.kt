@@ -2,7 +2,6 @@ package me.jakejmattson.embedbot.commands
 
 import me.jakejmattson.embedbot.arguments.*
 import me.jakejmattson.embedbot.extensions.*
-import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.utils.*
 import me.jakejmattson.kutils.api.annotations.CommandSet
 import me.jakejmattson.kutils.api.arguments.*
@@ -11,7 +10,7 @@ import me.jakejmattson.kutils.api.dsl.command.commands
 @CommandSet("Field")
 fun fieldCommands() = commands {
     command("AddField") {
-        description = messages.descriptions.ADD_FIELD
+        description = "Add a field in the following format: title|body|inline"
         requiresLoadedEmbed = true
         execute(FieldArg) {
             val field = it.args.first
@@ -26,7 +25,7 @@ fun fieldCommands() = commands {
     }
 
     command("AddBlankField") {
-        description = messages.descriptions.ADD_BLANK_FIELD
+        description = "Add a blank field to the loaded embed."
         requiresLoadedEmbed = true
         execute(BooleanArg("isInline").makeOptional(false)) {
             val isInline = it.args.first
@@ -41,7 +40,7 @@ fun fieldCommands() = commands {
     }
 
     command("InsertField") {
-        description = messages.descriptions.INSERT_FIELD
+        description = "Insert a field at an index to the loaded embed."
         requiresLoadedEmbed = true
         execute(FieldIndexArg("Index"), FieldArg) {
             val (index, field) = it.args
@@ -56,7 +55,7 @@ fun fieldCommands() = commands {
     }
 
     command("RemoveField") {
-        description = messages.descriptions.REMOVE_FIELD
+        description = "Remove a field from the loaded embed by its index."
         requiresLoadedEmbed = true
         execute(FieldIndexArg) {
             val index = it.args.first
@@ -68,7 +67,7 @@ fun fieldCommands() = commands {
     }
 
     command("SetField") {
-        description = messages.descriptions.EDIT_FIELD
+        description = "Edit a field at a given index with the given data."
         requiresLoadedEmbed = true
         execute(FieldIndexArg, FieldArg) {
             val (index, field) = it.args
@@ -80,7 +79,7 @@ fun fieldCommands() = commands {
     }
 
     command("SetFieldTitle") {
-        description = messages.descriptions.EDIT_FIELD_TITLE
+        description = "Get a field by its index and edit its title value."
         requiresLoadedEmbed = true
         execute(FieldIndexArg, EveryArg) {
             val (index, newTitle) = it.args
@@ -95,7 +94,7 @@ fun fieldCommands() = commands {
     }
 
     command("SetFieldText") {
-        description = messages.descriptions.EDIT_FIELD_TEXT
+        description = "Get a field by its index and edit its text value."
         requiresLoadedEmbed = true
         execute(FieldIndexArg, EveryArg) {
             val (index, newText) = it.args
@@ -110,7 +109,7 @@ fun fieldCommands() = commands {
     }
 
     command("SetFieldInline") {
-        description = messages.descriptions.EDIT_FIELD_INLINE
+        description = "Get a field by its index and edit its inline value."
         requiresLoadedEmbed = true
         execute(FieldIndexArg, BooleanArg) {
             val (index, newInline) = it.args

@@ -14,12 +14,12 @@ import net.dv8tion.jda.api.entities.TextChannel
 @CommandSet("Cluster")
 fun clusterCommands(embedService: EmbedService) = commands {
     command("CreateCluster") {
-        description = messages.descriptions.CREATE_CLUSTER
+        description = "Create a cluster for storing and deploying groups of embeds."
         execute(AnyArg("Cluster Name"), MultipleArg(EmbedArg).makeOptional(listOf())) {
             val (clusterName, embeds) = it.args
             val guild = it.guild!!
             val cluster = embedService.createCluster(guild, clusterName)
-                ?: return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
+                ?: return@execute it.respond(messages.CLUSTER_ALREADY_EXISTS)
 
             embeds.forEach { embed ->
                 cluster.addEmbed(guild, embed)
@@ -30,27 +30,27 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("DeleteCluster") {
-        description = messages.descriptions.DELETE_CLUSTER
+        description = "Delete a cluster and all of its embeds."
         execute(ClusterArg) {
             val cluster = it.args.first
             val wasDeleted = embedService.deleteCluster(it.guild!!, cluster)
 
             if (!wasDeleted)
-                it.respond(messages.errors.NO_SUCH_CLUSTER)
+                it.respond("No such cluster with this name.")
 
             it.reactSuccess()
         }
     }
 
     command("CloneCluster") {
-        description = messages.descriptions.CLONE_CLUSTER
+        description = "Clone a group of embeds into a cluster."
         execute(AnyArg("Cluster Name"),
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
             IntegerArg("Amount")) { event ->
             val (clusterName, channel, amount) = event.args
 
             if (amount <= 0)
-                return@execute event.respond(messages.errors.INVALID_CLUSTER_SIZE)
+                return@execute event.respond("Cluster size should be 1 or greater.")
 
             val messagesWithEmbeds = channel.iterableHistory.complete().filter { it.getEmbed() != null }.take(amount)
                 as ArrayList
@@ -64,14 +64,14 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val wasSuccessful = embedService.createClusterFromEmbeds(event.guild!!, Cluster(clusterName, embeds))
 
             if (!wasSuccessful)
-                event.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
+                event.respond(messages.CLUSTER_ALREADY_EXISTS)
 
             event.respond("Cloned ${embeds.size} embeds into $clusterName")
         }
     }
 
     command("UpdateCluster") {
-        description = messages.descriptions.UPDATE_CLUSTER
+        description = "Update the original embeds this cluster was copied from."
         execute(ClusterArg) { event ->
             val cluster = event.args.first
             val failures = ArrayList<String>()
@@ -82,7 +82,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 val location = embed.copyLocation
 
                 if (location == null) {
-                    failures.add(messages.errors.NOT_COPIED)
+                    failures.add(messages.NOT_COPIED)
                     return@sumBy 0
                 }
 
@@ -105,12 +105,12 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("RenameCluster") {
-        description = messages.descriptions.RENAME_CLUSTER
+        description = "Change the name of an existing cluster."
         execute(ClusterArg, AnyArg("New Name")) {
             val (cluster, newName) = it.args
 
             if (it.guild!!.hasClusterWithName(newName))
-                return@execute it.respond(messages.errors.CLUSTER_ALREADY_EXISTS)
+                return@execute it.respond(messages.CLUSTER_ALREADY_EXISTS)
 
             cluster.name = newName
             it.reactSuccess()
@@ -118,7 +118,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("Deploy") {
-        description = messages.descriptions.DEPLOY
+        description = "Deploy a cluster into a target channel."
         execute(ClusterArg,
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
             BooleanArg("shouldTrack").makeOptional(false)) {
@@ -139,7 +139,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("AddToCluster") {
-        description = messages.descriptions.ADD_TO_CLUSTER
+        description = "Add an embed into a cluster."
         execute(ClusterArg, MultipleArg(EmbedArg)) {
             val (cluster, embeds) = it.args
             val guild = it.guild!!
@@ -155,7 +155,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("InsertIntoCluster") {
-        description = messages.descriptions.INSERT_INTO_CLUSTER
+        description = "Insert an embed into a cluster at an index."
         execute(ClusterArg, IntegerArg("Index"), EmbedArg) {
             val (cluster, index, embed) = it.args
 
@@ -169,7 +169,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
     }
 
     command("RemoveFromCluster") {
-        description = messages.descriptions.REMOVE_FROM_CLUSTER
+        description = "Remove embeds from their current cluster."
         execute(MultipleArg(EmbedArg)) {
             val embeds = it.args.first
             val removals = arrayListOf<String>()

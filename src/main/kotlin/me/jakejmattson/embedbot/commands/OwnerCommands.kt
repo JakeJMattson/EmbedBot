@@ -3,7 +3,6 @@ package me.jakejmattson.embedbot.commands
 import me.jakejmattson.embedbot.arguments.EmbedArg
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.*
-import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.kutils.api.annotations.CommandSet
 import me.jakejmattson.kutils.api.arguments.*
@@ -14,7 +13,7 @@ import kotlin.system.exitProcess
 @CommandSet("Owner")
 fun botConfigurationCommands(configuration: Configuration, embedService: EmbedService) = commands {
     command("Leave") {
-        description = messages.descriptions.LEAVE
+        description = "Leave this guild and delete all associated information."
         requiredPermissionLevel = Permission.BOT_OWNER
         execute(GuildArg.makeOptional { it.guild!! }) {
             val guild = it.args.first
@@ -34,7 +33,7 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
     }
 
     command("Kill") {
-        description = messages.descriptions.KILL
+        description = "Kill the bot. It will remember this decision."
         requiredPermissionLevel = Permission.BOT_OWNER
         execute {
             it.respond("Goodbye :(")

@@ -8,10 +8,10 @@ import me.jakejmattson.kutils.api.dsl.preconditions.*
 class LoadedEmbedPrecondition : Precondition() {
     override fun evaluate(event: CommandEvent<*>): PreconditionResult {
         val command = event.command ?: return Pass
-        val guild = event.guild ?: return Fail(messages.errors.MISSING_GUILD)
+        val guild = event.guild ?: return Fail(messages.MISSING_GUILD)
 
         if (command.requiresLoadedEmbed && !guild.hasLoadedEmbed())
-            return Fail(messages.errors.MISSING_EMBED)
+            return Fail(messages.MISSING_EMBED)
 
         return Pass
     }

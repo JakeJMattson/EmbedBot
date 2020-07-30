@@ -11,10 +11,10 @@ import java.awt.Color
 @CommandSet("Information")
 fun infoCommands() = commands {
     command("Info") {
-        description = messages.descriptions.INFO
+        description = "Get extended info for the target embed."
         execute(EmbedArg.makeNullableOptional { it.guild!!.getLoadedEmbed() }) {
             val embed = it.args.first
-                ?: return@execute it.respond(messages.errors.MISSING_OPTIONAL_EMBED)
+                ?: return@execute it.respond(messages.MISSING_OPTIONAL_EMBED)
 
             val guild = it.guild!!
 
@@ -36,7 +36,7 @@ fun infoCommands() = commands {
     }
 
     command("ListEmbeds") {
-        description = messages.descriptions.LIST_EMBEDS
+        description = "List all embeds created in this guild."
         execute { event ->
             event.respond {
                 val guild = event.guild!!
@@ -62,7 +62,7 @@ fun infoCommands() = commands {
     }
 
     command("Limits") {
-        description = messages.descriptions.LIMITS
+        description = "Display the discord embed limits."
         execute {
             it.respond {
                 title {
@@ -79,7 +79,7 @@ fun infoCommands() = commands {
                 addInlineField("Field Value", "$FIELD_VALUE_LIMIT characters")
                 addInlineField("Footer", "$FOOTER_LIMIT characters")
                 addInlineField("Author", "$AUTHOR_LIMIT characters")
-                addInlineField("", "[Discord Docs](${messages.links.DISCORD_EMBED_DOCS})")
+                addInlineField("", "[Discord Docs](https://discordapp.com/developers/docs/resources/channel#embed-limits-limits)")
             }
         }
     }

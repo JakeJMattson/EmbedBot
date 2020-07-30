@@ -84,22 +84,23 @@ data class Embed(var name: String,
 
     fun update(jda: JDA, channelId: String, messageId: String): OperationResult {
         val channel = jda.getTextChannelById(channelId)
-            ?: return false withMessage messages.errors.NO_CHANNEL
+            ?: return false withMessage "Target channel does not exist."
 
         val message = jda.tryRetrieveSnowflake {
             channel.retrieveMessageById(messageId).complete()
-        } as Message? ?: return false withMessage messages.errors.NO_MESSAGE
+        } as Message? ?: return false withMessage "Target message does not exist."
 
         if (message.author != jda.selfUser)
-            return false withMessage messages.errors.NOT_AUTHOR
+            return false withMessage "Target message is not from this bot."
 
         if (isEmpty)
-            return false withMessage messages.errors.EMPTY_EMBED
+            return false withMessage messages.EMPTY_EMBED
 
         val currentEmbed = message.getEmbed()
-            ?: return false withMessage messages.errors.NO_EMBED_IN_MESSAGE
+            ?: return false withMessage "Target message has no embed."
+
         if (currentEmbed == builder.build())
-            return false withMessage messages.errors.UP_TO_DATE
+            return false withMessage "This embed is up to date."
 
         message.editMessage(build()).queue()
 

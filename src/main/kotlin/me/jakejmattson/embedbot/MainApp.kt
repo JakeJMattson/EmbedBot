@@ -2,14 +2,14 @@ package me.jakejmattson.embedbot
 
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
-import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.PermissionsService
 import me.jakejmattson.kutils.api.dsl.bot
 import me.jakejmattson.kutils.api.extensions.jda.*
 import java.awt.Color
 
 fun main(args: Array<String>) {
-    val token = args.firstOrNull() ?: throw IllegalArgumentException(messages.errors.NO_ARGS)
+    val token = args.firstOrNull()
+        ?: throw IllegalArgumentException("No program arguments provided. Expected bot token.")
 
     bot(token) {
         configure {
@@ -37,19 +37,19 @@ fun main(args: Array<String>) {
                     discord.jda.retrieveUserById(254786431656919051).queue {
                         iconUrl = it.effectiveAvatarUrl
                         name = it.fullName()
-                        url = messages.links.DISCORD_ACCOUNT
+                        url = "https://discordapp.com/users/254786431656919051/"
                     }
                 }
 
                 simpleTitle = "${self.fullName()} (EmbedBot 2.0.1)"
-                description = messages.project.BOT
+                description = "A bot for creating and managing embeds."
                 thumbnail = self.effectiveAvatarUrl
                 color = infoColor
 
                 addInlineField("Required role", requiredRole)
                 addInlineField("Prefix", it.relevantPrefix)
                 addInlineField("Build Info", "`${properties.kutilsVersion} - ${properties.jdaVersion}`")
-                addInlineField("Source", messages.project.REPO)
+                addInlineField("Source", "https://github.com/JakeJMattson/EmbedBot")
             }
 
             visibilityPredicate {
