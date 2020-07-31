@@ -1,9 +1,9 @@
 package me.jakejmattson.embedbot.preconditions
 
-import me.jakejmattson.embedbot.extensions.*
-import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.discordkt.api.dsl.command.CommandEvent
 import me.jakejmattson.discordkt.api.dsl.preconditions.*
+import me.jakejmattson.embedbot.extensions.*
+import me.jakejmattson.embedbot.utils.messages
 
 class LoadedEmbedPrecondition : Precondition() {
     override fun evaluate(event: CommandEvent<*>): PreconditionResult {

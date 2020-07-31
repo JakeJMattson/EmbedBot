@@ -1,13 +1,13 @@
 package me.jakejmattson.embedbot.commands
 
-import me.jakejmattson.embedbot.arguments.EmbedArg
-import me.jakejmattson.embedbot.dataclasses.Configuration
-import me.jakejmattson.embedbot.extensions.*
-import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.discordkt.api.annotations.CommandSet
 import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.command.commands
 import me.jakejmattson.discordkt.api.extensions.jda.sendPrivateMessage
+import me.jakejmattson.embedbot.arguments.EmbedArg
+import me.jakejmattson.embedbot.dataclasses.Configuration
+import me.jakejmattson.embedbot.extensions.*
+import me.jakejmattson.embedbot.services.*
 import kotlin.system.exitProcess
 
 @CommandSet("Owner")
@@ -23,12 +23,14 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
 
             val removedEmbeds = embedService.removeAllFromGuild(guild)
             val removedClusters = guild.getGuildEmbeds().clusterList.size
+
             it.respond("Deleted all ($removedEmbeds) embeds." +
                 "\nDeleted all ($removedClusters) clusters." +
                 "\nDeleted guild configuration for `${guild.name}`." +
                 "\nLeaving guild. Goodbye.")
 
             guild.leave().queue()
+            it.reactSuccess()
         }
     }
 
@@ -53,6 +55,8 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
                 .forEach {
                     it.user.sendPrivateMessage(message)
                 }
+
+            it.reactSuccess()
         }
     }
 

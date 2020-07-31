@@ -14,6 +14,7 @@ data class Configuration(val botOwner: Long = 254786431656919051,
         if (guildConfigurations[guild.idLong] != null) return
 
         guildConfigurations[guild.idLong] = GuildConfiguration("=", guild.publicRole.idLong)
+        save()
 
         guild.retrieveOwner().queue {
             it.user.sendPrivateMessage(

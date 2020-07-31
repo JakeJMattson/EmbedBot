@@ -1,17 +1,17 @@
 package me.jakejmattson.embedbot.services
 
-import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.discordkt.api.annotations.Service
+import me.jakejmattson.embedbot.dataclasses.Configuration
 import net.dv8tion.jda.api.entities.Member
 
 enum class Permission {
     BOT_OWNER,
     GUILD_OWNER,
-    STAFF,
+    USER,
     NONE
 }
 
-val DEFAULT_REQUIRED_PERMISSION = Permission.STAFF
+val DEFAULT_REQUIRED_PERMISSION = Permission.USER
 
 @Service
 class PermissionsService(private val configuration: Configuration) {
@@ -21,11 +21,11 @@ class PermissionsService(private val configuration: Configuration) {
         when {
             isBotOwner() -> Permission.BOT_OWNER
             isGuildOwner() -> Permission.GUILD_OWNER
-            isStaff() -> Permission.STAFF
+            isUser() -> Permission.USER
             else -> Permission.NONE
         }
 
     private fun Member.isBotOwner() = user.idLong == configuration.botOwner
     private fun Member.isGuildOwner() = isOwner
-    private fun Member.isStaff() = configuration[guild.idLong]?.getLiveRole(guild.jda) in roles
+    private fun Member.isUser() = configuration[guild.idLong]?.getLiveRole(guild.jda) in roles
 }

@@ -1,11 +1,11 @@
 package me.jakejmattson.embedbot.commands
 
-import me.jakejmattson.embedbot.dataclasses.Configuration
-import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
-import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.discordkt.api.annotations.CommandSet
 import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.command.commands
+import me.jakejmattson.embedbot.dataclasses.Configuration
+import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
+import me.jakejmattson.embedbot.services.*
 
 @CommandSet("GuildConfiguration")
 fun guildConfigurationCommands(configuration: Configuration, embedService: EmbedService) = commands {

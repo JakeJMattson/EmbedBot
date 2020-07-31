@@ -1,11 +1,10 @@
 package me.jakejmattson.embedbot.arguments
 
-import me.jakejmattson.embedbot.extensions.getLoadedEmbed
-import me.jakejmattson.embedbot.locale.messages
-import me.jakejmattson.embedbot.services.Field
-import me.jakejmattson.embedbot.utils.*
 import me.jakejmattson.discordkt.api.dsl.arguments.*
 import me.jakejmattson.discordkt.api.dsl.command.CommandEvent
+import me.jakejmattson.embedbot.extensions.getLoadedEmbed
+import me.jakejmattson.embedbot.services.Field
+import me.jakejmattson.embedbot.utils.*
 
 open class FieldArg(override val name: String = "Field Data", private val delimiter: String = "|") : ArgumentType<Field>() {
     companion object : FieldArg()

@@ -1,14 +1,14 @@
 package me.jakejmattson.embedbot.commands
 
-import me.jakejmattson.embedbot.arguments.*
-import me.jakejmattson.embedbot.dataclasses.*
-import me.jakejmattson.embedbot.extensions.*
-import me.jakejmattson.embedbot.locale.messages
-import me.jakejmattson.embedbot.services.EmbedService
 import me.jakejmattson.discordkt.api.annotations.CommandSet
 import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.command.commands
 import me.jakejmattson.discordkt.api.dsl.embed.toEmbedBuilder
+import me.jakejmattson.embedbot.arguments.*
+import me.jakejmattson.embedbot.dataclasses.*
+import me.jakejmattson.embedbot.extensions.*
+import me.jakejmattson.embedbot.services.EmbedService
+import me.jakejmattson.embedbot.utils.messages
 import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Cluster")

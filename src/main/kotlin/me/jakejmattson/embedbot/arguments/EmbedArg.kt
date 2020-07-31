@@ -1,10 +1,10 @@
 package me.jakejmattson.embedbot.arguments
 
-import me.jakejmattson.embedbot.dataclasses.Embed
-import me.jakejmattson.embedbot.extensions.*
-import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.discordkt.api.dsl.arguments.*
 import me.jakejmattson.discordkt.api.dsl.command.CommandEvent
+import me.jakejmattson.embedbot.dataclasses.Embed
+import me.jakejmattson.embedbot.extensions.*
+import me.jakejmattson.embedbot.utils.messages
 
 open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>() {
     companion object : EmbedArg()
@@ -20,4 +20,6 @@ open class EmbedArg(override val name: String = "Embed") : ArgumentType<Embed>()
 
     override fun generateExamples(event: CommandEvent<*>) = event.guild?.getEmbeds()?.map { it.name }
         ?: listOf("<No Embeds>")
+
+    override fun formatData(data: Embed) = data.name
 }

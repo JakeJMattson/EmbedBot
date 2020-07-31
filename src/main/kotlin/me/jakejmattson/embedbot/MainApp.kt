@@ -1,10 +1,10 @@
 package me.jakejmattson.embedbot
 
+import me.jakejmattson.discordkt.api.dsl.bot
+import me.jakejmattson.discordkt.api.extensions.jda.*
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.services.PermissionsService
-import me.jakejmattson.discordkt.api.dsl.bot
-import me.jakejmattson.discordkt.api.extensions.jda.*
 import java.awt.Color
 
 fun main(args: Array<String>) {
@@ -30,9 +30,7 @@ fun main(args: Array<String>) {
                 val discord = it.discord
                 val jda = discord.jda
                 val properties = discord.properties
-                val self = jda.selfUser
-                val requiredRole = it.guild?.idLong?.let { configuration[it]?.getLiveRole(jda)?.name }
-                    ?: "<Not configured>"
+                val role = it.guild?.idLong?.let { configuration[it]?.getLiveRole(jda)?.asMention } ?: "<None>"
 
                 author {
                     jda.retrieveUserById(254786431656919051).queue {
@@ -42,15 +40,20 @@ fun main(args: Array<String>) {
                     }
                 }
 
-                simpleTitle = "${self.fullName()} (EmbedBot 2.0.1)"
+                title {
+                    text = "EmbedBot"
+                    url = "https://discordapp.com/oauth2/authorize?client_id=705079543538384936&scope=bot&permissions=101440"
+                }
+
                 description = "A bot for creating and managing embeds."
-                thumbnail = self.effectiveAvatarUrl
+                thumbnail = jda.selfUser.effectiveAvatarUrl
                 color = infoColor
 
-                addInlineField("Required role", requiredRole)
                 addInlineField("Prefix", it.relevantPrefix)
-                addInlineField("Build Info", "`${properties.libraryVersion} - ${properties.jdaVersion}`")
-                addInlineField("Source", "https://github.com/JakeJMattson/EmbedBot")
+                addInlineField("Role", role)
+
+                addField("Build", "`2.1.0 - ${properties.libraryVersion} - ${properties.jdaVersion}`")
+                addInlineField("Source Code", "https://github.com/JakeJMattson/EmbedBot")
             }
 
             visibilityPredicate {
@@ -59,6 +62,10 @@ fun main(args: Array<String>) {
                 val permission = it.command.requiredPermissionLevel
 
                 permissionsService.hasClearance(member, permission)
+            }
+
+            it.jda.guilds.forEach {
+                configuration.setup(it)
             }
         }
     }

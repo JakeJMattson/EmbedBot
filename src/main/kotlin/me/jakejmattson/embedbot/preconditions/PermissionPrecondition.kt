@@ -1,10 +1,10 @@
 package me.jakejmattson.embedbot.preconditions
 
-import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
-import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.discordkt.api.dsl.command.CommandEvent
 import me.jakejmattson.discordkt.api.dsl.preconditions.*
 import me.jakejmattson.discordkt.api.extensions.jda.toMember
+import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
+import me.jakejmattson.embedbot.services.*
 
 class PermissionPrecondition(private val permissionsService: PermissionsService) : Precondition() {
     override fun evaluate(event: CommandEvent<*>): PreconditionResult {
