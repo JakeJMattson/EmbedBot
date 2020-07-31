@@ -1,7 +1,7 @@
 package me.jakejmattson.embedbot.extensions
 
 import me.jakejmattson.embedbot.services.*
-import me.jakejmattson.kutils.api.dsl.command.*
+import me.jakejmattson.discordkt.api.dsl.command.*
 import java.util.WeakHashMap
 
 fun CommandEvent<*>.reactSuccess() = message.addReaction("✅").queue()

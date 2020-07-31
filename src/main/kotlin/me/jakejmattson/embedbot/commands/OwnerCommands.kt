@@ -4,10 +4,10 @@ import me.jakejmattson.embedbot.arguments.EmbedArg
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.services.*
-import me.jakejmattson.kutils.api.annotations.CommandSet
-import me.jakejmattson.kutils.api.arguments.*
-import me.jakejmattson.kutils.api.dsl.command.commands
-import me.jakejmattson.kutils.api.extensions.jda.sendPrivateMessage
+import me.jakejmattson.discordkt.api.annotations.CommandSet
+import me.jakejmattson.discordkt.api.arguments.*
+import me.jakejmattson.discordkt.api.dsl.command.commands
+import me.jakejmattson.discordkt.api.extensions.jda.sendPrivateMessage
 import kotlin.system.exitProcess
 
 @CommandSet("Owner")

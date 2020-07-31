@@ -1,8 +1,8 @@
 package me.jakejmattson.embedbot.dataclasses
 
-import me.jakejmattson.kutils.api.dsl.data.Data
-import me.jakejmattson.kutils.api.dsl.embed.embed
-import me.jakejmattson.kutils.api.extensions.jda.*
+import me.jakejmattson.discordkt.api.dsl.data.Data
+import me.jakejmattson.discordkt.api.dsl.embed.embed
+import me.jakejmattson.discordkt.api.extensions.jda.*
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Guild
 

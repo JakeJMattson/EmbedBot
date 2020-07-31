@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("me.jakejmattson:KUtils:${Versions.KUTILS}")
+    implementation("me.jakejmattson:DiscordKt:${Versions.DISCORDKT}")
 }
 
 tasks {
@@ -29,7 +29,7 @@ tasks {
         rename{ "README.md" }
         expand(
             "kotlin" to Versions.KOTLIN,
-            "kutils" to Versions.KUTILS
+            "discordkt" to Versions.DISCORDKT
         )
     }
 
@@ -41,5 +41,5 @@ tasks {
 object Versions {
     const val BOT = "2.0.1"
     const val KOTLIN = "1.3.72"
-    const val KUTILS = "0.18.0"
+    const val DISCORDKT = "0.19.0"
 }

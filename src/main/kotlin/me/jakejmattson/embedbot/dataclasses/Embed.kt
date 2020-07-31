@@ -3,7 +3,7 @@ package me.jakejmattson.embedbot.dataclasses
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.jakejmattson.kutils.api.extensions.jda.tryRetrieveSnowflake
+import me.jakejmattson.discordkt.api.extensions.jda.tryRetrieveSnowflake
 import net.dv8tion.jda.api.*
 import net.dv8tion.jda.api.entities.*
 import java.awt.Color

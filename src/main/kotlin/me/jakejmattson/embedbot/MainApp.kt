@@ -3,8 +3,8 @@ package me.jakejmattson.embedbot
 import me.jakejmattson.embedbot.dataclasses.Configuration
 import me.jakejmattson.embedbot.extensions.requiredPermissionLevel
 import me.jakejmattson.embedbot.services.PermissionsService
-import me.jakejmattson.kutils.api.dsl.bot
-import me.jakejmattson.kutils.api.extensions.jda.*
+import me.jakejmattson.discordkt.api.dsl.bot
+import me.jakejmattson.discordkt.api.extensions.jda.*
 import java.awt.Color
 
 fun main(args: Array<String>) {
@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
             commandReaction = null
 
             prefix {
-                configuration[it.guild!!.idLong]?.prefix.takeUnless { it.isNullOrBlank() } ?: "="
+                it.guild?.let { configuration[it.idLong]?.prefix.takeUnless { it.isNullOrBlank() } ?: "=" } ?: "<none>"
             }
 
             colors {
@@ -28,13 +28,14 @@ fun main(args: Array<String>) {
 
             mentionEmbed {
                 val discord = it.discord
+                val jda = discord.jda
                 val properties = discord.properties
-                val self = discord.jda.selfUser
-                val requiredRole = it.guild?.idLong?.let { configuration[it]?.getLiveRole(discord.jda)?.name }
+                val self = jda.selfUser
+                val requiredRole = it.guild?.idLong?.let { configuration[it]?.getLiveRole(jda)?.name }
                     ?: "<Not configured>"
 
                 author {
-                    discord.jda.retrieveUserById(254786431656919051).queue {
+                    jda.retrieveUserById(254786431656919051).queue {
                         iconUrl = it.effectiveAvatarUrl
                         name = it.fullName()
                         url = "https://discordapp.com/users/254786431656919051/"
@@ -48,7 +49,7 @@ fun main(args: Array<String>) {
 
                 addInlineField("Required role", requiredRole)
                 addInlineField("Prefix", it.relevantPrefix)
-                addInlineField("Build Info", "`${properties.kutilsVersion} - ${properties.jdaVersion}`")
+                addInlineField("Build Info", "`${properties.libraryVersion} - ${properties.jdaVersion}`")
                 addInlineField("Source", "https://github.com/JakeJMattson/EmbedBot")
             }
 

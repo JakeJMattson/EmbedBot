@@ -6,9 +6,9 @@ import me.jakejmattson.embedbot.dataclasses.CopyLocation
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.services.*
-import me.jakejmattson.kutils.api.annotations.CommandSet
-import me.jakejmattson.kutils.api.arguments.*
-import me.jakejmattson.kutils.api.dsl.command.*
+import me.jakejmattson.discordkt.api.annotations.CommandSet
+import me.jakejmattson.discordkt.api.arguments.*
+import me.jakejmattson.discordkt.api.dsl.command.*
 import net.dv8tion.jda.api.entities.TextChannel
 
 @CommandSet("Core")
@@ -66,10 +66,7 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
 
     command("Delete") {
         description = "Delete the embed with this name."
-        execute(MultipleArg(EmbedArg).makeNullableOptional {
-            val loadedEmbed = it.guild!!.getLoadedEmbed() ?: return@makeNullableOptional null
-            listOf(loadedEmbed)
-        }) { event ->
+        execute(MultipleArg(EmbedArg).makeNullableOptional { it.guild!!.getLoadedEmbed()?.let { listOf(it) } }) { event ->
             val embeds = event.args.first
                 ?: return@execute event.respond(messages.MISSING_OPTIONAL_EMBED)
 

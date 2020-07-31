@@ -1,8 +1,8 @@
 package me.jakejmattson.embedbot.commands
 
-import me.jakejmattson.kutils.api.annotations.CommandSet
-import me.jakejmattson.kutils.api.dsl.command.commands
-import me.jakejmattson.kutils.api.extensions.stdlib.toTimeString
+import me.jakejmattson.discordkt.api.annotations.CommandSet
+import me.jakejmattson.discordkt.api.dsl.command.commands
+import me.jakejmattson.discordkt.api.extensions.stdlib.toTimeString
 import java.awt.Color
 import java.util.Date
 

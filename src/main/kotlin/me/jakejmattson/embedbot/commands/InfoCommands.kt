@@ -4,8 +4,8 @@ import me.jakejmattson.embedbot.arguments.EmbedArg
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.locale.messages
 import me.jakejmattson.embedbot.utils.*
-import me.jakejmattson.kutils.api.annotations.CommandSet
-import me.jakejmattson.kutils.api.dsl.command.commands
+import me.jakejmattson.discordkt.api.annotations.CommandSet
+import me.jakejmattson.discordkt.api.dsl.command.commands
 import java.awt.Color
 
 @CommandSet("Information")

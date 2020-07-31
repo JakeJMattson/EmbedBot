@@ -22,7 +22,7 @@
 | Commands       | Arguments                         | Description                                             |
 | -------------- | --------------------------------- | ------------------------------------------------------- |
 | CopyTarget     | Embed Name, (Channel), Message ID | Copy an embed by its message ID.                        |
-| UpdateOriginal | <none>                            | Update the original embed this content was copied from. |
+| UpdateOriginal |                                   | Update the original embed this content was copied from. |
 | UpdateTarget   | (Channel), Message ID             | Replace the target message embed with the loaded embed. |
 
 ## Core
@@ -48,7 +48,7 @@
 | SetFooter      | Icon URL, Text    | Set the footer for the currently loaded embed.      |
 | SetImage       | URL               | Set the image for the currently loaded embed.       |
 | SetThumbnail   | URL               | Set the thumbnail for the currently loaded embed.   |
-| SetTimestamp   | <none>            | Set the timestamp for the currently loaded embed.   |
+| SetTimestamp   |                   | Set the timestamp for the currently loaded embed.   |
 | SetTitle       | Text              | Set the title for the currently loaded embed.       |
 
 ## Field
@@ -66,7 +66,7 @@
 ## GuildConfiguration
 | Commands  | Arguments | Description                                                |
 | --------- | --------- | ---------------------------------------------------------- |
-| DeleteAll | <none>    | Delete all embeds and clusters in this guild.              |
+| DeleteAll |           | Delete all embeds and clusters in this guild.              |
 | SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
 | SetRole   | Role      | Set the role required to use this bot.                     |
 
@@ -74,15 +74,15 @@
 | Commands   | Arguments | Description                             |
 | ---------- | --------- | --------------------------------------- |
 | Info       | (Embed)   | Get extended info for the target embed. |
-| Limits     | <none>    | Display the discord embed limits.       |
-| ListEmbeds | <none>    | List all embeds created in this guild.  |
+| Limits     |           | Display the discord embed limits.       |
+| ListEmbeds |           | List all embeds created in this guild.  |
 
 ## Owner
 | Commands    | Arguments                         | Description                                             |
 | ----------- | --------------------------------- | ------------------------------------------------------- |
 | Broadcast   | Text                              | Send a direct message to all guild owners.              |
-| GuildReport | <none>                            | Get a complete list of guilds.                          |
-| Kill        | <none>                            | Kill the bot. It will remember this decision.           |
+| GuildReport |                                   | Get a complete list of guilds.                          |
+| Kill        |                                   | Kill the bot. It will remember this decision.           |
 | Leave       | (Guild)                           | Leave this guild and delete all associated information. |
 | Transfer    | (Embed), Target Guild, (New Name) | Send an embed to another guild.                         |
 
@@ -90,5 +90,5 @@
 | Commands             | Arguments | Description                              |
 | -------------------- | --------- | ---------------------------------------- |
 | Help                 | (Command) | Display a help menu.                     |
-| Status, Ping, Uptime | <none>    | Display network status and total uptime. |
+| Status, Ping, Uptime |           | Display network status and total uptime. |
 
