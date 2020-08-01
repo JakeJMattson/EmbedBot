@@ -87,8 +87,13 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
         description = "Get a complete list of guilds and IDs."
         requiredPermissionLevel = Permission.BOT_OWNER
         execute {
-            val report = it.discord.jda.guilds.sortedBy { it.name }.joinToString("\n") { it.id + " - " + it.name }
-            it.respond("```$report```")
+            val guilds = it.discord.jda.guilds
+
+            val report = guilds
+                .sortedBy { it.name }
+                .joinToString("\n") { it.id + " - " + it.name }
+
+            it.respond("Total Guilds: ${guilds.size}\n```$report```")
         }
     }
 }

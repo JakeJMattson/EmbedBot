@@ -13,7 +13,10 @@ data class Configuration(val botOwner: Long = 254786431656919051,
     fun setup(guild: Guild) {
         if (guildConfigurations[guild.idLong] != null) return
 
-        guildConfigurations[guild.idLong] = GuildConfiguration("=", guild.publicRole.idLong)
+        val everyone = guild.publicRole
+        val newConfiguration = GuildConfiguration("=", everyone.idLong)
+
+        guildConfigurations[guild.idLong] = newConfiguration
         save()
 
         guild.retrieveOwner().queue {
@@ -30,14 +33,20 @@ data class Configuration(val botOwner: Long = 254786431656919051,
                         iconUrl = me.effectiveAvatarUrl
                     }
 
+                    val prefix = newConfiguration.prefix
+
                     field {
                         name = "Prefix"
-                        value = "Use `SetPrefix` to set the prefix that your bot will respond to."
+                        value = "This is the prefix used before commands given to the bot.\n" +
+                            "Default: $prefix\n" +
+                            "Use `${prefix}SetPrefix` to change this."
                     }
 
                     field {
                         name = "Role"
-                        value = "Use `SetRole` to set the role that is required to use the bot."
+                        value = "This is the role that a user must have to use this bot.\n" +
+                            "Default: ${everyone.asMention}\n" +
+                            "Use `${prefix}SetRole` to change this."
                     }
                 }
             )
