@@ -46,7 +46,7 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
     command("Broadcast") {
         description = "Send a direct message to all guild owners."
         requiredPermissionLevel = Permission.BOT_OWNER
-        execute(EveryArg) {
+        execute(EveryArg("Message")) {
             val message = it.args.first
 
             it.discord.jda.guilds
@@ -83,11 +83,11 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
         }
     }
 
-    command("GuildReport") {
-        description = "Get a complete list of guilds."
+    command("Guilds") {
+        description = "Get a complete list of guilds and IDs."
         requiredPermissionLevel = Permission.BOT_OWNER
         execute {
-            val report = it.discord.jda.guilds.joinToString("\n") { it.id + " - " + it.name }
+            val report = it.discord.jda.guilds.sortedBy { it.name }.joinToString("\n") { it.id + " - " + it.name }
             it.respond("```$report```")
         }
     }

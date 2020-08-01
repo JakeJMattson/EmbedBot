@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
 
                 title {
                     text = "EmbedBot"
-                    url = "https://discordapp.com/oauth2/authorize?client_id=705079543538384936&scope=bot&permissions=101440"
+                    url = "https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440"
                 }
 
                 description = "A bot for creating and managing embeds."

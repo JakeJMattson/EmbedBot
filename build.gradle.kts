@@ -35,6 +35,11 @@ tasks {
 
     shadowJar {
         archiveFileName.set("EmbedBot.jar")
+        manifest {
+            attributes(
+                "Main-Class" to "me.jakejmattson.embedbot.MainAppKt"
+            )
+        }
     }
 }
 
