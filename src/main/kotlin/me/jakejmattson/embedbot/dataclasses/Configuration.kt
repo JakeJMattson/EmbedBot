@@ -14,7 +14,7 @@ data class Configuration(val botOwner: Long = 254786431656919051,
         if (guildConfigurations[guild.idLong] != null) return
 
         val everyone = guild.publicRole
-        val newConfiguration = GuildConfiguration("=", everyone.idLong)
+        val newConfiguration = GuildConfiguration("e!", everyone.idLong)
 
         guildConfigurations[guild.idLong] = newConfiguration
         save()

@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
             commandReaction = null
 
             prefix {
-                it.guild?.let { configuration[it.idLong]?.prefix.takeUnless { it.isNullOrBlank() } ?: "=" } ?: "<none>"
+                it.guild?.let { configuration[it.idLong]?.prefix } ?: "<none>"
             }
 
             colors {
