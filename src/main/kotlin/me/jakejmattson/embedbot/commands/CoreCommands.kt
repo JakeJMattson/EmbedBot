@@ -116,7 +116,6 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
     command("ExecuteAll") {
         description = "Execute a batch of commands in sequence."
         execute(EveryArg("Commands")) { event ->
-            event.respond("Command currently disabled")
             val rawInvocations = event.args.first.split("\n").filter { it.isNotEmpty() }
             val unknownCommands = mutableListOf<String>()
             val missingPermissions = mutableListOf<String>()
