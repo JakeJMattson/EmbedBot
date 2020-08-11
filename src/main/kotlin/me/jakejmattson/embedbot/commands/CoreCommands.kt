@@ -4,6 +4,7 @@ import com.google.gson.JsonSyntaxException
 import me.jakejmattson.discordkt.api.annotations.CommandSet
 import me.jakejmattson.discordkt.api.arguments.*
 import me.jakejmattson.discordkt.api.dsl.command.*
+import me.jakejmattson.discordkt.internal.command.ParseResult
 import me.jakejmattson.embedbot.arguments.EmbedArg
 import me.jakejmattson.embedbot.dataclasses.CopyLocation
 import me.jakejmattson.embedbot.extensions.*
@@ -117,52 +118,50 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
         description = "Execute a batch of commands in sequence."
         execute(EveryArg("Commands")) { event ->
             val rawInvocations = event.args.first.split("\n").filter { it.isNotEmpty() }
-            val unknownCommands = mutableListOf<String>()
-            val missingPermissions = mutableListOf<String>()
+            val invalidCommands = mutableListOf<String>()
 
             val commandMap = rawInvocations.mapNotNull {
                 val split = it.split(" ")
                 val commandName = split.first()
-                val command = event.container[commandName]
+                val args = split.drop(1)
 
-                if (command == null) {
-                    unknownCommands.add(commandName)
-                    return@mapNotNull null
-                }
+                event.container[commandName]?.let {
+                    val hasPermission = permissionsService.hasClearance(event.message.member!!, it.requiredPermissionLevel)
 
-                val hasPermission = permissionsService.hasClearance(event.message.member!!, command.requiredPermissionLevel)
-
-                if (!hasPermission) {
-                    missingPermissions.add(commandName)
-                    return@mapNotNull null
-                }
-
-                command to split.drop(1)
-            }
-
-            if (unknownCommands.isNotEmpty() || missingPermissions.isNotEmpty()) {
-                val unknownResponse = when (unknownCommands.size) {
-                    0 -> ""
-                    1 -> "Unknown Command: ${unknownCommands.first()}"
-                    else -> "Unknown Commands: ${unknownCommands.joinToString()}"
-                }
-
-                val permissionResponse = when (missingPermissions.size) {
-                    0 -> ""
-                    else -> "Missing Permissions: ${missingPermissions.joinToString()}"
-                }
-
-                val response =
-                    if (unknownResponse.isNotEmpty() && permissionResponse.isNotEmpty())
-                        unknownResponse + "\n" + permissionResponse
+                    if (hasPermission)
+                        it to args
                     else
-                        unknownResponse + permissionResponse
-
-                return@execute event.respond(response)
+                        null
+                }
             }
+
+            if (invalidCommands.isNotEmpty())
+                return@execute event.respond("Invalid: ${invalidCommands.joinToString()}")
 
             if (commandMap.isEmpty())
-                return@execute event.respond("No commands to execute!")
+                return@execute event.respond("No Commands!")
+
+            val genericEvent = event.cloneToGeneric()
+
+            val (success, fail) = commandMap.map { (command, args) ->
+                command to command.manualParseInput(args, genericEvent)
+            }.partition { it.second is ParseResult.Success }
+
+            if (fail.isNotEmpty()) {
+                val response = fail.joinToString { it.first.names.first() }
+                return@execute event.respond("Failed: $response")
+            }
+
+            println(success.joinToString { it.first.names.first() })
+
+            success
+                .map { it.first to (it.second as ParseResult.Success).argumentContainer }
+                .forEach { (command, result) ->
+                    println("${command.names.first()}(${result})")
+                    command.manualInvoke(result, genericEvent)
+                }
+
+            event.reactSuccess()
         }
     }
 }
