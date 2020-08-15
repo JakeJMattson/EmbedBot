@@ -17,6 +17,7 @@ fun main(args: Array<String>) {
                 = it.getInjectionObjects(Configuration::class, PermissionsService::class)
 
             commandReaction = null
+            allowMentionPrefix = true
 
             prefix {
                 it.guild?.let { configuration[it.idLong]?.prefix } ?: "<none>"

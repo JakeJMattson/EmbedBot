@@ -24,5 +24,4 @@ class PermissionPrecondition(private val permissionsService: PermissionsService)
 
         return Pass
     }
-
 }
