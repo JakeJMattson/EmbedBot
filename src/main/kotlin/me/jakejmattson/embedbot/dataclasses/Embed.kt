@@ -1,11 +1,11 @@
 package me.jakejmattson.embedbot.dataclasses
 
-import me.jakejmattson.discordkt.api.extensions.jda.tryRetrieveSnowflake
+import me.jakejmattson.discordkt.api.Discord
 import me.jakejmattson.embedbot.extensions.*
 import me.jakejmattson.embedbot.services.*
 import me.jakejmattson.embedbot.utils.messages
-import net.dv8tion.jda.api.*
-import net.dv8tion.jda.api.entities.*
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.entities.Guild
 import java.awt.Color
 import java.time.temporal.TemporalAccessor
 import kotlin.streams.toList
@@ -82,15 +82,15 @@ data class Embed(var name: String,
 
     fun isLoaded(guild: Guild) = guild.getLoadedEmbed() == this
 
-    fun update(jda: JDA, channelId: String, messageId: String): OperationResult {
-        val channel = jda.getTextChannelById(channelId)
+    fun update(discord: Discord, channelId: String, messageId: String): OperationResult {
+        val channel = discord.jda.getTextChannelById(channelId)
             ?: return false withMessage "Target channel does not exist."
 
-        val message = jda.tryRetrieveSnowflake {
+        val message = discord.retrieveEntity {
             channel.retrieveMessageById(messageId).complete()
-        } as Message? ?: return false withMessage "Target message does not exist."
+        } ?: return false withMessage "Target message does not exist."
 
-        if (message.author != jda.selfUser)
+        if (message.author != discord.jda.selfUser)
             return false withMessage "Target message is not from this bot."
 
         if (isEmpty)

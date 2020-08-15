@@ -10,19 +10,17 @@ data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf(
 
     fun getEmbedByName(name: String) = embeds.firstOrNull { it.name.toLowerCase() == name.toLowerCase() }
     fun removeEmbed(embed: Embed) = embeds.remove(embed)
-    fun build() = embeds.filter { !it.isEmpty }.map { it.build() }
+
+    fun addEmbed(guild: Guild, embed: Embed, index: Int = -1) {
+        guild.removeEmbed(embed)
+
+        if (index == -1)
+            embeds.add(embed)
+        else
+            embeds.add(index, embed)
+
+        saveEmbeds()
+    }
 
     override fun toString() = embeds.joinToString { it.name }.takeIf { it.isNotEmpty() } ?: "<No embeds>"
-
-    fun addEmbed(guild: Guild, embed: Embed) {
-        guild.removeEmbed(embed)
-        embeds.add(embed)
-        saveEmbeds()
-    }
-
-    fun insertEmbed(guild: Guild, index: Int, embed: Embed) {
-        guild.removeEmbed(embed)
-        embeds.add(index, embed)
-        saveEmbeds()
-    }
 }

@@ -1,9 +1,10 @@
 # Commands
 
-## Key
-| Symbol     | Meaning                    |
-| ---------- | -------------------------- |
-| (Argument) | This argument is optional. |
+## Key 
+| Symbol      | Meaning                        |
+| ----------- | ------------------------------ |
+| (Argument)  | Argument is not required.      |
+| Argument... | Accepts many of this argument. |
 
 ## Cluster
 | Commands          | Arguments                         | Description                                                  |

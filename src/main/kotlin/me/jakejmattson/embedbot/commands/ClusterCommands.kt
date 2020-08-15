@@ -86,7 +86,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                     return@sumBy 0
                 }
 
-                val updateResponse = embed.update(event.discord.jda, location.channelId, location.messageId)
+                val updateResponse = embed.update(event.discord, location.channelId, location.messageId)
 
                 with(updateResponse) {
                     if (!wasSuccessful)
@@ -162,7 +162,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             if (index !in 0..cluster.size)
                 return@execute it.respond("Invalid Index. Expected range: 0-${cluster.size}")
 
-            cluster.insertEmbed(it.guild!!, index, embed)
+            cluster.addEmbed(it.guild!!, embed, index)
 
             it.reactSuccess()
         }

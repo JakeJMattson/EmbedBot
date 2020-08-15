@@ -4,7 +4,7 @@ group = "me.jakejmattson"
 version = Versions.BOT
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.0"
     id("com.github.johnrengelman.shadow") version "6.0.0"
 }
 
@@ -14,7 +14,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
     implementation("me.jakejmattson:DiscordKt:${Versions.DISCORDKT}")
 }
 
@@ -28,7 +27,7 @@ tasks {
         into(file("."))
         rename{ "README.md" }
         expand(
-            "kotlin" to Versions.KOTLIN,
+            "kotlin" to kotlin.coreLibrariesVersion,
             "discordkt" to Versions.DISCORDKT
         )
     }
@@ -45,6 +44,5 @@ tasks {
 
 object Versions {
     const val BOT = "2.1.0"
-    const val KOTLIN = "1.3.72"
     const val DISCORDKT = "0.19.1"
 }

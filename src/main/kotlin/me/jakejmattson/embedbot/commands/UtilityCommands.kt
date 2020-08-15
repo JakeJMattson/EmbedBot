@@ -4,7 +4,7 @@ import me.jakejmattson.discordkt.api.annotations.CommandSet
 import me.jakejmattson.discordkt.api.dsl.command.commands
 import me.jakejmattson.discordkt.api.extensions.stdlib.toTimeString
 import java.awt.Color
-import java.util.Date
+import java.util.*
 
 private val startTime = Date()
 
