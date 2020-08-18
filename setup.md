@@ -66,10 +66,15 @@ The JAR will now read in your provided configuration values and start the bot. Y
 <details>
 <summary>With Docker</summary>
 
-Each time the code is pushed, a new Docker container is built, meaning you can just pull down the most recent one.
+New containers for this project are built automatically. Pulling it with Docker will always give you the most recent commit.
 
 * Install [Docker Desktop](https://www.docker.com/get-started) onto your machine.
 * Run `docker pull jakejmattson/embedbot`
+* Run `docker run -e BOT_TOKEN=<TOKEN> -v <PATH>:/config embedbot:latest`
+    * `<TOKEN>` should be replaced with the bot token obtained from the steps above.
+    * `<PATH>` should be replaced with a local path where you want to store the configuration files.
+
+Your Docker container should now be running.
 
 </details>
 
