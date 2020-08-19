@@ -23,5 +23,5 @@ EmbedBot is a simple bot interface to create and modify embeds via commands. Cre
 ## Add it
 You can either [invite](https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440) it to your server or host it yourself with the [setup guide](setup.md).
 
-## Commands
-See [commands.md](commands.md) for a list of commands.
+## Using it
+To use the bot, see the [User Guide](guide.md) or a full list of [commands](commands.md).
