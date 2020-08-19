@@ -28,33 +28,38 @@ fun main(args: Array<String>) {
             }
 
             mentionEmbed {
-                val discord = it.discord
-                val jda = discord.jda
-                val properties = discord.properties
-                val role = it.guild?.idLong?.let { configuration[it]?.getLiveRole(jda)?.asMention } ?: "<None>"
+                val guild = it.guild ?: return@mentionEmbed
+
+                val jda = it.discord.jda
+                val properties = it.discord.properties
+                val prefix = it.relevantPrefix
+                val role = configuration[guild.idLong]?.getLiveRole(jda)?.takeUnless { it == guild.publicRole }?.asMention
+                    ?: ""
 
                 author {
-                    jda.retrieveUserById(254786431656919051).queue {
-                        iconUrl = it.effectiveAvatarUrl
-                        name = it.fullName()
-                        url = "https://discordapp.com/users/254786431656919051/"
+                    jda.retrieveUserById(254786431656919051).queue { user ->
+                        iconUrl = user.effectiveAvatarUrl
+                        name = user.fullName()
+                        url = user.profileLink
                     }
                 }
 
-                title {
-                    text = "EmbedBot"
-                    url = "https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440"
-                }
-
-                description = "A bot for creating and managing embeds."
+                simpleTitle = "EmbedBot 2.1.0"
                 thumbnail = jda.selfUser.effectiveAvatarUrl
                 color = infoColor
+                description = "A bot for creating and managing embeds." +
+                    (if (role.isNotBlank())
+                        "\nRequired Role: $role"
+                    else "") +
+                        "\nCurrent Prefix: `$prefix`" +
+                        "\nUse `${prefix}help` to see commands."
 
-                addInlineField("Prefix", it.relevantPrefix)
-                addInlineField("Role", role)
-
-                addField("Build", "`2.1.0 - ${properties.libraryVersion} - ${properties.jdaVersion}`")
-                addInlineField("Source Code", "https://github.com/JakeJMattson/EmbedBot")
+                addInlineField("", "[[Invite Me]](https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440)")
+                addInlineField("", "[[See Code]](https://github.com/JakeJMattson/EmbedBot)")
+                addInlineField("", "[[User Guide]](https://github.com/JakeJMattson/DiscordKt/blob/master/guide.md)")
+                footer {
+                    text = "2.1.0 - ${properties.libraryVersion} - ${properties.jdaVersion}"
+                }
             }
 
             visibilityPredicate {
