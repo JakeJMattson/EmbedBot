@@ -56,7 +56,7 @@ fun main(args: Array<String>) {
 
                 addInlineField("", "[[Invite Me]](https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440)")
                 addInlineField("", "[[See Code]](https://github.com/JakeJMattson/EmbedBot)")
-                addInlineField("", "[[User Guide]](https://github.com/JakeJMattson/DiscordKt/blob/master/guide.md)")
+                addInlineField("", "[[User Guide]](https://github.com/JakeJMattson/EmbedBot/blob/master/guide.md)")
                 footer {
                     text = "2.1.0 - ${properties.libraryVersion} - ${properties.jdaVersion}"
                 }
