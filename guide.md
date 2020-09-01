@@ -23,11 +23,19 @@ To find information about commands, you can use the `Help` feature.
 * `e!Help` will list all available commands.
 * `e!Help [Command]` will give help for a specific command.
 
-## Multiple Embeds
+## Editing Embeds
+
+## Updating Sent Embeds
+
+## Creating Multiple Embeds
 
 This bot can store as many embeds as you want, but this means that the bot needs to know which embed you're talking about when you run a command. It does this by keeping a single embed loaded. This allows you to edit embeds without having to specify the name each time.
 
 * You can run `e!ListEmbeds` to see all the embeds you have.
 * You can run `e!Load [Embed Name]` to load a different embed.
 
-## Updating Sent Embeds
+## Managing Multiple Embeds
+
+## Transferring Embeds
+
+## Other useful commands
