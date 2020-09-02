@@ -12,7 +12,7 @@ Before we start working, we need to create a new embed. You can do this with the
 This creates a new embed, but it's empty. Let's add some text.
 * `e!SetTitle Hello World`
 
-Now you can `Send` it.
+Now you can display it on discord by sending it.
 * `e!Send`
 
 You've just created your first embed!
@@ -25,6 +25,21 @@ To find information about commands, you can use the `Help` feature.
 
 ## Editing Embeds
 
+If your embed is more permanent, like something in a #rules channel, we want to have a way to update it.
+
+The easiest way is to keep track of your embed when you send it.
+
+`e!Send true`
+
+This saves the message information. Once you make all of your changes, you can update it with one command. 
+
+`e!Update`
+
+If you didn't track your embed when you first sent it, you can also update a message's embed.
+
+`e!UpdateTarget`
+
+
 ## Updating Sent Embeds
 
 ## Creating Multiple Embeds
@@ -36,6 +51,6 @@ This bot can store as many embeds as you want, but this means that the bot needs
 
 ## Managing Multiple Embeds
 
-## Transferring Embeds
+## Importing Embeds
 
 ## Other useful commands
