@@ -19,24 +19,20 @@
 | RenameCluster     | Cluster, New Name                 | Change the name of an existing cluster.                      |
 | UpdateCluster     | Cluster                           | Update the original embeds this cluster was copied from.     |
 
-## Copy
-| Commands       | Arguments                         | Description                                             |
-| -------------- | --------------------------------- | ------------------------------------------------------- |
-| CopyTarget     | Embed Name, (Channel), Message ID | Copy an embed by its message ID.                        |
-| UpdateOriginal |                                   | Update the original embed this content was copied from. |
-| UpdateTarget   | (Channel), Message ID             | Replace the target message embed with the loaded embed. |
-
 ## Core
-| Commands   | Arguments                  | Description                                |
-| ---------- | -------------------------- | ------------------------------------------ |
-| Create     | Embed Name                 | Create a new embed with this name.         |
-| Delete     | (Embed...)                 | Delete the embed with this name.           |
-| Duplicate  | Embed Name, (Embed)        | Create a new embed from an existing embed. |
-| ExecuteAll | Commands                   | Execute a batch of commands in sequence.   |
-| Export     | (Embed), (preferFile)      | Export the currently loaded embed to JSON. |
-| Import     | Embed Name, File \| String | Import a JSON file or string as an embed.  |
-| Load       | Embed                      | Load the embed with this name into memory. |
-| Send       | (Channel), (shouldTrack)   | Send the currently loaded embed.           |
+| Commands     | Arguments                      | Description                                             |
+| ------------ | ------------------------------ | ------------------------------------------------------- |
+| Copy         | Embed Name, Message Link or ID | Copy an embed by its message ID.                        |
+| Create       | Embed Name                     | Create a new embed with this name.                      |
+| Delete       | (Embed...)                     | Delete the embed with this name.                        |
+| Duplicate    | Embed Name, (Embed)            | Create a new embed from an existing embed.              |
+| ExecuteAll   | Commands                       | Execute a batch of commands in sequence.                |
+| Export       | (Embed), (preferFile)          | Export the currently loaded embed to JSON.              |
+| Import       | Embed Name, File \| String     | Import a JSON file or string as an embed.               |
+| Load         | Embed                          | Load the embed with this name into memory.              |
+| Send         | (Channel), (shouldTrack)       | Send the currently loaded embed.                        |
+| Update       |                                | Update the message embed                                |
+| UpdateTarget | Message Link or ID             | Replace the target message embed with the loaded embed. |
 
 ## Edit
 | Commands       | Arguments         | Description                                         |
