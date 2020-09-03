@@ -28,7 +28,7 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
 
             channel.sendMessage(embed.build()).queue { message ->
                 if (shouldTrack)
-                    embed.copyLocation = CopyLocation(channel.id, message.id)
+                    embed.location = Location(channel.id, message.id)
             }
 
             if (channel != it.channel)
@@ -120,7 +120,7 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
             val builder = message.getEmbed()?.toEmbedBuilder()
                 ?: return@execute it.respond("Target message has no embed.")
 
-            val embed = Embed(name, builder, CopyLocation(message.channel.id, message.id))
+            val embed = Embed(name, builder, Location(message.channel.id, message.id))
 
             embedService.addEmbed(guild, embed)
             it.reactSuccess()
@@ -132,7 +132,7 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
         requiresLoadedEmbed = true
         execute {
             val embed = it.guild!!.getLoadedEmbed()!!
-            val original = embed.copyLocation ?: return@execute it.respond(messages.NOT_COPIED)
+            val original = embed.location ?: return@execute it.respond(messages.NO_LOCATION)
             val updateResponse = embed.update(it.discord, original.channelId, original.messageId)
 
             if (!updateResponse.wasSuccessful)

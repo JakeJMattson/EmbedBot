@@ -29,7 +29,7 @@ fun infoCommands() = commands {
                     addField("Is Empty", embed.isEmpty.toString())
                 }
 
-                addField("Copied From", embed.copyLocationString)
+                addField("Copied From", embed.locationString)
             }
         }
     }

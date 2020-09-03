@@ -58,7 +58,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
             messagesWithEmbeds.reverse()
 
             val embeds = messagesWithEmbeds.mapIndexed { index, message ->
-                Embed("$clusterName-${index + 1}", message.getEmbed()!!.toEmbedBuilder(), CopyLocation(channel.id, message.id))
+                Embed("$clusterName-${index + 1}", message.getEmbed()!!.toEmbedBuilder(), Location(channel.id, message.id))
             } as ArrayList
 
             val wasSuccessful = embedService.createClusterFromEmbeds(event.guild!!, Cluster(clusterName, embeds))
@@ -78,11 +78,10 @@ fun clusterCommands(embedService: EmbedService) = commands {
             val size = cluster.size
 
             val totalSuccessful = cluster.embeds.sumBy { embed ->
-
-                val location = embed.copyLocation
+                val location = embed.location
 
                 if (location == null) {
-                    failures.add(messages.NOT_COPIED)
+                    failures.add(messages.NO_LOCATION)
                     return@sumBy 0
                 }
 
@@ -128,7 +127,7 @@ fun clusterCommands(embedService: EmbedService) = commands {
                 if (!embed.isEmpty) {
                     channel.sendMessage(embed.build()).queue { message ->
                         if (shouldTrack)
-                            embed.copyLocation = CopyLocation(channel.id, message.id)
+                            embed.location = Location(channel.id, message.id)
                     }
                 }
             }

@@ -15,13 +15,13 @@ private fun EmbedBuilder.save(): EmbedBuilder {
     return this
 }
 
-data class CopyLocation(val channelId: String, val messageId: String) {
+data class Location(val channelId: String, val messageId: String) {
     override fun toString() = "Channel ID: $channelId\nMessage ID: $messageId"
 }
 
 data class Embed(var name: String,
                  private val builder: EmbedBuilder = EmbedBuilder(),
-                 var copyLocation: CopyLocation? = null) {
+                 var location: Location? = null) {
 
     private val fields: MutableList<Field>
         get() = builder.fields
@@ -35,8 +35,8 @@ data class Embed(var name: String,
     val charCount: Int
         get() = if (!isEmpty) build().length else 0
 
-    val copyLocationString: String
-        get() = copyLocation?.toString() ?: "<Not copied>"
+    val locationString: String
+        get() = location?.toString() ?: "<No Location Set>"
 
     fun setAuthor(name: String, iconUrl: String) = builder.setAuthor(name, null, iconUrl).save()
     fun setColor(color: Color) = builder.setColor(color).save()
