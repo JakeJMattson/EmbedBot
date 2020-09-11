@@ -29,7 +29,6 @@ fun main(args: Array<String>) {
 
             mentionEmbed {
                 val guild = it.guild ?: return@mentionEmbed
-
                 val jda = it.discord.jda
                 val properties = it.discord.properties
                 val prefix = it.relevantPrefix
@@ -44,19 +43,17 @@ fun main(args: Array<String>) {
                     }
                 }
 
-                simpleTitle = "EmbedBot 2.1.0"
+                simpleTitle = "EmbedBot"
                 thumbnail = jda.selfUser.effectiveAvatarUrl
                 color = infoColor
-                description = "A bot for creating and managing embeds." +
-                    (if (role.isNotBlank())
-                        "\nRequired Role: $role"
-                    else "") +
-                        "\nCurrent Prefix: `$prefix`" +
-                        "\nUse `${prefix}help` to see commands."
+                description = (if (role.isNotBlank()) "\nRequired Role: $role" else "") +
+                    "\nPrefix: `$prefix`" +
+                    "\nUse `${prefix}help` to see commands."
 
                 addInlineField("", "[[Invite Me]](https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440)")
                 addInlineField("", "[[See Code]](https://github.com/JakeJMattson/EmbedBot)")
                 addInlineField("", "[[User Guide]](https://github.com/JakeJMattson/EmbedBot/blob/master/guide.md)")
+
                 footer {
                     text = "2.1.0 - ${properties.libraryVersion} - ${properties.jdaVersion}"
                 }
