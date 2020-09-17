@@ -84,19 +84,16 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
     }
 
     command("Guilds") {
-        description = "Get a complete list of guilds and IDs."
+        description = "Get a complete list of guilds and info."
         requiredPermissionLevel = Permission.BOT_OWNER
         execute(ChoiceArg("Sort", "name", "size").makeOptional("name")) {
             val guilds = it.discord.jda.guilds
             val sortStyle = it.args.first.toLowerCase()
 
-            val data = guilds
-                .sortedBy {
-                    when (sortStyle) {
-                        "name" -> it.name
-                        else -> (-it.getGuildEmbeds().size).toString()
-                    }
-                }
+            val data = when (sortStyle) {
+                "name" -> guilds.sortedBy { it.name }
+                else -> guilds.sortedBy { -it.getGuildEmbeds().size }
+            }
                 .map {
                     it.name to it.getGuildEmbeds().size
                 }
