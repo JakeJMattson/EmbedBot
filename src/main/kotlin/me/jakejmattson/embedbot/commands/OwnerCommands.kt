@@ -51,7 +51,7 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
 
             it.discord.jda.guilds
                 .mapNotNull { it.retrieveOwner().complete() }
-                .distinct()
+                .distinctBy { it.id }
                 .forEach {
                     it.user.sendPrivateMessage(message)
                 }
@@ -86,12 +86,26 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
     command("Guilds") {
         description = "Get a complete list of guilds and IDs."
         requiredPermissionLevel = Permission.BOT_OWNER
-        execute {
+        execute(ChoiceArg("Sort", "name", "size").makeOptional("name")) {
             val guilds = it.discord.jda.guilds
+            val sortStyle = it.args.first.toLowerCase()
 
-            val report = guilds
-                .sortedBy { it.name }
-                .joinToString("\n") { it.id + " - " + it.name }
+            val data = guilds
+                .sortedBy {
+                    when (sortStyle) {
+                        "name" -> it.name
+                        else -> (-it.getGuildEmbeds().size).toString()
+                    }
+                }
+                .map {
+                    it.name to it.getGuildEmbeds().size
+                }
+
+            val formatter = "%-${data.maxOf { it.first.length }}s | %s"
+
+            val report = data.joinToString("\n") { (name, size) ->
+                formatter.format(name, size)
+            }
 
             it.respond("Total Guilds: ${guilds.size}\n```$report```")
         }

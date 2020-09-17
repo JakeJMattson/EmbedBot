@@ -78,7 +78,7 @@
 | Commands  | Arguments                         | Description                                             |
 | --------- | --------------------------------- | ------------------------------------------------------- |
 | Broadcast | Message                           | Send a direct message to all guild owners.              |
-| Guilds    |                                   | Get a complete list of guilds and IDs.                  |
+| Guilds    | (Sort)                            | Get a complete list of guilds and IDs.                  |
 | Kill      |                                   | Kill the bot. It will remember this decision.           |
 | Leave     | (Guild)                           | Leave this guild and delete all associated information. |
 | Transfer  | (Embed), Target Guild, (New Name) | Send an embed to another guild.                         |
