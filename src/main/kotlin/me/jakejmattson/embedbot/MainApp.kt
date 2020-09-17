@@ -46,8 +46,8 @@ fun main(args: Array<String>) {
                 simpleTitle = "EmbedBot"
                 thumbnail = jda.selfUser.effectiveAvatarUrl
                 color = infoColor
-                description = (if (role.isNotBlank()) "\nRequired Role: $role" else "") +
-                    "\nPrefix: `$prefix`" +
+                description = (if (role.isNotBlank()) "You must have $role" else "") +
+                    "\nCurrent prefix is `$prefix`" +
                     "\nUse `${prefix}help` to see commands."
 
                 addInlineField("", "[[Invite Me]](https://discordapp.com/oauth2/authorize?client_id=439163847618592782&scope=bot&permissions=101440)")

@@ -27,5 +27,8 @@ class PermissionsService(private val configuration: Configuration) {
 
     private fun Member.isBotOwner() = user.idLong == configuration.botOwner
     private fun Member.isGuildOwner() = isOwner
-    private fun Member.isUser() = configuration[guild.idLong]?.getLiveRole(guild.jda) in roles
+    private fun Member.isUser(): Boolean {
+        val role = configuration[guild.idLong]?.getLiveRole(guild.jda)
+        return role?.isPublicRole == true || role in roles
+    }
 }
