@@ -93,15 +93,14 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
             val data = when (sortStyle) {
                 "name" -> guilds.sortedBy { it.name }
                 else -> guilds.sortedBy { -it.getGuildEmbeds().size }
+            }.map {
+                it.getGuildEmbeds().size to it.name
             }
-                .map {
-                    it.name to it.getGuildEmbeds().size
-                }
 
-            val formatter = "%-${data.maxOf { it.first.length }}s | %s"
+            val formatter = "%${data.maxOf { it.first.toString().length }}s | %s"
 
-            val report = data.joinToString("\n") { (name, size) ->
-                formatter.format(name, size)
+            val report = data.joinToString("\n") { (size, name) ->
+                formatter.format(size, name)
             }
 
             it.respond("Total Guilds: ${guilds.size}\n```$report```")
