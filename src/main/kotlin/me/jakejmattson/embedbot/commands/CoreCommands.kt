@@ -19,15 +19,15 @@ fun coreCommands(embedService: EmbedService, permissionsService: PermissionsServ
         description = "Send the currently loaded embed."
         requiresLoadedEmbed = true
         execute(TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
-            BooleanArg("shouldTrack").makeOptional(false)) {
-            val (channel, shouldTrack) = it.args
+            BooleanArg("saveLocation").makeOptional(false)) {
+            val (channel, saveLocation) = it.args
             val embed = it.guild!!.getLoadedEmbed()!!
 
             if (embed.isEmpty)
                 return@execute it.respond(messages.EMPTY_EMBED)
 
             channel.sendMessage(embed.build()).queue { message ->
-                if (shouldTrack)
+                if (saveLocation)
                     embed.location = Location(channel.id, message.id)
             }
 

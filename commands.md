@@ -17,7 +17,7 @@
 | Export       | (Embed), (preferFile)          | Export the currently loaded embed to JSON.              |
 | Import       | Embed Name, File \| String     | Import a JSON file or string as an embed.               |
 | Load         | Embed                          | Load the embed with this name into memory.              |
-| Send         | (Channel), (shouldTrack)       | Send the currently loaded embed.                        |
+| Send         | (Channel), (saveLocation)       | Send the currently loaded embed.                        |
 | Update       |                                | Update the message embed                                |
 | UpdateTarget | Message Link or ID             | Replace the target message embed with the loaded embed. |
 
@@ -54,7 +54,7 @@
 | CloneGroup      | Group Name, (Channel), Amount   | Clone a group of embeds.                               |
 | CreateGroup     | Group Name, (Embed...)          | Create a group of embeds.                              |
 | DeleteGroup     | Group                           | Delete a group and all of its embeds.                  |
-| Deploy          | Group, (Channel), (shouldTrack) | Deploy a group into a target channel.                  |
+| Deploy          | Group, (Channel), (saveLocation) | Deploy a group into a target channel.                  |
 | InsertIntoGroup | Group, Index, Embed             | Insert an embed into a group at an index.              |
 | RemoveFromGroup | Embed...                        | Remove embeds from their current group.                |
 | RenameGroup     | Group, New Name                 | Change the name of an existing group.                  |

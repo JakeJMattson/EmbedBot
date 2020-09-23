@@ -120,13 +120,13 @@ fun groupCommands(embedService: EmbedService) = commands {
         description = "Deploy a group into a target channel."
         execute(GroupArg,
             TextChannelArg("Channel").makeOptional { it.channel as TextChannel },
-            BooleanArg("shouldTrack").makeOptional(false)) {
-            val (group, channel, shouldTrack) = it.args
+            BooleanArg("saveLocation").makeOptional(false)) {
+            val (group, channel, saveLocation) = it.args
 
             group.embeds.forEach { embed ->
                 if (!embed.isEmpty) {
                     channel.sendMessage(embed.build()).queue { message ->
-                        if (shouldTrack)
+                        if (saveLocation)
                             embed.location = Location(channel.id, message.id)
                     }
                 }
