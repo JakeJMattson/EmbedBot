@@ -36,7 +36,7 @@ fun guildConfigurationCommands(configuration: Configuration, embedService: Embed
     }
 
     command("DeleteAll") {
-        description = "Delete all embeds and clusters in this guild."
+        description = "Delete all embeds and groups in this guild."
         requiredPermissionLevel = Permission.GUILD_OWNER
         execute {
             val guild = it.guild!!

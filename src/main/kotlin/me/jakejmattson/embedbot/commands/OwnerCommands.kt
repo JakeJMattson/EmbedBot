@@ -22,10 +22,10 @@ fun botConfigurationCommands(configuration: Configuration, embedService: EmbedSe
             configuration.save()
 
             val removedEmbeds = embedService.removeAllFromGuild(guild)
-            val removedClusters = guild.getGuildEmbeds().clusterList.size
+            val removedGroups = guild.getGuildEmbeds().groupList.size
 
             it.respond("Deleted all ($removedEmbeds) embeds." +
-                "\nDeleted all ($removedClusters) clusters." +
+                "\nDeleted all ($removedGroups) groups." +
                 "\nDeleted guild configuration for `${guild.name}`." +
                 "\nLeaving guild. Goodbye.")
 

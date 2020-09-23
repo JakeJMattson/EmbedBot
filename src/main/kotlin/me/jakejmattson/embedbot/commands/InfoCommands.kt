@@ -40,7 +40,7 @@ fun infoCommands() = commands {
             event.respond {
                 val guild = event.guild!!
                 val embeds = guild.getEmbeds()
-                val clusters = guild.getClusters()
+                val groups = guild.getGroups()
                 val loadedEmbed = guild.getLoadedEmbed()
                 val embedList = embeds.joinToString("\n") { it.name }.takeIf { it.isNotEmpty() } ?: "<No embeds>"
 
@@ -51,9 +51,9 @@ fun infoCommands() = commands {
 
                 addField("Embeds", embedList)
 
-                if (clusters.isNotEmpty()) {
-                    clusters.forEach { cluster ->
-                        addField(cluster.name, cluster.toString())
+                if (groups.isNotEmpty()) {
+                    groups.forEach { group ->
+                        addField(group.name, group.toString())
                     }
                 }
             }

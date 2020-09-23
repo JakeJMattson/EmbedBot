@@ -1,8 +1,8 @@
 package me.jakejmattson.embedbot.dataclasses
 
-data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>, val clusterList: ArrayList<Cluster>) {
+data class GuildEmbeds(var loadedEmbed: Embed? = null, val embedList: MutableList<Embed> = mutableListOf(), val groupList: MutableList<Group> = mutableListOf()) {
     val size: Int
-        get() = embedList.size + clusterList.sumBy { it.size }
+        get() = embedList.size + groupList.sumBy { it.size }
 
     fun addAndLoad(embed: Embed) {
         embedList.add(embed)
@@ -14,11 +14,11 @@ data class GuildEmbeds(var loadedEmbed: Embed?, val embedList: ArrayList<Embed>,
     }
 
     fun clear(): Int {
-        val removed = embedList.size + clusterList.sumBy { it.size }
+        val removed = embedList.size + groupList.sumBy { it.size }
 
         loadedEmbed = null
         embedList.clear()
-        clusterList.clear()
+        groupList.clear()
 
         return removed
     }

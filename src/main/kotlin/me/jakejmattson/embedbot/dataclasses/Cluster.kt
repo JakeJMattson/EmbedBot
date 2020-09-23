@@ -4,7 +4,7 @@ import me.jakejmattson.embedbot.extensions.removeEmbed
 import me.jakejmattson.embedbot.services.saveEmbeds
 import net.dv8tion.jda.api.entities.Guild
 
-data class Cluster(var name: String, val embeds: ArrayList<Embed> = arrayListOf()) {
+data class Group(var name: String, val embeds: MutableList<Embed> = mutableListOf()) {
     val size: Int
         get() = embeds.size
 

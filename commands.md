@@ -6,19 +6,6 @@
 | (Argument)  | Argument is not required.      |
 | Argument... | Accepts many of this argument. |
 
-## Cluster
-| Commands          | Arguments                         | Description                                                  |
-| ----------------- | --------------------------------- | ------------------------------------------------------------ |
-| AddToCluster      | Cluster, Embed...                 | Add an embed into a cluster.                                 |
-| CloneCluster      | Cluster Name, (Channel), Amount   | Clone a group of embeds into a cluster.                      |
-| CreateCluster     | Cluster Name, (Embed...)          | Create a cluster for storing and deploying groups of embeds. |
-| DeleteCluster     | Cluster                           | Delete a cluster and all of its embeds.                      |
-| Deploy            | Cluster, (Channel), (shouldTrack) | Deploy a cluster into a target channel.                      |
-| InsertIntoCluster | Cluster, Index, Embed             | Insert an embed into a cluster at an index.                  |
-| RemoveFromCluster | Embed...                          | Remove embeds from their current cluster.                    |
-| RenameCluster     | Cluster, New Name                 | Change the name of an existing cluster.                      |
-| UpdateCluster     | Cluster                           | Update the original embeds this cluster was copied from.     |
-
 ## Core
 | Commands     | Arguments                      | Description                                             |
 | ------------ | ------------------------------ | ------------------------------------------------------- |
@@ -60,10 +47,23 @@
 | SetFieldText   | Field Index, Text       | Get a field by its index and edit its text value.        |
 | SetFieldTitle  | Field Index, Text       | Get a field by its index and edit its title value.       |
 
+## Group
+| Commands        | Arguments                       | Description                                            |
+| --------------- | ------------------------------- | ------------------------------------------------------ |
+| AddToGroup      | Group, Embed...                 | Add an embed into a group.                             |
+| CloneGroup      | Group Name, (Channel), Amount   | Clone a group of embeds.                               |
+| CreateGroup     | Group Name, (Embed...)          | Create a group of embeds.                              |
+| DeleteGroup     | Group                           | Delete a group and all of its embeds.                  |
+| Deploy          | Group, (Channel), (shouldTrack) | Deploy a group into a target channel.                  |
+| InsertIntoGroup | Group, Index, Embed             | Insert an embed into a group at an index.              |
+| RemoveFromGroup | Embed...                        | Remove embeds from their current group.                |
+| RenameGroup     | Group, New Name                 | Change the name of an existing group.                  |
+| UpdateGroup     | Group                           | Update the original embeds this group was copied from. |
+
 ## GuildConfiguration
 | Commands  | Arguments | Description                                                |
 | --------- | --------- | ---------------------------------------------------------- |
-| DeleteAll |           | Delete all embeds and clusters in this guild.              |
+| DeleteAll |           | Delete all embeds and groups in this guild.                |
 | SetPrefix | Prefix    | Set the prefix required for the bot to register a command. |
 | SetRole   | Role      | Set the role required to use this bot.                     |
 

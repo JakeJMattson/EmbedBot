@@ -16,7 +16,7 @@ val gson = GsonBuilder().setPrettyPrinting().create()!!
 private val embedFile = File("config/embeds.json")
 private val embedMap = loadEmbeds()
 
-fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds(null, arrayListOf(), arrayListOf()) }
+fun Guild.getGuildEmbeds() = embedMap.getOrPut(this.id) { GuildEmbeds() }
 
 @Service
 class EmbedService {
@@ -51,36 +51,36 @@ class EmbedService {
         return removed
     }
 
-    fun createCluster(guild: Guild, name: String) =
-        if (!guild.hasClusterWithName(name)) {
-            val clusters = guild.getGuildEmbeds().clusterList
-            val newCluster = Cluster(name)
+    fun createGroup(guild: Guild, name: String) =
+        if (!guild.hasGroupWithName(name)) {
+            val groups = guild.getGuildEmbeds().groupList
+            val newGroup = Group(name)
 
-            clusters.add(newCluster)
+            groups.add(newGroup)
             saveEmbeds()
-            newCluster
+            newGroup
         } else
             null
 
-    fun createClusterFromEmbeds(guild: Guild, cluster: Cluster): Boolean {
-        val clusters = guild.getGuildEmbeds().clusterList
+    fun createGroupFromEmbeds(guild: Guild, group: Group): Boolean {
+        val groups = guild.getGuildEmbeds().groupList
 
-        if (guild.hasClusterWithName(cluster.name))
+        if (guild.hasGroupWithName(group.name))
             return false
 
-        clusters.add(cluster)
+        groups.add(group)
         saveEmbeds()
         return true
     }
 
-    fun deleteCluster(guild: Guild, cluster: Cluster): Boolean {
-        val clusters = guild.getGuildEmbeds().clusterList
-        clusters.remove(cluster)
+    fun deleteGroup(guild: Guild, group: Group): Boolean {
+        val groups = guild.getGuildEmbeds().groupList
+        groups.remove(group)
         saveEmbeds()
         return true
     }
 
-    fun removeEmbedFromCluster(guild: Guild, embed: Embed) {
+    fun removeEmbedFromGroup(guild: Guild, embed: Embed) {
         guild.removeEmbed(embed)
         addEmbed(guild, embed)
         saveEmbeds()
