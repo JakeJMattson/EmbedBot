@@ -1,4 +1,4 @@
-FROM gradle:6.5.1-jdk14 AS build
+FROM gradle:6.7.0-jdk15 AS build
 COPY --chown=gradle:gradle . /embedbot
 WORKDIR /embedbot
 RUN gradle shadowJar --no-daemon
